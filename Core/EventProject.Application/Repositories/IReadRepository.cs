@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using EventProject.Domain.Entities;
 
 namespace EventProject.Application.Repositories;
-
-public interface IReadRepository
+public interface IReadRepository<T> :IRepository<T> where T : BaseEntity
 {
+      
+
 }

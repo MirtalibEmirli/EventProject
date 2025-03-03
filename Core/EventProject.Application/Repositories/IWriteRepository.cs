@@ -2,7 +2,7 @@
 
 namespace EventProject.Application.Repositories;
 
-public interface IWriteRepository<T> where T : BaseEntity
+public interface IWriteRepository<T>:IRepository<T> where T : BaseEntity
 {
 
 }

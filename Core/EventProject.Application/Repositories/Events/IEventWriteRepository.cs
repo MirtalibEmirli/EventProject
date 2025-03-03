@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace EventProject.Application.Repositories.Events;
 
-public interface IEventWriteRepository
+public interface IEventWriteRepository : IWriteRepository<Event>
 {
-
-
+    // Burada Event spesifik CRUD metodları olacaq
 }
+

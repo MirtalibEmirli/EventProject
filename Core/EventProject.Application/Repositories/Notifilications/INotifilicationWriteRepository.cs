@@ -5,8 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EventProject.Application.Repositories.EventCategories;
+namespace EventProject.Application.Repositories.Notifilications;
 
-public interface   IEventCategoryReadRepository:IReadRepository<EventCategory>
+public interface INotifilicationWriteRepository:IWriteRepository<Notification>
 {
 }

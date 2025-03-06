@@ -2,8 +2,8 @@
 
 namespace EventProject.Application.Repositories.Tickets;
 
-public interface ITicketWriteRepository<T> where T : BaseEntity
+public interface ITicketWriteRepository:IWriteRepository<Ticket>
 {
-    //
+    
 
 }

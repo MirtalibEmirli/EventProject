@@ -2,7 +2,7 @@
 
 namespace EventProject.Application.Repositories.Payments;
 
-public interface IPaymentWriteRepository<T> where T : BaseEntity
+public interface IPaymentWriteRepository:IWriteRepository<Payment>
 {
 
 }

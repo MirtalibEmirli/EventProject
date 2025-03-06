@@ -6,6 +6,6 @@ using System.Threading.Tasks;
 
 namespace EventProject.Application.Repositories.Payments;
 
-public interface IPaymentReadRepository
+public interface IPaymentReadRepository:IReadRepository<Payment>
 {
 }

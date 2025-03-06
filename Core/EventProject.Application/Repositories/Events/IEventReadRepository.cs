@@ -1,6 +1,6 @@
 ﻿namespace EventProject.Application.Repositories.Events;
 
-public interface IEventReadRepository<T> : IReadRepository<T>  where T :Event, new()
+public interface IEventReadRepository: IReadRepository<Event>  
 {
 
 }

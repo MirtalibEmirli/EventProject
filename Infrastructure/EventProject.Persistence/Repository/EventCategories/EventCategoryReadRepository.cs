@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EventProject.Application.Repositories.Notifilication;
-
-public interface INotifilicationReadRepository
+namespace EventProject.Persistence.Repository.EventCategories
 {
+	internal class EventCategoryReadRepository
+	{
+	}
 }

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using EventProject.Domain.Entities;
 
 namespace EventProject.Application.Repositories.Users;
 
-public interface IUserWriteRepository
+public interface IUserWriteRepository:IWriteRepository<User>
 {
 }

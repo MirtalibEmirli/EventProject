@@ -23,4 +23,8 @@
     <ProjectReference Include="..\..\Core\EventProject.Application\EventProject.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="UnitOfWork\" />
+  </ItemGroup>
+
 </Project>

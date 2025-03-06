@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using EventProject.Domain.Entities;
 
 namespace EventProject.Application.Repositories.Tickets;
 
-public interface ITicketReadRepository
+public interface ITicketReadRepository:IReadRepository<Ticket>
 {
 
 }

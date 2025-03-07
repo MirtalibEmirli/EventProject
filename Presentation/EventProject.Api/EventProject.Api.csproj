@@ -20,4 +20,8 @@
     <ProjectReference Include="..\..\Infrastructure\EventProject.Persistence\EventProject.Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Middlewares\" />
+  </ItemGroup>
+
 </Project>

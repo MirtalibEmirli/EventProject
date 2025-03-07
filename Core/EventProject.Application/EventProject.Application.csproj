@@ -20,12 +20,4 @@
     <ProjectReference Include="..\EventProject.Domain\EventProject.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="CQRS\EventCategory\Handlers\CommandHandlers\" />
-    <Folder Include="CQRS\EventCategory\Handlers\QueryHandlers\" />
-    <Folder Include="CQRS\EventCategory\Queries\Responses\" />
-    <Folder Include="CQRS\EventCategory\Queries\Requests\" />
-    <Folder Include="CQRS\EventCategory\Validations\" />
-  </ItemGroup>
-
 </Project>

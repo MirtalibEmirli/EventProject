@@ -9,7 +9,7 @@ public class MappingProfile:Profile
 
     public MappingProfile()
     {
-        CreateMap<EventCategory,CreateEventCategoryRequest>().ReverseMap();
-        CreateMap<CreateEventCategoryResponse,EventCategory>().ReverseMap().ForMember(dest=>dest.CategoryId,opt=>opt.MapFrom(src=>src.Id.ToString()));    
+        CreateMap<Category,CreateEventCategoryRequest>().ReverseMap();
+        CreateMap<CreateEventCategoryResponse,Category>().ReverseMap().ForMember(dest=>dest.CategoryId,opt=>opt.MapFrom(src=>src.Id.ToString()));    
     }
 }

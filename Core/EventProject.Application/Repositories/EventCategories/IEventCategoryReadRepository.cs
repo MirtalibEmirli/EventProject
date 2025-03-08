@@ -7,6 +7,6 @@ using System.Threading.Tasks;
 
 namespace EventProject.Application.Repositories.EventCategories;
 
-public interface   IEventCategoryReadRepository:IReadRepository<EventCategory>
+public interface   IEventCategoryReadRepository:IReadRepository<Category>
 {
 }

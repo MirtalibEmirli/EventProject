@@ -9,19 +9,16 @@ namespace EventProject.Application.Features.Commands.EventCategoryCommands.Creat
 {
     public class CreateEventCategoryHandler(IEventCategoryWriteRepository eventCategoryWrite, IMapper mapper) : IRequestHandler<CreateEventCategoryRequest, ResponseModel<CreateEventCategoryResponse>>
     {
-        private readonly IEventCategoryWriteRepository _eventCategoryWriteRepository = eventCategoryWrite;                                //bunu silede bilerik isdesez   
+        private readonly IEventCategoryWriteRepository _eventCategoryWriteRepository = eventCategoryWrite;                                  
 
 
         public async Task<ResponseModel<CreateEventCategoryResponse>> Handle(CreateEventCategoryRequest request, CancellationToken cancellationToken)
         {
-            //Afet bu yoxlanis kodudur sadece MediatR i yoxlayrdim isleyir 
-            //repositoryni qos database e add ed fso bnu sile bilersen.
-
-
+         
             if (request == null) throw new BadRequestException("Request is null");
 
 
-            var category = mapper.Map<EventCategory>(request);
+            var category = mapper.Map<Category>(request);
 
             try
             {

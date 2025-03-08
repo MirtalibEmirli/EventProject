@@ -13,7 +13,7 @@ public class AppDbContext : DbContext
 
     public DbSet<Event> Events { get; set; }
 
-    public DbSet<EventCategory> Categories { get; set; }
+    public DbSet<Category> Categories { get; set; }
 
     public DbSet<Ticket> Tickets { get; set; }
 

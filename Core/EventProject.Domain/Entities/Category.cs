@@ -1,6 +1,6 @@
 ﻿namespace EventProject.Domain.Entities;
 
-public class EventCategory:BaseEntity
+public class Category:BaseEntity
 {
     public string CategoryName { get; set; } = string.Empty;
 

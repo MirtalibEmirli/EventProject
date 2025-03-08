@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EventProject.Application.Features.Commands.EventCategoryCommands.DeleteEventCategory
+namespace EventProject.Application.Features.Commands.EventCategoryCommands.DeleteEventCategory;
+
+public class DeleteEventCategoryResponse
 {
-    internal class DeleteEventCategoryResponse
-    {
-    }
+
+
 }

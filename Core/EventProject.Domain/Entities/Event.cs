@@ -22,7 +22,7 @@ public class Event:BaseEntity
 
     //// Foreign Keys
     public Guid CategoryId { get; set; }
-    public EventCategory Category { get; set; } = null!;
+    public Category Category { get; set; } = null!;
 
     public Guid OrganizerId { get; set; }
     public User Organizer { get; set; } = null!;

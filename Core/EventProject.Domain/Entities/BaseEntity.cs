@@ -9,13 +9,7 @@ public abstract class BaseEntity
 
     public DateTime? UpdatedDate { get; set; }
 
-    public DateTime? DeletedDate { get; set; }
-
-    public int? DeletedBy { get; set; }
-
-    public int? CreatedBy { get; set; }
-
-    public int? UpdatedBy { get; set; }
+    public DateTime? DeletedDate { get; set; } = null;
 
     public bool? IsDeleted { get; set;}=false;
 

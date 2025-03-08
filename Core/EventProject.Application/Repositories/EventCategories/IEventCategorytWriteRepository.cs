@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EventProject.Application.Repositories.EventCategories
 {
-    public interface IEvenCategorytWriteRepository:IWriteRepository<EventCategory>
+    public interface IEventCategoryWriteRepository : IWriteRepository<EventCategory>
     {
     }
 }

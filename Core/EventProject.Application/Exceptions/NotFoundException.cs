@@ -1,4 +1,4 @@
-﻿namespace Common.Exceptions;
+﻿namespace EventProject.Application.Exceptions;
 
 public class NotFoundException:Exception
 {

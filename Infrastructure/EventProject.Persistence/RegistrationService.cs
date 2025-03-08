@@ -1,5 +1,4 @@
-﻿using EventProject.Application.Repositories;
-using EventProject.Application.Repositories.EventCategories;
+﻿using EventProject.Application.Repositories.EventCategories;
 using EventProject.Persistence.Data;
 using EventProject.Persistence.Repository.EventCategories;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +14,7 @@ public static class RegistrationService
     {
         services.AddDbContext<AppDbContext>(opt =>   opt.UseSqlServer(config.GetConnectionString("Default")));
 
-        services.AddScoped<IEventCategoryWriteRepository, EventCategoryWriteRepository>();
+        services.AddScoped<IEventCategoryWriteRepository, EventCategoryWriteRepository > ();
         return services;
     }
 }

@@ -1,18 +1,15 @@
-﻿using EventProject.Application.Exceptions;
+﻿using AutoMapper;
+using EventProject.Application.Exceptions;
 using EventProject.Application.Repositories.EventCategories;
 using EventProject.Application.ResponseModels.Generics;
+using EventProject.Domain.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EventProject.Application.Features.Commands.EventCategoryCommands.CreateEventCategory
 {
-    public class CreateEventCategoryHandler(IEventCategoryWriteRepository eventCategoryWrite) : IRequestHandler<CreateEventCategoryRequest, ResponseModel<CreateEventCategoryResponse>>
+    public class CreateEventCategoryHandler(IEventCategoryWriteRepository eventCategoryWrite, IMapper mapper) : IRequestHandler<CreateEventCategoryRequest, ResponseModel<CreateEventCategoryResponse>>
     {
-        private readonly IEventCategoryWriteRepository _eventCategoryWriteRepository =eventCategoryWrite;                                //bunu silede bilerik isdesez   
+        private readonly IEventCategoryWriteRepository _eventCategoryWriteRepository = eventCategoryWrite;                                //bunu silede bilerik isdesez   
 
 
         public async Task<ResponseModel<CreateEventCategoryResponse>> Handle(CreateEventCategoryRequest request, CancellationToken cancellationToken)
@@ -24,17 +21,28 @@ namespace EventProject.Application.Features.Commands.EventCategoryCommands.Creat
             if (request == null) throw new BadRequestException("Request is null");
 
 
+            var category = mapper.Map<EventCategory>(request);
 
-            Console.WriteLine("Request geldi ve catdi db yoxla");
+            try
+            {
+                await _eventCategoryWriteRepository.AddAsync(category);
+                await _eventCategoryWriteRepository.SaveChangesAsync();
+
+            }
+            catch (Exception ex) 
+            {
+                Console.WriteLine(ex.Message);
+                
+            }
+            var response = mapper.Map<CreateEventCategoryResponse>(category);
+            Console.WriteLine(response.CategoryId);
+            //Console.WriteLine("Request geldi ve catdi db yoxla");
             return new ResponseModel<CreateEventCategoryResponse>
             {
-                Data = new CreateEventCategoryResponse()
-                {
-                    CategoryId = "1",
-                },
-                IsSucces = true
+                Data = response,
+                IsSuccess = true
             };
-            
+
 
 
 

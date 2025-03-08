@@ -5,5 +5,8 @@ namespace EventProject.Application.Features.Commands.EventCategoryCommands.Creat
 // 
 public class CreateEventCategoryRequest:IRequest<ResponseModel<CreateEventCategoryResponse>>
 {
-    public string Name { get; set; }
+    public string CategoryName { get; set; } = string.Empty;
+
+    public string? Description { get; set; }
+    public int? CreatedBy { get; set; }
 }

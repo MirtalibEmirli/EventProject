@@ -3,17 +3,16 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EventProject.Api.Controllers
-{
-    [Route("api/[controller]")]
-    [ApiController]
-    public class EventCategoryHandler(ISender sender ) : ControllerBase
-    {
+namespace EventProject.Api.Controllers;
 
-        [HttpPost]
-        public async Task<IActionResult> CreateEventCategory(CreateEventCategoryRequest request)
-        {
-            return Ok(await sender.Send(request));
-        }
+[Route("api/[controller]")]
+[ApiController]
+public class EventCategoryHandler(ISender sender ) : ControllerBase
+{
+
+    [HttpPost]
+    public async Task<IActionResult> CreateEventCategory(CreateEventCategoryRequest request)
+    {
+        return Ok(await sender.Send(request));
     }
 }

@@ -10,17 +10,17 @@ public class BaseResponseModel
 {
 
     public List<string> Errors { get; set; }
-    public bool IsSucces { get; set; }
+    public bool IsSuccess { get; set; }
 
     public BaseResponseModel()
     {
-        IsSucces=true;
+        IsSuccess=true;
         Errors = null;
     }
 
     public BaseResponseModel(List<string> errors )
     {
         Errors = errors;
-        IsSucces = false;
+        IsSuccess = false;
     }
 }

@@ -20,6 +20,7 @@ namespace EventProject.Application
 
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
+
             services.AddMediatR(Assembly.GetExecutingAssembly());   //bunu bilmirem menasi nedir niye asssemblye muraciet gedr yeqin mediatr a harda isleyeceyini deyir dusunurem afro
             return services;
         }

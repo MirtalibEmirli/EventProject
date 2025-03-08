@@ -31,6 +31,9 @@ public class AppDbContext : DbContext
             .WithMany(u => u.Comments)
             .HasForeignKey(c => c.UserId)
             .OnDelete(DeleteBehavior.NoAction); 
+        modelBuilder.Entity<Event>().Property(e=>e.Price).HasPrecision(18,2);
+        modelBuilder.Entity<Ticket>().Property(t => t.Price).HasPrecision(18, 2);
+        modelBuilder.Entity<Payment>().Property(p=>p.Amount).HasPrecision(18, 2);   
 
         modelBuilder.Entity<Comment>()
             .HasOne(c => c.Event)

@@ -37,7 +37,7 @@ namespace EventProject.Application.Features.Commands.EventCategoryCommands.Creat
             return new ResponseModel<CreateEventCategoryResponse>
             {
                 Data = response,
-                IsSuccess = true
+                Message="Create Category"
             };
 
 

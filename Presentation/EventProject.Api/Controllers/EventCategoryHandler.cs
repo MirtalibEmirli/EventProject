@@ -1,5 +1,6 @@
 ﻿using EventProject.Application.Features.Commands.EventCategoryCommands.CreateEventCategory;
 using EventProject.Application.Features.Commands.EventCategoryCommands.DeleteEventCategory;
+using EventProject.Application.Features.Commands.EventCategoryCommands.UpdateEventCategory;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,6 +24,12 @@ public class EventCategoryHandler(IMediator sender) : ControllerBase
     public async Task<IActionResult> Delete([FromRoute] DeleteEventCategoryRequest request)
     {
         var response = await _mediator.Send(request);
-        return Ok();
+        return Ok(response);
+    }
+    [HttpPut]
+    public async Task<IActionResult> Update([FromBody] UpdateEventCategoryRequest request)
+    {
+        var response = await sender.Send(request);
+        return Ok(response);
     }
 }

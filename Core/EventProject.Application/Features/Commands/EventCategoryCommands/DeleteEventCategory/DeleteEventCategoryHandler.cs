@@ -1,18 +1,34 @@
-﻿using EventProject.Application.Repositories.EventCategories;
+﻿using AutoMapper;
+using EventProject.Application.Repositories.EventCategories;
+using EventProject.Application.ResponseModels.Generics;
 using EventProject.Domain.Entities;
 using MediatR;
 
 namespace EventProject.Application.Features.Commands.EventCategoryCommands.DeleteEventCategory;
 
-public class DeleteEventCategoryHandler(IEventCategoryWriteRepository categoryWriteRepository) : IRequestHandler<DeleteEventCategoryRequest, DeleteEventCategoryResponse>
+public class DeleteEventCategoryHandler(IEventCategoryWriteRepository categoryWriteRepository) : IRequestHandler<DeleteEventCategoryRequest, ResponseModel<DeleteEventCategoryResponse>>
 {
 	private readonly IEventCategoryWriteRepository _categoryWriteRepository  = categoryWriteRepository;
 
-	public async Task<DeleteEventCategoryResponse> Handle(DeleteEventCategoryRequest request,CancellationToken cancellationToken)
+
+	public async Task<ResponseModel<DeleteEventCategoryResponse>> Handle(DeleteEventCategoryRequest request,CancellationToken cancellationToken)
 	{
-		await _categoryWriteRepository.DeleteAsync(id: request.Id);
+
+
+		await _categoryWriteRepository.SoftDeleteAsync(id: request.Id);
 		await _categoryWriteRepository.SaveChangesAsync();
-		return new DeleteEventCategoryResponse();
+
+		var response = new DeleteEventCategoryResponse()
+		{
+			Id=request.Id
+		};
+		return new ResponseModel<DeleteEventCategoryResponse> {
+
+			Data = response,
+			IsSuccess=true,
+			Message="Deleted Successfully"
+			
+		};
 
 	}
 }

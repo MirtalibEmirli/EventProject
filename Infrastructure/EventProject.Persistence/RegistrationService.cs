@@ -15,6 +15,7 @@ public static class RegistrationService
         services.AddDbContext<AppDbContext>(opt =>   opt.UseSqlServer(config.GetConnectionString("Default")));
 
         services.AddScoped<IEventCategoryWriteRepository, EventCategoryWriteRepository > ();
-        return services;
+		services.AddScoped<IEventCategoryReadRepository, EventCategoryReadRepository>();
+		return services;
     }
 }

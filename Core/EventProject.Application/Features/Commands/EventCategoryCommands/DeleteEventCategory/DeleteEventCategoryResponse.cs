@@ -8,6 +8,6 @@ namespace EventProject.Application.Features.Commands.EventCategoryCommands.Delet
 
 public class DeleteEventCategoryResponse
 {
-
+	public string Id { get; set; }	
 
 }

@@ -10,7 +10,7 @@ public class ExceptionHandlerMiddleware
 {
 
 
-    public async Task InvoceAsync(HttpContext context, RequestDelegate next)
+    public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
         try
         {

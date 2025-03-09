@@ -1,4 +1,4 @@
-using EventProject.Api.Middlewares;
+﻿using EventProject.Api.Middlewares;
 using EventProject.Application;
 using EventProject.Persistence;
 
@@ -12,6 +12,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddApplicationServices();
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+
+
+
 
 var app = builder.Build();
 
@@ -28,6 +33,9 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.UseMiddleware<ExceptionHandlerMiddleware>();
+
+
+
 
 
 app.Run();

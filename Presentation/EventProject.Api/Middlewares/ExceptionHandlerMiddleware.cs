@@ -8,14 +8,18 @@ namespace EventProject.Api.Middlewares;
 
 public class ExceptionHandlerMiddleware
 {
+    private readonly RequestDelegate _next;
+    public ExceptionHandlerMiddleware(RequestDelegate next)
+    {
+            _next = next;
+    }
 
-
-    public async Task InvokeAsync(HttpContext context, RequestDelegate next)
+    public async Task InvokeAsync(HttpContext context )
     {
         try
         {
 
-            await next.Invoke(context);
+            await _next.Invoke(context);
         }
         catch (Exception ex)
         {

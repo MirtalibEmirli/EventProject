@@ -12,7 +12,7 @@ public class ReadRepository<TEntity>(AppDbContext context) : IReadRepository<TEn
 
 	public DbSet<TEntity> Table=>_context.Set<TEntity>();
 
-	public IEnumerable<TEntity> GetAll() =>  Table.Where(Table=>Table.IsDeleted != true);
+	public async Task<IEnumerable<TEntity>> GetAllAsync() => await Table.Where(Table=>Table.IsDeleted != true).ToListAsync();
 
 	public async Task<TEntity> GetByIdAsync(string id) => await Table.FirstOrDefaultAsync(T => T.Id==Guid.Parse(id) && T.IsDeleted!=true);
 

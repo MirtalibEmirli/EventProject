@@ -72,11 +72,11 @@ public class WriteRepository<TEntity>(AppDbContext context) : IWriteRepository<T
 		return false;
 	}
 
-	public async Task<bool> UpdateAsync(TEntity entity)
+	public  bool Update(TEntity entity)
 	{
-		var result=await UpdateAsync(entity);
+		var result= Table.Update(entity);
 		entity.UpdatedDate= DateTime.Now;	
-		return result;
+		return result.State==EntityState.Modified;
 	}
 
 	

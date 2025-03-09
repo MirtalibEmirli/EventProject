@@ -9,7 +9,7 @@ public interface IWriteRepository<T>:IRepository<T> where T : BaseEntity
 	Task<bool> SoftDeleteAsync(string id);//cqrs
  	//bool Delete(T Entity);
 	bool DeleteRange(IEnumerable<T> entities);
-	Task<bool> UpdateAsync(T entity);
+	bool Update(T entity);
 	Task<int> SaveChangesAsync();
 
 }

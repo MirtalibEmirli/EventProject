@@ -20,14 +20,20 @@ public class UpdateEventCategoryHandler(IEventCategoryWriteRepository eventCateg
 
 
 		var entity= await _eventCategoryReadRepository.GetByIdAsync(request.Id);
-		if (entity is not null)
+		if (entity is null)
 		{
-			entity.CategoryName = request.CategoryName;
-			entity.Description = request.Description;
+			return new ResponseModel<UpdateEventCategoryResponse>()
+			{
+				Data=null,
+				Message="Entity is null",
+				IsSuccess=false
+			};
 		}
-		else return new ResponseModel<UpdateEventCategoryResponse>() { Data=null, Message="Entity is null",IsSuccess=false };
+	     
+		entity.CategoryName=request.CategoryName;
+		entity.Description=request.Description;
 
-		await _eventCategoryWriteRepository.UpdateAsync(entity);
+		 _eventCategoryWriteRepository.Update(entity);
 		await _eventCategoryWriteRepository.SaveChangesAsync();
 
 		return new ResponseModel<UpdateEventCategoryResponse>() { Data=null,Message="Successfuly Update" };

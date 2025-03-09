@@ -1,3 +1,4 @@
+using EventProject.Api.Middlewares;
 using EventProject.Application;
 using EventProject.Persistence;
 
@@ -26,5 +27,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+app.UseMiddleware<ExceptionHandlerMiddleware>();
+
 
 app.Run();

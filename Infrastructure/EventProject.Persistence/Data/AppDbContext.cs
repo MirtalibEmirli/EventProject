@@ -19,7 +19,7 @@ public class AppDbContext : DbContext
 
     public DbSet<Payment> Payments { get; set; }
 
-    public DbSet<Comment> Comments { get; set; }
+    public DbSet<Image> Images { get; set; }
 
     public DbSet<Notification> Notifications { get; set; }
 

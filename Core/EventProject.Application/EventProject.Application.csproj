@@ -26,4 +26,9 @@
     <ProjectReference Include="..\EventProject.Domain\EventProject.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Commands\EventCommands\" />
+    <Folder Include="Features\Queries\EeventQueries\" />
+  </ItemGroup>
+
 </Project>

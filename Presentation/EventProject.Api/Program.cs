@@ -1,5 +1,6 @@
 ﻿using EventProject.Api.Middlewares;
 using EventProject.Application;
+using EventProject.Application.Settings;
 using EventProject.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,10 +12,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddPersistence(builder.Configuration);
-builder.Services.AddApplicationServices();
+builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>
     policy.WithOrigins("http://localhost:5177", "https://localhost:5177").AllowAnyHeader().AllowAnyMethod().AllowCredentials()
 ));
+
+
+
+
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 

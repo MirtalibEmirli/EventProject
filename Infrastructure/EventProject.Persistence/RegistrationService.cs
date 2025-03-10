@@ -12,7 +12,7 @@ public static class RegistrationService
 
     public static IServiceCollection AddPersistence(this IServiceCollection services, IConfigurationManager config)
     {
-        services.AddDbContext<AppDbContext>(opt =>   opt.UseSqlServer(config.GetConnectionString("Default")));
+        services.AddDbContext<AppDbContext>(opt =>   opt.UseSqlServer(config.GetConnectionString("DefaultConnection")));
 
         services.AddScoped<IEventCategoryWriteRepository, EventCategoryWriteRepository > ();
 		services.AddScoped<IEventCategoryReadRepository, EventCategoryReadRepository>();

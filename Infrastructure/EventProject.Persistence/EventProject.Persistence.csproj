@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="UnitOfWork\**" />
+    <EmbeddedResource Remove="UnitOfWork\**" />
+    <None Remove="UnitOfWork\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
       <PrivateAssets>all</PrivateAssets>
@@ -21,10 +27,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\EventProject.Application\EventProject.Application.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="UnitOfWork\" />
   </ItemGroup>
 
 </Project>

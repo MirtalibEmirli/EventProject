@@ -16,7 +16,10 @@ public class Event:BaseEntity
 
     public decimal Price { get; set; } = 0;
 
-   
+    public  List<string> ImageUrls { get; set; }
+
+    public  List<string> VideoUrls { get; set; }
+
 
     public string Status { get; set; } = "Active"; // Active, Canceled, Past
 

@@ -1,4 +1,7 @@
-﻿namespace EventProject.Domain.Entities;
+﻿using static System.Net.Mime.MediaTypeNames;
+using System.Data.Common;
+
+namespace EventProject.Domain.Entities;
 
 public abstract class BaseEntity
 {
@@ -13,5 +16,12 @@ public abstract class BaseEntity
 
     public bool? IsDeleted { get; set;}=false;
 
-
 }
+
+//var sql = @"INSERT INTO Images (FileName, Location, CreatedAt) 
+//                    VALUES (@FileName, @Location, @CreatedAt);
+//                    SELECT CAST(SCOPE_IDENTITY() as int);"
+//;
+
+//var _connection = OpenConnection();
+//        return await _connection.ExecuteScalarAsync<int>(sql, image);

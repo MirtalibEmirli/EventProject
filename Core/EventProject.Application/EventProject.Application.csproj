@@ -27,8 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Commands\EventCommands\" />
-    <Folder Include="Features\Queries\EeventQueries\" />
+    <Folder Include="Features\Queries\EventQueries\" />
   </ItemGroup>
 
 </Project>

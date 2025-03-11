@@ -38,10 +38,10 @@ public class EventCategoryHandler(IMediator sender) : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll([FromQuery] GetAllEventCategoriesRequest request)
     {
 
-        var response = await _mediator.Send(new GetAllEventCategoriesRequest());
+        var response = await _mediator.Send(request);
         return Ok(response);
     }
 

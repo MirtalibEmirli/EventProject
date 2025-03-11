@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using EventProject.Application.DTOs;
 using EventProject.Application.Features.Commands.EventCategoryCommands.CreateEventCategory;
 using EventProject.Domain.Entities;
 
@@ -10,6 +11,9 @@ public class MappingProfile:Profile
     public MappingProfile()
     {
         CreateMap<Category,CreateEventCategoryRequest>().ReverseMap();
-        CreateMap<CreateEventCategoryResponse,Category>().ReverseMap().ForMember(dest=>dest.CategoryId,opt=>opt.MapFrom(src=>src.Id.ToString()));    
+
+        CreateMap<CreateEventCategoryResponse,Category>().ReverseMap().ForMember(dest=>dest.CategoryId,opt=>opt.MapFrom(src=>src.Id.ToString()));  
+        
+        CreateMap<GetAllCategories,Category>().ReverseMap();
     }
 }

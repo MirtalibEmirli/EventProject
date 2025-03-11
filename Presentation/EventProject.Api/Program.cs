@@ -1,7 +1,9 @@
 ﻿using EventProject.Api.Middlewares;
 using EventProject.Application;
+using EventProject.Application.Services;
 using EventProject.Application.Settings;
 using EventProject.Persistence;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +14,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddPersistence(builder.Configuration);
-builder.Services.AddApplicationServices(builder.Configuration);
+builder.Services.AddApplicationServices();
 builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>
     policy.WithOrigins("http://localhost:5177", "https://localhost:5177").AllowAnyHeader().AllowAnyMethod().AllowCredentials()
 ));
@@ -23,9 +25,11 @@ builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
-
-
-
+#region cloudinary services
+builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
+builder.Services.AddSingleton(sp => sp.GetRequiredService<IOptions<CloudinarySettings>>().Value);
+builder.Services.AddScoped<CloudinaryService>();
+#endregion
 
 var app = builder.Build();
 app.UseCors();

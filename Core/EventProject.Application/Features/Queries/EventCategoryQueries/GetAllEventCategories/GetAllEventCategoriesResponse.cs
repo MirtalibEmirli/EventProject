@@ -9,6 +9,7 @@ namespace EventProject.Application.Features.Queries.EventCategoryQueries.GetAllE
 
 public class GetAllEventCategoriesResponse
 {
-   public IEnumerable<GetAllCategories> NamesCategories { get; set; }
-
+    //public IEnumerable<GetAllCategories> NamesCategories { get; set; }
+    public string Name { get; set; }
+    public string? Description { get; set; }
 }

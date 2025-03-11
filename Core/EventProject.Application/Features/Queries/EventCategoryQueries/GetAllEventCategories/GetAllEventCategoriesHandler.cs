@@ -1,4 +1,6 @@
-﻿using EventProject.Application.DTOs;
+﻿using AutoMapper;
+using EventProject.Application.DTOs;
+using EventProject.Application.Exceptions;
 using EventProject.Application.Repositories.EventCategories;
 using EventProject.Application.ResponseModels.Generics;
 using EventProject.Domain.Entities;
@@ -11,33 +13,42 @@ using System.Threading.Tasks;
 
 namespace EventProject.Application.Features.Queries.EventCategoryQueries.GetAllEventCategories;
 
-public class GetAllEventCategoriesHandler(IEventCategoryReadRepository eventCategoryReadRepository) :IRequestHandler<GetAllEventCategoriesRequest, ResponseModel<GetAllEventCategoriesResponse>>
+public class GetAllEventCategoriesHandler(IEventCategoryReadRepository eventCategoryReadRepository,IMapper mapper) :IRequestHandler<GetAllEventCategoriesRequest, ResponseModelPagination<GetAllCategories>>
 {
 
 	private readonly IEventCategoryReadRepository _eventCategoryReadRepository = eventCategoryReadRepository;
-	   
-	public async Task<ResponseModel<GetAllEventCategoriesResponse>> Handle(GetAllEventCategoriesRequest request, CancellationToken cancellationToken)
+	   private readonly IMapper _mapper=mapper;
+	public async Task<ResponseModelPagination<GetAllCategories>> Handle(GetAllEventCategoriesRequest request, CancellationToken cancellationToken)
 	{
 		var categories = await  _eventCategoryReadRepository.GetAllAsync();
-		if (categories is null) return  new ResponseModel<GetAllEventCategoriesResponse>
+		if (categories is null) throw new BadRequestException("Request is null ,Try again");
+		var totalCount = categories.Count();
+		categories = categories.Skip((request.Page - 1) * (request.Limit)).ToList();
+
+		var itemsToMap = new List<GetAllCategories>();//bunu dto   eddim response qalsn
+
+		foreach (var item in categories)
 		{
-			Data=null,
-			Message="Categories is null",
-			IsSuccess=false
+			var data = _mapper.Map<GetAllCategories>(item);			
+
+			itemsToMap.Add(data);
+        }
+
+		var responseModel = new Pagination<GetAllCategories>() { Items=itemsToMap,TotalCount= totalCount };
+
+		return   new ResponseModelPagination<GetAllCategories>()
+		{
+			Data = responseModel,
+			IsSuccess = true,
+			Message="GetAllCategories"
 		};
 
-		var categoryList = categories.Select(c => new GetAllCategories
-		{
-			Name=c.CategoryName
-		});
+		//var categoryList = categories.Select(c => new GetAllCategories
+		//{
+		//	Name=c.CategoryName
+		//});
 
-		return new ResponseModel<GetAllEventCategoriesResponse>()
-		{ 
-		   Data=new GetAllEventCategoriesResponse() {
-			 NamesCategories=categoryList
-		   },
-		   Message="Get All Categories Successfully"
-		};
+		 
 
 
 

@@ -6,7 +6,7 @@ using Microsoft.Extensions.Options;
 using System;
 using System.IO;
 using System.Threading.Tasks;
-
+namespace EventProject.Application.Services;
 public class CloudinaryService
 {
     private readonly Cloudinary _cloudinary;

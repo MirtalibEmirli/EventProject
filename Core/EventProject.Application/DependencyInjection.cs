@@ -6,13 +6,14 @@ using EventProject.Application.Settings;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using System.Reflection;
 
 namespace EventProject.Application
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddApplicationServices(this IServiceCollection services,IConfiguration configuration)
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services )
         {
 
             ///aoutomapper injection
@@ -29,11 +30,8 @@ namespace EventProject.Application
 
             services.AddMediatR(Assembly.GetExecutingAssembly());   //bunu bilmirem menasi nedir niye asssemblye muraciet gedr yeqin mediatr a harda isleyeceyini deyir dusunurem afro
 
+             
 
-
-            //cloudinary services
-            services.Configure<CloudinarySettings>(configuration.GetSection("CloudinarySettings").Get<CloudinarySettings>());
-            services.AddScoped<CloudinaryService>();
             return services;
         }
 

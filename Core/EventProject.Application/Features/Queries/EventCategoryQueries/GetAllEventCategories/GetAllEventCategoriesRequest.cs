@@ -1,13 +1,12 @@
-﻿using EventProject.Application.ResponseModels.Generics;
+﻿using EventProject.Application.DTOs;
+using EventProject.Application.ResponseModels.Generics;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EventProject.Application.Features.Queries.EventCategoryQueries.GetAllEventCategories;
 
-public class GetAllEventCategoriesRequest:IRequest<ResponseModel<GetAllEventCategoriesResponse>>
+public class GetAllEventCategoriesRequest:IRequest<ResponseModelPagination<GetAllCategories>>
 {
+
+    public int Page { get; set; } = 1;
+    public int Limit { get; set; } = 5;
 }

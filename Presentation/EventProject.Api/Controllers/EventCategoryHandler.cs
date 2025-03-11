@@ -1,13 +1,10 @@
-﻿using EventProject.Application.DTOs;
-using EventProject.Application.Features.Commands.EventCategoryCommands.CreateEventCategory;
+﻿using EventProject.Application.Features.Commands.EventCategoryCommands.CreateEventCategory;
 using EventProject.Application.Features.Commands.EventCategoryCommands.DeleteEventCategory;
 using EventProject.Application.Features.Commands.EventCategoryCommands.UpdateEventCategory;
 using EventProject.Application.Features.Queries.EventCategoryQueries.GetAllEventCategories;
 using EventProject.Application.Features.Queries.EventCategoryQueries.GetEventCategoryById;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace EventProject.Api.Controllers;
 
@@ -19,6 +16,7 @@ public class EventCategoryHandler(IMediator sender) : ControllerBase
     readonly IMediator _mediator = sender;
 
     [HttpPost]
+    //butun add requestleri [FromForm] edmeliyik
     public async Task<IActionResult> CreateEventCategory(CreateEventCategoryRequest request)
     {
         return Ok(await sender.Send(request));

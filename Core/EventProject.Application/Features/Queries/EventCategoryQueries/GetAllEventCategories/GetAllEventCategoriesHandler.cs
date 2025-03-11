@@ -43,15 +43,6 @@ public class GetAllEventCategoriesHandler(IEventCategoryReadRepository eventCate
 			Message="GetAllCategories"
 		};
 
-		//var categoryList = categories.Select(c => new GetAllCategories
-		//{
-		//	Name=c.CategoryName
-		//});
-
-		 
-
-
-
 
 	}
 

@@ -11,6 +11,7 @@ public class Ticket:BaseEntity
     public User User { get; set; } = null!;
 
     public decimal Price { get; set; }
+    //burda imaURL olmalidir 
 
     public string SeatNumber { get; set; } = string.Empty;
 

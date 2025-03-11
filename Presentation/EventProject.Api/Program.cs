@@ -1,6 +1,6 @@
 ﻿using EventProject.Api.Middlewares;
 using EventProject.Application;
-using EventProject.Application.Services;
+using EventProject.Application.Services.Cloudinary;
 using EventProject.Application.Settings;
 using EventProject.Persistence;
 using Microsoft.Extensions.Options;

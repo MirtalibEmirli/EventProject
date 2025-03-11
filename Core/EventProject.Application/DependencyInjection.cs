@@ -1,8 +1,10 @@
-﻿using AutoMapper;
+﻿using Application.PipelineBehavior;
+using AutoMapper;
 using EventProject.Application.AutoMapper;
 using EventProject.Application.Repositories.EventCategories;
 using EventProject.Application.Services;
 using EventProject.Application.Settings;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,7 +32,10 @@ namespace EventProject.Application
 
             services.AddMediatR(Assembly.GetExecutingAssembly());   //bunu bilmirem menasi nedir niye asssemblye muraciet gedr yeqin mediatr a harda isleyeceyini deyir dusunurem afro
 
-             
+            //fluent validation
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            //pipelinebehavior
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
 
             return services;
         }

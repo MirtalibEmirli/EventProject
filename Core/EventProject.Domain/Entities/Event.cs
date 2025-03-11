@@ -16,9 +16,9 @@ public class Event:BaseEntity
 
     public decimal Price { get; set; } = 0;
 
-    public  List<string>? ImageUrls { get; set; }
+    public string? ImageUrl { get; set; }
 
-    public  List<string>? VideoUrls { get; set; }
+    public  string? VideoUrl { get; set; }
 
 
     public string Status { get; set; } = "Active"; // Active, Canceled, Past
@@ -34,4 +34,5 @@ public class Event:BaseEntity
     public List<Ticket> Tickets { get; set; } = new();
     public List<Comment> Comments { get; set; } = new();
     public List<Payment> Payments { get; set; } = new();
+    public List<Media> MediaFiles { get; set; } = new(); //sekil ve videolar ile elaqelendirek
 }

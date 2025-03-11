@@ -21,41 +21,35 @@ public class CloudinaryService
         _cloudinary = new Cloudinary(account);
     }
 
-
-    public async Task<string> UploadImageAsync(IFormFile file)
+ 
+    public async Task<string?> UploadImageAsync(IFormFile file)
     {
-        if (file.Length > 0)
+        if (file.Length <= 0) return null;
+
+        await using var stream = file.OpenReadStream();
+        var uploadParams = new ImageUploadParams
         {
-            await using var stream = file.OpenReadStream();
-            var uploadParams = new ImageUploadParams
-            {
-                File = new FileDescription(file.FileName, stream),
-                Transformation = new Transformation().Width(500).Height(500).Crop("fill")
-            };
+            File = new FileDescription(file.FileName, stream),
+            Transformation = new Transformation().Width(500).Height(500).Crop("fill")
+        };
 
-            var uploadResult = await _cloudinary.UploadAsync(uploadParams);
-            return uploadResult.SecureUrl.AbsoluteUri;
-        }
-
-        return null;
+        var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+        return uploadResult.SecureUrl.AbsoluteUri;
     }
 
-
-    public async Task<string> UploadVideoAsync(IFormFile file)
+    public async Task<string?> UploadVideoAsync(IFormFile file)
     {
-        if (file.Length > 0)
+        if (file.Length <= 0) return null;
+
+        await using var stream = file.OpenReadStream();
+        var uploadParams = new VideoUploadParams
         {
-            await using var stream = file.OpenReadStream();
-            var uploadParams = new VideoUploadParams
-            {
-                File = new FileDescription(file.FileName, stream),
-                Transformation = new Transformation().Width(720).Height(480).Crop("fill") // Video üçün   parametrlər bunu reacta baxib desyiseruk gorek , eger olcu sohbeti necede
-            };
+            File = new FileDescription(file.FileName, stream),
+            Transformation = new Transformation().Width(720).Height(480).Crop("fill")
+        };
 
-            var uploadResult = await _cloudinary.UploadAsync(uploadParams);
-            return uploadResult.SecureUrl.AbsoluteUri;
-        }
-
-        return null;
+        var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+        return uploadResult.SecureUrl.AbsoluteUri;
     }
+     
 }

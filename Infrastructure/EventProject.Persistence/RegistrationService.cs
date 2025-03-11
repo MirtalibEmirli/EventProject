@@ -1,6 +1,10 @@
 ﻿using EventProject.Application.Repositories.EventCategories;
+using EventProject.Application.Repositories.Events;
+using EventProject.Application.Repositories.Medias;
 using EventProject.Persistence.Data;
 using EventProject.Persistence.Repository.EventCategories;
+using EventProject.Persistence.Repository.Events;
+using EventProject.Persistence.Repository.Medias;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +20,8 @@ public static class RegistrationService
 
         services.AddScoped<IEventCategoryWriteRepository, EventCategoryWriteRepository > ();
 		services.AddScoped<IEventCategoryReadRepository, EventCategoryReadRepository>();
+        services.AddScoped<IEventWriteRepository, EventWriteRepository>();
+        services.AddScoped<IMediaRepository, MediaRepository>();
 		return services;
     }
 }

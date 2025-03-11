@@ -16,11 +16,6 @@ public class Event:BaseEntity
 
     public decimal Price { get; set; } = 0;
 
-    public string? ImageUrl { get; set; }
-
-    public  string? VideoUrl { get; set; }
-
-
     public string Status { get; set; } = "Active"; // Active, Canceled, Past
 
     //// Foreign Keys

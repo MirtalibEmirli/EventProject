@@ -2,6 +2,5 @@
 
 public class CreateEventResponse
 {
-
-
+    public required string EventId { get; set; }
 }

@@ -22,8 +22,9 @@ public class Event:BaseEntity
     public Guid CategoryId { get; set; }
     public Category Category { get; set; } = null!;
 
-    public Guid OrganizerId { get; set; }
+    public Guid OrganizerId { get; set; }= Guid.Parse("6d4b5992-47d4-4a33-9470-57556a455f58");
     public User Organizer { get; set; } = null!;
+     
 
     //// Relations
     public List<Ticket> Tickets { get; set; } = new();

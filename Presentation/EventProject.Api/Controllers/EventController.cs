@@ -17,3 +17,4 @@ public class EventController(IMediator sender) : ControllerBase
        return Ok(await _sender.Send(request));  
     }
 }
+

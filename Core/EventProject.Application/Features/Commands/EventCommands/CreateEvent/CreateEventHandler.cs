@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EventProject.Application.Features.Commands.EventCommands.CreateEvent;
 
-public class CreateEventHandler(IEventWriteRepository eventWrite, IMapper mapper, IEventCategoryReadRepository eventCategoryRead, CloudinaryService cloudinaryService,IMediaRepository mediaRepository) : IRequestHandler<CreateEventRequest, ResponseModel<CreateEventResponse>>
+public class CreateEventHandler(IEventWriteRepository eventWrite, IMapper mapper, IEventCategoryReadRepository eventCategoryRead, CloudinaryService cloudinaryService, IMediaRepository mediaRepository) : IRequestHandler<CreateEventRequest, ResponseModel<CreateEventResponse>>
 {
     private readonly CloudinaryService _cloudinaryService = cloudinaryService;
     private readonly IEventWriteRepository eventWriteRepository = eventWrite;
@@ -24,7 +24,7 @@ public class CreateEventHandler(IEventWriteRepository eventWrite, IMapper mapper
 
         var selectedCategory = categories.FirstOrDefault(c => c.CategoryName == request.CategoryName);
         if (selectedCategory == null)
-            throw new BadRequestException($"Yhere is no category with {selectedCategory?.CategoryName} in database");
+            throw new BadRequestException($"There is no category with {selectedCategory?.CategoryName} in database");
 
 
 
@@ -33,7 +33,12 @@ public class CreateEventHandler(IEventWriteRepository eventWrite, IMapper mapper
         eventEntity.CategoryId = selectedCategory.Id;
 
         await eventWriteRepository.AddAsync(eventEntity);
+
+
         await eventWriteRepository.SaveChangesAsync();
+
+
+
 
 
         foreach (var media in request.Medias)
@@ -41,7 +46,7 @@ public class CreateEventHandler(IEventWriteRepository eventWrite, IMapper mapper
 
             var extension = Path.GetExtension(media.FileName).ToLowerInvariant();
             var url = string.Empty;
-            if (extension == ".img" || extension == ".jpg" || extension == ".jpeg")
+            if (extension == ".img"||extension==".png" || extension == ".jpg" || extension == ".jpeg")
             {
                 url = await _cloudinaryService.UploadImageAsync(media);
 
@@ -60,7 +65,7 @@ public class CreateEventHandler(IEventWriteRepository eventWrite, IMapper mapper
                 EventId = eventEntity.Id,
                 MediaType = extension,
             };
-           await mediaRepository.AddAsync(mediaToDb);
+            await mediaRepository.AddAsync(mediaToDb);
         }
         await mediaRepository.SaveAsync();
 
@@ -77,5 +82,8 @@ public class CreateEventHandler(IEventWriteRepository eventWrite, IMapper mapper
             ,
             Message = "Event created successfully with media files."
         };
+
     }
+
+
 }

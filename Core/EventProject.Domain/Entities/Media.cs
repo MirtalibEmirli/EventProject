@@ -1,4 +1,4 @@
-﻿
+﻿ 
 namespace EventProject.Domain.Entities
 {
     public class Media

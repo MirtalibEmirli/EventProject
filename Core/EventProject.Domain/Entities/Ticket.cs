@@ -1,4 +1,6 @@
-﻿namespace EventProject.Domain.Entities;
+﻿using EventProject.Domain.Enums;
+
+namespace EventProject.Domain.Entities;
 
 public class Ticket:BaseEntity
 {
@@ -6,19 +8,23 @@ public class Ticket:BaseEntity
 
     public Event Event { get; set; } = null!;
 
+    public Guid? SeatId { get; set; }
+    public Seat? Seat { get; set; }
+
+    public Guid? StandingZoneId { get; set; }
+    public StandingZone? StandingZone { get; set; }
+
     public Guid UserId { get; set; }
-
-
     public User User { get; set; } = null!;
 
+
     public decimal Price { get; set; }
-    //burda imaURL olmalidir 
 
-    public string SeatNumber { get; set; } = string.Empty;
+    public DateTime PurchaseDate { get; set; } //alinma tarixi
 
-    public bool IsPaid { get; set; } = false;
-    //isentered
+    public TicketStatus Status { get; set; }
+   
 
-    public DateTime PurchaseDate { get; set; } = DateTime.UtcNow;
+
 
 }

@@ -14,5 +14,5 @@ public class Comment:BaseEntity
 
     public int Rating { get; set; } // 1-5 ulduz
 
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    
 }

@@ -24,6 +24,7 @@ public class CreateEventRequest : IRequest<ResponseModel<CreateEventResponse>>
     public float MaxPrice { get; set; } = 0;
     public float MinPrice { get; set; }
 
+   public IFormFileCollection ? Files { get; set; }
 
   
 

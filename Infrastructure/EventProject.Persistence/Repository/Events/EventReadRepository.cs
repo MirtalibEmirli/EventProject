@@ -10,5 +10,6 @@ public class EventReadRepository : ReadRepository<Event>, IEventReadRepository
 {
 	public EventReadRepository(AppDbContext context) : base(context)
 	{
+
 	}
 }

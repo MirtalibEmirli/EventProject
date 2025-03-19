@@ -29,7 +29,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Commands\EventCommands\" />
     <Folder Include="Features\Queries\EventQueries\GetEventById\" />
     <Folder Include="Features\Queries\EventQueries\GetAllEvents\" />
   </ItemGroup>

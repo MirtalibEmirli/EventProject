@@ -16,7 +16,7 @@ public class MappingProfile:Profile
         CreateMap<CreateEventCategoryResponse,Category>().ReverseMap().ForMember(dest=>dest.CategoryId,opt=>opt.MapFrom(src=>src.Id.ToString()));
 
 
-        CreateMap<CreateEventRequest, Event>();
+        //CreateMap<CreateEventRequest, Event>();
         CreateMap<GetAllCategories,Category>().ReverseMap();
     }
 }

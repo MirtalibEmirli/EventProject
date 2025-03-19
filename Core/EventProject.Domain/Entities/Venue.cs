@@ -9,6 +9,7 @@ public class Venue:BaseEntity
     public double Latitude { get; set; }
     public double Longitude { get; set; }
 
+    public ICollection<VenueImageFile> VenueImages { get; set; }
 
     //qeyd-> sekil olmali
 

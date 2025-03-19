@@ -15,13 +15,12 @@ public class User : BaseEntity
 
     public Role Role { get; set; }  // Admin, User, EventManager
 
-    public string? ProfilePicture { get; set; }
+    public Guid? ProfilePictureId { get; set; }
+    public UserMediaFile? ProfilePicture { get; set; } = null!;
 
-
-
-    public List<Event> OrganizedEvents { get; set; } = new();
-    public List<Ticket> Tickets { get; set; } = new();
-    public List<Comment> Comments { get; set; } = new();
-    public List<Payment> Payments { get; set; } = new();
+    public ICollection<Event> OrganizedEvents { get; set; } 
+    public ICollection<Ticket> Tickets { get; set; } 
+    public ICollection<Comment> Comments { get; set; } 
+    public ICollection<Payment> Payments { get; set; }
 
 }

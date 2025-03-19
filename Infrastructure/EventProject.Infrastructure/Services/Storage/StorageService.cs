@@ -1,5 +1,4 @@
 ﻿
-
 using EventProject.Application.Abstractions.Storage;
 using Microsoft.AspNetCore.Http;
 

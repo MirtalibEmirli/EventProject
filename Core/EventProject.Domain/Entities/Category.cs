@@ -6,6 +6,6 @@ public class Category:BaseEntity
 
     public string? Description { get; set; }
     
-    //// Relations
-    //public List<Event> Events { get; set; } = new();
+   
+    public ICollection<Event> Events { get; set; }
 }

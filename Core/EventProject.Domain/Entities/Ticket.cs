@@ -18,7 +18,7 @@ public class Ticket:BaseEntity
     public User User { get; set; } = null!;
 
 
-    public decimal Price { get; set; }
+    public float Price { get; set; }
 
     public DateTime PurchaseDate { get; set; } //alinma tarixi
 

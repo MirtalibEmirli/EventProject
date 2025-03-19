@@ -9,7 +9,7 @@ public class Payment:BaseEntity
     public Guid EventId { get; set; }
     public Event Event { get; set; } = null!;
 
-    public decimal Amount { get; set; }
+    public float Amount { get; set; }
 
     public string PaymentStatus { get; set; } = "Pending"; // Pending, Completed, Failed
 

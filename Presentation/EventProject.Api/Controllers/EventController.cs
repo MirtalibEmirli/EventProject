@@ -11,10 +11,5 @@ public class EventController(IMediator sender) : ControllerBase
 {
       readonly IMediator _sender =sender;
 
-    [HttpPost]
-   public async Task<IActionResult> CreateEvent([FromForm] CreateEventRequest request)
-    {
-       return Ok(await _sender.Send(request));  
-    }
 }
 

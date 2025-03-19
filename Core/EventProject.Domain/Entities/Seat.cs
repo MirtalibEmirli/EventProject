@@ -1,9 +1,11 @@
 ﻿namespace EventProject.Domain.Entities;
 
+//venue -seat  one-many  
+
 public  class Seat:BaseEntity
 {
     public string Section { get; set; } = null!;
-    public string Row { get; set; } = null!;
+    public int Row { get; set; } 
     public int Number { get; set; }
     public bool IsBooked { get; set; } = false;
 

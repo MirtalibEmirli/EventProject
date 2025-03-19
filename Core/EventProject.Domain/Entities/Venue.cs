@@ -1,5 +1,7 @@
 ﻿namespace EventProject.Domain.Entities;
 
+
+//venue-seat =>
 public class Venue:BaseEntity
 {
     public string Name { get; set; } = null!;

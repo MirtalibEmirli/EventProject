@@ -2,6 +2,8 @@
 using EventProject.Application;
 using EventProject.Application.Services.CloudinaryServices;
 using EventProject.Application.Settings;
+using EventProject.Infrastructure;
+using EventProject.Infrastructure.Services.Storage.Azure;
 using EventProject.Persistence;
 using Microsoft.Extensions.Options;
 
@@ -15,6 +17,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddApplicationServices();
+builder.Services.AddStorage<AzureStorage>();
 builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>
     policy.WithOrigins("http://localhost:5177", "https://localhost:5177").AllowAnyHeader().AllowAnyMethod().AllowCredentials()
 ));

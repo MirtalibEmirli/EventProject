@@ -9,6 +9,12 @@ public  class Seat:BaseEntity
     public int Number { get; set; }
     public bool IsBooked { get; set; } = false;
 
+    public float? X { get; set; }     // 3D koordinat
+    public float? Y { get; set; }     // 3D koordinat
+    public float? Z { get; set; }     // 3D koordinat
+
+    public float? RotationY { get; set; }
+
     public Guid VenueId { get; set; }
     public Venue Venue { get; set; }
 

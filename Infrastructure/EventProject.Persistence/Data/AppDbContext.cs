@@ -6,21 +6,22 @@ using File = EventProject.Domain.Entities.File;
 namespace EventProject.Persistence.Data;
 public class AppDbContext : DbContext
 {
-    public DbSet<Event> Events { get; set; }
-    public DbSet<Category> Categories { get; set; }
     public DbSet<Venue> Venues { get; set; }
-    public DbSet<Ticket> Tickets { get; set; }
-    public DbSet<Comment> Comments { get; set; }
-    public DbSet<Payment> Payments { get; set; }
-    public DbSet<EventMediaFile> EventMediaFiles { get; set; }
-    public DbSet<User> Users { get; set; }
     public DbSet<Seat> Seats { get; set; }
+    public DbSet<Event> Events { get; set; }
+    public DbSet<Ticket> Tickets { get; set; }
+    public DbSet<EventSeatPrice> EventSeatPrices { get; set; }
+    public DbSet<SectionWeight> SectionWeights { get; set; }
+    public DbSet<Category> Categories { get; set; }
+    public DbSet<Payment> Payments { get; set; }
+    public DbSet<Notification> Notifications { get; set; }
+    public DbSet<Comment> Comments { get; set; }
     public DbSet<StandingZone> StandingZones { get; set; }
+    public DbSet<User> Users { get; set; }
     public DbSet<File> Files { get; set; }
     public DbSet<UserMediaFile> UserMediaFiles { get; set; }
+    public DbSet<EventMediaFile> EventMediaFiles { get; set; }
     public DbSet<VenueImageFile> VenueImageFiles { get; set; }
-    public DbSet<Notification> Notifications { get; set; }
-
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

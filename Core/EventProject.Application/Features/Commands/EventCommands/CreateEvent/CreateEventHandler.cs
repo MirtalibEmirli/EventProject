@@ -1,23 +1,54 @@
-﻿using EventProject.Application.Abstractions.Storage;
+﻿using EventProject.Application.Repositories.EventCategories;
+using EventProject.Application.Repositories.Events;
+using EventProject.Application.Repositories.Venues;
 using EventProject.Application.ResponseModels.Generics;
 using MediatR;
-using MediatR.Pipeline;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EventProject.Application.Features.Commands.EventCommands.CreateEvent;
 
-public class CreateEventHandler() : IRequestHandler<CreateEventRequest, ResponseModel<CreateEventResponse>>
+public class CreateEventHandler : IRequestHandler<CreateEventRequest, ResponseModel<Guid>>
 {
-    
-    public async  Task<ResponseModel<CreateEventResponse>> Handle(CreateEventRequest request, CancellationToken cancellationToken)
+    private readonly IEventWriteRepository _eventWriteRepository;
+    private readonly IEventCategoryReadRepository _eventCategoryReadRepository;
+    private readonly IVenueReadRepository _venueReadRepository;
 
+    public CreateEventHandler(IEventCategoryReadRepository eventCategoryReadRepository, IVenueReadRepository venueReadRepository, IEventWriteRepository eventWriteRepository)
     {
-        //sekil elave edmek burda olmayacaq ayri endpointde olacaq amma eventcontrollerin icersinde
+        _eventCategoryReadRepository = eventCategoryReadRepository;
+        _venueReadRepository = venueReadRepository;
+        _eventWriteRepository = eventWriteRepository;
+    }
 
-        throw new NotImplementedException();
+    public async Task<ResponseModel<Guid>> Handle(CreateEventRequest request, CancellationToken cancellationToken)
+    {
+
+
+        var categoryExists = await _eventCategoryReadRepository.GetByIdAsync(request.CategoryId.ToString());
+        var locationExists= await _venueReadRepository.GetByIdAsync(request.LocationId.ToString());
+        if (categoryExists is null) return new ResponseModel<Guid>(new List<string> {"Category tapilmir" });
+        if (categoryExists is null) return new ResponseModel<Guid>(new List<string> { "Venue tapilmir" });
+
+        var newEvent = new Event
+        {
+            Title = request.Title,
+            Description = request.Description,
+            StartTime = request.StartTime,
+            EndTime = request.EndTime,
+            AgeLimit = request.AgeLimit,
+            LocationId = request.LocationId,
+            MinPrice = request.MinPrice,
+            MaxPrice = request.MaxPrice,
+            Status = request.Status,
+            CategoryId = request.CategoryId,
+            CreatedDate = DateTime.Now
+            
+        };
+
+       await _eventWriteRepository.AddAsync(newEvent);
+        await _eventWriteRepository.SaveChangesAsync();
+
+
+        return new ResponseModel<Guid> {  IsSuccess =true,Data = newEvent.Id};
+
     }
 }

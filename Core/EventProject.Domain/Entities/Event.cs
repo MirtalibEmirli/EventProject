@@ -12,7 +12,8 @@ public class Event:BaseEntity
     public int AgeLimit { get; set; }
     public DateTime EndTime { get; set; }
 
-    public Venue Location { get; set; } = null!;
+    public Guid LocationId { get; set; }
+    public virtual Venue Location { get; set; } = null!;
 
     public float MinPrice { get; set; }
     public float MaxPrice { get; set; }
@@ -24,7 +25,9 @@ public class Event:BaseEntity
     public Category Category { get; set; } = null!;
 
 
-     
+ 
+   
+
 
     //// Relations
     public ICollection<Ticket> Tickets { get; set; } 

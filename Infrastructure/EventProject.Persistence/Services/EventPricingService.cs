@@ -42,11 +42,11 @@ public class EventPricingService(ISeatReadRepository seatReadRepository, ISeatWr
                 SeatId = seat.Id,
                 Price = price
             });
-            await _eventSeatPriceWriteRepository.AddRangeAsync(eventSeatPrices);
-            await _eventSeatPriceWriteRepository.SaveChangesAsync();
+           
         }
 
 
-     
+        await _eventSeatPriceWriteRepository.AddRangeAsync(eventSeatPrices);
+        await _eventSeatPriceWriteRepository.SaveChangesAsync();
     }
 }

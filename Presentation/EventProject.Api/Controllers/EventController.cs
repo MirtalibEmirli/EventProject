@@ -6,28 +6,26 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EventProject.Api.Controllers;
 
-[Route("api/[controller]")]
 [ApiController]
-public class EventController(IMediator sender) : ControllerBase
+[Route("api/[controller]")]
+public class EventController : ControllerBase
 {
-    readonly IMediator _sender = sender;
+    private readonly IMediator _mediator;
 
-    [HttpPost]
-
-    public async Task<IActionResult> AddEvent(CreateEventRequest request)
+    public EventController(IMediator mediator)
     {
-        return Ok(await _sender.Send(request));
+        _mediator = mediator;
     }
 
-    //[HttpPost("[action]")]
-    //[Authorize(AuthenticationSchemes = "Admin")]
-    //[AuthorizeDefinition(Menu = AuthorizeDefinitionConstants.Products, ActionType = ActionType.Writing, Definition = "Upload Product File")]
-    //public async Task<IActionResult> Upload([FromQuery] UploadProductImageCommandRequest uploadProductImageCommandRequest)
-    //{
-    //    uploadProductImageCommandRequest.Files = Request.Form.Files;
-    //    UploadProductImageCommandResponse response = await _mediator.Send(uploadProductImageCommandRequest);
-    //    return Ok();
-    //}
+    [HttpPost("create")]
+    public async Task<IActionResult> Create([FromBody] CreateEventRequest request)
+    {
+        var result = await _mediator.Send(request);
+        if (!result.IsSuccess)
+            return BadRequest(result);
 
+        return Ok(result);
+    }
 }
+
 

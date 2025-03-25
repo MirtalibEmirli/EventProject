@@ -2,6 +2,7 @@
 using EventProject.Domain.Entities;
 using EventProject.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Identity.Client;
 
 namespace EventProject.Persistence.Repository.Generics;
@@ -58,9 +59,14 @@ public class WriteRepository<TEntity>(AppDbContext context) : IWriteRepository<T
 
 	}
 
-	public Task<int> SaveChangesAsync()=>context.SaveChangesAsync();
+	public Task<int> SaveChangesAsync()=> context.SaveChangesAsync();
 
-	public async Task<bool> SoftDeleteAsync(string id)
+
+
+
+
+
+    public async Task<bool> SoftDeleteAsync(string id)
 	{
 		var entity = await Table.FirstOrDefaultAsync(e => e.Id==Guid.Parse(id));
 		if(entity is not null)

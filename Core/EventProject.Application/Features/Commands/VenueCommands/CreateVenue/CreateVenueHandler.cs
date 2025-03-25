@@ -25,6 +25,7 @@ public class CreateVenueHandler : IRequestHandler<CreateVenueRequest, ResponseMo
             Phone = request.Phone,
             Latitude = request.Latitude,
             Longitude = request.Longitude
+            
         };
 
          await  venueWriteRepository.AddAsync(venue);

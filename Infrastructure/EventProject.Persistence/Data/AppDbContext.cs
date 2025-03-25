@@ -142,4 +142,30 @@ public class AppDbContext : DbContext
                     .IsRequired();
 
     }
+  
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        var entries = ChangeTracker
+            .Entries()
+            .Where(e => e.State == EntityState.Added);
+
+        var entriesUpdate =ChangeTracker.Entries().Where(e=>e.State == EntityState.Modified);
+
+        foreach (var entry in entries)
+        {
+            if (entry.Entity is BaseEntity baseEntity)
+            {
+                baseEntity.CreatedDate = DateTime.Now;
+            }
+        }
+
+        foreach (var entry in entriesUpdate)
+        {
+            if (entry.Entity is BaseEntity baseEntity)
+            {
+                baseEntity.UpdatedDate = DateTime.Now;
+            }
+        }
+        return await base.SaveChangesAsync(cancellationToken);
+    }
 }

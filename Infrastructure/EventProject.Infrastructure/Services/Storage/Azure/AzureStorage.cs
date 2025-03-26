@@ -8,7 +8,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace EventProject.Infrastructure.Services.Storage.Azure;
 
-public class AzureStorage : IAzureStorage
+public class AzureStorage :Storage, IAzureStorage
 {
     private readonly BlobServiceClient _blobServiceClient;
     BlobContainerClient _blobContainerClient;
@@ -47,9 +47,10 @@ public class AzureStorage : IAzureStorage
         List<(string fileName, string pathOrContainerClient)> datas = new();
         foreach(var file in files)
         {
-            BlobClient blobClient = _blobContainerClient.GetBlobClient(file.FileName);
+            var newName = await FileRenameAsync(containerName, file.FileName,HasFile);
+            BlobClient blobClient = _blobContainerClient.GetBlobClient(newName);
             await blobClient.UploadAsync(file.OpenReadStream());
-            datas.Add((file.FileName, $"{containerName}/{file.FileName}"));
+            datas.Add((newName, $"{containerName}/{newName}"));
 
         }
         return datas;

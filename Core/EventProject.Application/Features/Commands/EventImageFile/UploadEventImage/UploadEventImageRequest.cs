@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 
 namespace EventProject.Application.Features.Commands.EventImageFile.UploadEventImage;
 
-public class UploadEventImageRequest(IStorageService storageService) : IRequest<ResponseModel<Unit>>
+public class UploadEventImageRequest() : IRequest<ResponseModel<Unit>>
 {
-    public int EventId { get; set; }
+    public string EventId { get; set; }
     public IFormFileCollection? Images { get; set; }
 }

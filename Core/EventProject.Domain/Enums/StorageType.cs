@@ -2,8 +2,8 @@
 
 public enum StorageType
 {
-    Azure,
-    Local,
+    AzureStorage,
+    LocalStorage,
     Aws,
     Google
 

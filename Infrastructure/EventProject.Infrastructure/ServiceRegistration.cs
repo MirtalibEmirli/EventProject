@@ -30,8 +30,8 @@ public static class ServiceRegistration
     {
         var storage = storageType switch
         {
-            StorageType.Local => services.AddScoped<ILocalStorage, LocalStorage>(),
-            StorageType.Azure => services.AddScoped<IAzureStorage, AzureStorage>(),
+            StorageType.LocalStorage => services.AddScoped<ILocalStorage, LocalStorage>(),
+            StorageType.AzureStorage => services.AddScoped<IAzureStorage, AzureStorage>(),
             _ => services.AddScoped<ILocalStorage, LocalStorage>()
 
         };

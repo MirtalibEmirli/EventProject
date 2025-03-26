@@ -1,4 +1,5 @@
 ﻿using EventProject.Application.Features.Commands.EventCommands.CreateEvent;
+using EventProject.Application.Features.Commands.EventImageFile.UploadEventImage;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -25,6 +26,13 @@ public class EventController : ControllerBase
             return BadRequest(result);
 
         return Ok(result);
+    }
+
+
+    [HttpPost("uploadImage")]
+    public async Task<IActionResult> UploadEventImage([FromForm] UploadEventImageRequest request)
+    {
+        return Ok(await _mediator.Send(request));   
     }
 }
 

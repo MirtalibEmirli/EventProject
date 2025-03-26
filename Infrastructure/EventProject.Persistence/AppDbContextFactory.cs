@@ -11,7 +11,7 @@ namespace EventProject.Persistence
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
 
             // Burada öz connection stringini yaz
-            optionsBuilder.UseSqlServer("Server=DESKTOP-0P1DC60\\SQLEXPRESS;Initial Catalog=EventDatabase;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False");
+            optionsBuilder.UseSqlServer("Data Source=DESKTOP-U9UFRFT\\SQLEXPRESS;Initial Catalog=EventDatabase;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False");
 
             return new AppDbContext(optionsBuilder.Options);
         }

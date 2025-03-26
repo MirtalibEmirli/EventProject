@@ -17,14 +17,15 @@ public class UploadEventImageHandler(IStorageService storageService, IEventReadR
     {
         List<(string fileName, string pathorContainerName)> images = await _storageService.UploadAsync("event-images", request.Images);
 
-        var eventToImg = await _eventReadRepository.GetByIdAsync(request.EventId.ToString());
+        var eventToImg = await _eventReadRepository.GetByIdAsync(request.EventId);
 
         await _eventMediaFileWriteRepository.AddRangeAsync(images.Select(x => new Domain.Entities.EventMediaFile
         {
             FileName = x.fileName,
             CreatedDate = DateTime.Now,
             EventId = eventToImg.Id,
-            StorageType = Enum.Parse<StorageType>(_storageService.StorageName),
+            StorageType = Enum.Parse<StorageType>(_storageService.StorageName),//burda errror olurdu
+            //sebeb ise  public string StorageName { get => _storage.GetType().Name; } storageservicede bunu bele yazmaq idi AzureStorage adi ile yaranib enumda ise Azure idi
             Path = x.pathorContainerName,
 
         }));

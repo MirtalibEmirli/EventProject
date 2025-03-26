@@ -1,11 +1,9 @@
 ﻿using EventProject.Api.Middlewares;
 using EventProject.Application;
-using EventProject.Application.Services.CloudinaryServices;
-using EventProject.Application.Settings;
+
 using EventProject.Infrastructure;
 using EventProject.Infrastructure.Services.Storage.Azure;
 using EventProject.Persistence;
-using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +31,7 @@ var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 var app = builder.Build();
 app.UseCors();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

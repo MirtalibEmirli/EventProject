@@ -27,7 +27,7 @@ public class EventController : ControllerBase
 
         return Ok(result);
     }
-
+     
 
     [HttpPost("uploadImage")]
     public async Task<IActionResult> UploadEventImage([FromForm] UploadEventImageRequest request)

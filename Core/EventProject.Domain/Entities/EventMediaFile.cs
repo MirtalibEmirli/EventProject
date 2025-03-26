@@ -4,5 +4,5 @@ public class EventMediaFile:File
 {
     public Guid EventId { get; set; }
     public Event Event { get; set; } = null!;
-
+     
 }

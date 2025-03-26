@@ -11,7 +11,7 @@ public class Venue:BaseEntity
     public double Latitude { get; set; }
     public double Longitude { get; set; }
 
-    public ICollection<VenueImageFile> VenueImages { get; set; }
+    public ICollection<VenueMediaFile> VenueMediaFiles { get; set; }
     public ICollection<Seat> Seats { get; set; }
     public ICollection<Event> Events { get; set; }
     //qeyd-> sekil olmali

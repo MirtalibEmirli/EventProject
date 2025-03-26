@@ -1,6 +1,6 @@
 ﻿namespace EventProject.Domain.Entities;
 
-public class VenueImageFile:File
+public class VenueMediaFile:File 
 {
 
     public Guid VenueId { get; set; }

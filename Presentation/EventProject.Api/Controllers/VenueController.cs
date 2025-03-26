@@ -2,6 +2,7 @@
 using EventProject.Application.Features.Commands.VenueCommands.CreateVenue;
 using EventProject.Application.Features.Commands.VenueCommands.DeleteVenue;
 using EventProject.Application.Features.Commands.VenueCommands.UpdateVenue;
+using EventProject.Application.Features.Commands.VenueMediaFile.UploadVenueMedia;
 using EventProject.Application.Features.Queries.VenueQueries.GetAllVenueQueries;
 using EventProject.Application.Features.Queries.VenueQueries.GetByIdVenueQueries;
 using MediatR;
@@ -29,9 +30,9 @@ public class VenueController : ControllerBase
             return BadRequest(response);
 
         return Ok(response);
-    }
-
-    [HttpPut("update")]
+    }   
+      
+    [HttpPut("update")] 
     public async Task<IActionResult> UpdateVenue([FromBody] UpdateVenueRequest request)
     {
         var response = await _mediator.Send(request);
@@ -70,5 +71,12 @@ public class VenueController : ControllerBase
 
         return Ok(result);
     }
+    [HttpPost("uploadVenueMedia")]
+    public async Task<IActionResult> UploadVenueMedia([FromForm] UploadVenueMediaRequest request)
+    {
+        return Ok(await _mediator.Send(request));   
+    }
+
+
 
 }

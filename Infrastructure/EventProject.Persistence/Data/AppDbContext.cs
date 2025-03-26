@@ -21,7 +21,7 @@ public class AppDbContext : DbContext
     public DbSet<File> Files { get; set; }
     public DbSet<UserMediaFile> UserMediaFiles { get; set; }
     public DbSet<EventMediaFile> EventMediaFiles { get; set; }
-    public DbSet<VenueImageFile> VenueImageFiles { get; set; }
+    public DbSet<VenueMediaFile> VenueMediaFiles { get; set; }
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -115,7 +115,7 @@ public class AppDbContext : DbContext
 
         // Venue və VenueImageFile əlaqəsi (One-to-Many)
         modelBuilder.Entity<Venue>()
-            .HasMany(v => v.VenueImages)
+            .HasMany(v => v.VenueMediaFiles)
             .WithOne(vi => vi.Venue)
             .HasForeignKey(vi => vi.VenueId)
             .OnDelete(DeleteBehavior.Cascade);

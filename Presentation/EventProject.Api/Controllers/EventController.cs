@@ -1,8 +1,6 @@
 ﻿using EventProject.Application.Features.Commands.EventCommands.CreateEvent;
-using EventProject.Application.Features.Commands.EventImageFile.UploadEventImage;
+using EventProject.Application.Features.Commands.EventMediaFile.UploadEventMedia;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventProject.Api.Controllers;
@@ -27,12 +25,12 @@ public class EventController : ControllerBase
 
         return Ok(result);
     }
-     
 
-    [HttpPost("uploadImage")]
-    public async Task<IActionResult> UploadEventImage([FromForm] UploadEventImageRequest request)
+
+    [HttpPost("uploadEventMedia")]
+    public async Task<IActionResult> UploadEventMedia([FromForm] UploadEventMediaRequest request)
     {
-        return Ok(await _mediator.Send(request));   
+        return Ok(await _mediator.Send(request));
     }
 }
 

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35707.178 d17.12
+VisualStudioVersion = 17.12.35707.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{C9CDBB29-B3F8-4047-B31A-2BA951CB01C7}"
 EndProject
@@ -9,15 +9,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Intrastructure", "Intrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{A7C46BD1-33AB-4203-A96B-A15C57870716}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventProject.Api", "Presentation\EventProject.Api\EventProject.Api.csproj", "{95B3B436-D38C-4799-955D-E22CA8F4A286}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventProject.Api", "Presentation\EventProject.Api\EventProject.Api.csproj", "{95B3B436-D38C-4799-955D-E22CA8F4A286}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventProject.Domain", "Core\EventProject.Domain\EventProject.Domain.csproj", "{044B16DE-2F41-43B5-A019-AB2DCE8D3202}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventProject.Domain", "Core\EventProject.Domain\EventProject.Domain.csproj", "{044B16DE-2F41-43B5-A019-AB2DCE8D3202}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventProject.Application", "Core\EventProject.Application\EventProject.Application.csproj", "{2EFB26E2-9209-4CF0-86E6-0F661EB51F87}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventProject.Application", "Core\EventProject.Application\EventProject.Application.csproj", "{2EFB26E2-9209-4CF0-86E6-0F661EB51F87}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventProject.Persistence", "Infrastructure\EventProject.Persistence\EventProject.Persistence.csproj", "{8AFEB094-6B6B-4194-A98D-EDC76D1C7FF0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventProject.Persistence", "Infrastructure\EventProject.Persistence\EventProject.Persistence.csproj", "{8AFEB094-6B6B-4194-A98D-EDC76D1C7FF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventProject.Infrastructure", "Infrastructure\EventProject.Infrastructure\EventProject.Infrastructure.csproj", "{D27297FC-6944-4642-A47D-4BC90A7B63F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventProject.Infrastructure", "Infrastructure\EventProject.Infrastructure\EventProject.Infrastructure.csproj", "{D27297FC-6944-4642-A47D-4BC90A7B63F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventProject.AdminPanelApp", "Presentation\EventProject.AdminPanelApp\EventProject.AdminPanelApp.csproj", "{458C1976-5CE7-4915-8B08-9FB1357CBF51}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{D27297FC-6944-4642-A47D-4BC90A7B63F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D27297FC-6944-4642-A47D-4BC90A7B63F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D27297FC-6944-4642-A47D-4BC90A7B63F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{458C1976-5CE7-4915-8B08-9FB1357CBF51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{458C1976-5CE7-4915-8B08-9FB1357CBF51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{458C1976-5CE7-4915-8B08-9FB1357CBF51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{458C1976-5CE7-4915-8B08-9FB1357CBF51}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,5 +61,9 @@ Global
 		{2EFB26E2-9209-4CF0-86E6-0F661EB51F87} = {C9CDBB29-B3F8-4047-B31A-2BA951CB01C7}
 		{8AFEB094-6B6B-4194-A98D-EDC76D1C7FF0} = {56640BB7-3A7A-4EAE-A9AC-5871C5291E3B}
 		{D27297FC-6944-4642-A47D-4BC90A7B63F7} = {56640BB7-3A7A-4EAE-A9AC-5871C5291E3B}
+		{458C1976-5CE7-4915-8B08-9FB1357CBF51} = {A7C46BD1-33AB-4203-A96B-A15C57870716}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8EB1A763-D085-4AAC-AA96-B2E6A96E4414}
 	EndGlobalSection
 EndGlobal

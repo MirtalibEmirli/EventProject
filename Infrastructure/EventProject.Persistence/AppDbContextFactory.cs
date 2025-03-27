@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using EventProject.Persistence.Data;
+using Microsoft.Extensions.Configuration;
 
 namespace EventProject.Persistence
 {
@@ -10,8 +11,15 @@ namespace EventProject.Persistence
         {
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
 
-            // Burada öz connection stringini yaz
-            optionsBuilder.UseSqlServer("Data Source=DESKTOP-U9UFRFT\\SQLEXPRESS;Initial Catalog=EventDatabase;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False");
+            var config = new ConfigurationBuilder()
+                           .SetBasePath(Directory.GetCurrentDirectory()) 
+                           .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                           .Build();
+
+            var connectionString = config.GetConnectionString("DefaultConnection");
+
+           
+            optionsBuilder.UseSqlServer(connectionString);
 
             return new AppDbContext(optionsBuilder.Options);
         }

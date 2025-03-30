@@ -1,5 +1,7 @@
 ﻿using EventProject.Application.Features.Commands.EventCommands.CreateEvent;
 using EventProject.Application.Features.Commands.EventMediaFile.UploadEventMedia;
+using EventProject.Application.Features.Queries.EventQueries.GetEventById;
+using EventProject.Application.Features.Queries.EventQueries.GetEvents;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,12 +28,36 @@ public class EventController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("getEvents")]
+    public async Task<IActionResult> GetEvents([FromQuery] GetEventsRequest request)
+    {
+        var result = await _mediator.Send(request);
+        if (!result.IsSuccess)
+            return BadRequest(result);
+
+        return Ok(result);
+    }
+
 
     [HttpPost("uploadEventMedia")]
     public async Task<IActionResult> UploadEventMedia([FromForm] UploadEventMediaRequest request)
     {
         return Ok(await _mediator.Send(request));
     }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(Guid id)
+    {
+        var result = await _mediator.Send(new GetEventByIdRequest { Id = id });
+
+        if (!result.IsSuccess)
+            return NotFound(result);
+
+        return Ok(result);
+    }
+
+
+
 }
 
 

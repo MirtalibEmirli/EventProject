@@ -28,9 +28,4 @@
     <ProjectReference Include="..\EventProject.Domain\EventProject.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\Queries\EventQueries\GetEventById\" />
-    <Folder Include="Features\Queries\EventQueries\GetAllEvents\" />
-  </ItemGroup>
-
 </Project>

@@ -20,10 +20,10 @@ public class GetAllEventCategoriesHandler(IEventCategoryReadRepository eventCate
 	   private readonly IMapper _mapper=mapper;
 	public async Task<ResponseModelPagination<GetAllCategories>> Handle(GetAllEventCategoriesRequest request, CancellationToken cancellationToken)
 	{
-		var categories = await  _eventCategoryReadRepository.GetAllAsync();
+		var categories = _eventCategoryReadRepository.GetAll();
 		if (categories is null) throw new BadRequestException("Request is null ,Try again");
 		var totalCount = categories.Count();
-		categories = categories.Skip((request.Page - 1) * (request.Limit)).ToList();
+		categories = categories.Skip((request.Page - 1) * (request.Limit));
 
 		var itemsToMap = new List<GetAllCategories>();//bunu dto   eddim response qalsn
 
@@ -36,7 +36,7 @@ public class GetAllEventCategoriesHandler(IEventCategoryReadRepository eventCate
 
 		var responseModel = new Pagination<GetAllCategories>() { Items=itemsToMap,TotalCount= totalCount };
 
-		return   new ResponseModelPagination<GetAllCategories>()
+		return new ResponseModelPagination<GetAllCategories>()
 		{
 			Data = responseModel,
 			IsSuccess = true,

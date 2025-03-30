@@ -33,5 +33,6 @@ public class Event:BaseEntity
     public ICollection<Ticket> Tickets { get; set; } 
     public ICollection<Comment> Comments { get; set; } 
     public ICollection<Payment> Payments { get; set; } 
-    public ICollection<EventMediaFile> MediaFiles { get; set; } 
+    public IEnumerable<EventMediaFile> MediaFiles { get; set; }
+    public ICollection<EventSeatPrice> EventSeatPrices { get; set; } = new List<EventSeatPrice>();
 }

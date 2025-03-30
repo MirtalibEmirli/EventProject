@@ -12,7 +12,7 @@ public class Venue:BaseEntity
     public double Longitude { get; set; }
 
     public ICollection<VenueMediaFile> VenueMediaFiles { get; set; }
-    public ICollection<Seat> Seats { get; set; }
+    public virtual ICollection<Seat> Seats { get; set; } = new List<Seat>();
     public ICollection<Event> Events { get; set; }
     //qeyd-> sekil olmali
 

@@ -23,7 +23,7 @@ public class GetAllVenueHandler : IRequestHandler<GetAllVenueRequest, ResponseMo
 
     public async Task<ResponseModel<List<GetAllVenueResponse>>> Handle(GetAllVenueRequest request, CancellationToken cancellationToken)
     {
-        var venues = await _venueReadRepository.GetAllAsync();
+        var venues =  _venueReadRepository.GetAll();
         var result = _mapper.Map<List<GetAllVenueResponse>>(venues);
 
         return new ResponseModel<List<GetAllVenueResponse>>

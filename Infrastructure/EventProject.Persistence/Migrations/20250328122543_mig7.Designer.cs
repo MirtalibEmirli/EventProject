@@ -4,6 +4,7 @@ using EventProject.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventProject.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250328122543_mig7")]
+    partial class mig7
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -115,6 +118,9 @@ namespace EventProject.Persistence.Migrations
                     b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("VenueId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
@@ -122,6 +128,8 @@ namespace EventProject.Persistence.Migrations
                     b.HasIndex("LocationId");
 
                     b.HasIndex("UserId");
+
+                    b.HasIndex("VenueId");
 
                     b.ToTable("Events");
                 });
@@ -265,14 +273,9 @@ namespace EventProject.Persistence.Migrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UserId1")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
-
-                    b.HasIndex("UserId1");
 
                     b.ToTable("Notifications");
                 });
@@ -662,7 +665,7 @@ namespace EventProject.Persistence.Migrations
                         .IsRequired();
 
                     b.HasOne("EventProject.Domain.Entities.Venue", "Location")
-                        .WithMany("Events")
+                        .WithMany()
                         .HasForeignKey("LocationId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -670,6 +673,10 @@ namespace EventProject.Persistence.Migrations
                     b.HasOne("EventProject.Domain.Entities.User", null)
                         .WithMany("OrganizedEvents")
                         .HasForeignKey("UserId");
+
+                    b.HasOne("EventProject.Domain.Entities.Venue", null)
+                        .WithMany("Events")
+                        .HasForeignKey("VenueId");
 
                     b.Navigation("Category");
 
@@ -697,15 +704,9 @@ namespace EventProject.Persistence.Migrations
 
             modelBuilder.Entity("EventProject.Domain.Entities.Notification", b =>
                 {
-                    b.HasOne("EventProject.Domain.Entities.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("EventProject.Domain.Entities.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId1")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -717,7 +718,7 @@ namespace EventProject.Persistence.Migrations
                     b.HasOne("EventProject.Domain.Entities.Venue", "Venue")
                         .WithMany("Seats")
                         .HasForeignKey("VenueId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Venue");
@@ -801,7 +802,7 @@ namespace EventProject.Persistence.Migrations
                     b.HasOne("Event", "Event")
                         .WithMany("MediaFiles")
                         .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Event");
@@ -812,7 +813,7 @@ namespace EventProject.Persistence.Migrations
                     b.HasOne("Event", "Event")
                         .WithMany()
                         .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Event");

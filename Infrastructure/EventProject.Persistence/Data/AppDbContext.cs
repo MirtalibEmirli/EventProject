@@ -28,121 +28,126 @@ public class AppDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        // BaseEntity üçün əsas konfiqurasiya
-        
-        // Event və Category əlaqəsi (Many-to-One)
+        // Event → Category
         modelBuilder.Entity<Event>()
             .HasOne(e => e.Category)
             .WithMany(c => c.Events)
             .HasForeignKey(e => e.CategoryId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        // Event və Venue əlaqəsi (Many-to-One)
+        // Event → Venue (Location)
         modelBuilder.Entity<Event>()
             .HasOne(e => e.Location)
-            .WithMany()
+            .WithMany(v => v.Events)
+            .HasForeignKey(e => e.LocationId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        // Event və Ticket əlaqəsi (One-to-Many)
+        // Event → Tickets
         modelBuilder.Entity<Event>()
             .HasMany(e => e.Tickets)
             .WithOne(t => t.Event)
             .HasForeignKey(t => t.EventId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        // Event və Comment əlaqəsi (One-to-Many)
+        // Event → Comments
         modelBuilder.Entity<Event>()
             .HasMany(e => e.Comments)
             .WithOne(c => c.Event)
             .HasForeignKey(c => c.EventId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        // Event və Payment əlaqəsi (One-to-Many)
+        // Event → Payments
         modelBuilder.Entity<Event>()
             .HasMany(e => e.Payments)
             .WithOne(p => p.Event)
             .HasForeignKey(p => p.EventId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        // Event və MediaFile əlaqəsi (One-to-Many)
+        // Event → MediaFiles (burada problem yaranırdı)
         modelBuilder.Entity<Event>()
             .HasMany(e => e.MediaFiles)
             .WithOne(m => m.Event)
             .HasForeignKey(m => m.EventId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Restrict); // ❗ cascade yox, restrict et
 
-        // User və Ticket əlaqəsi (One-to-Many)
+        // User → Tickets
         modelBuilder.Entity<User>()
             .HasMany(u => u.Tickets)
             .WithOne(t => t.User)
             .HasForeignKey(t => t.UserId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        // User və Payment əlaqəsi (One-to-Many)
+        // User → Payments
         modelBuilder.Entity<User>()
             .HasMany(u => u.Payments)
             .WithOne(p => p.User)
             .HasForeignKey(p => p.UserId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        // User və Comment əlaqəsi (One-to-Many)
+        // User → Comments
         modelBuilder.Entity<User>()
             .HasMany(u => u.Comments)
             .WithOne(c => c.User)
             .HasForeignKey(c => c.UserId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        // User və Notification əlaqəsi (One-to-Many)
+        // User → ProfilePicture (optional 1-1)
         modelBuilder.Entity<User>()
-            .HasMany(u => u.Payments)
-            .WithOne(n => n.User)
-            .HasForeignKey(n => n.UserId)
+            .HasOne(u => u.ProfilePicture)
+            .WithOne()
+            .HasForeignKey<User>(u => u.ProfilePictureId)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        // User → Notifications
+        modelBuilder.Entity<User>()
+            .HasMany<Notification>() // fərzən UserNotification varsa
+            .WithOne()
+            .HasForeignKey("UserId")
             .OnDelete(DeleteBehavior.Cascade);
 
-        // User və ProfilePicture əlaqəsi (One-to-One)
-        modelBuilder.Entity<User>()
-       .HasOne(u => u.ProfilePicture)
-       .WithOne()
-       .HasForeignKey<User>(u => u.ProfilePictureId)
-       .OnDelete(DeleteBehavior.SetNull);
-
-        // Seat və Venue əlaqəsi (Many-to-One)
+        // Venue → Seats
         modelBuilder.Entity<Seat>()
             .HasOne(s => s.Venue)
-            .WithMany()
+            .WithMany(v => v.Seats)
             .HasForeignKey(s => s.VenueId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Restrict);
 
-        // Venue və VenueImageFile əlaqəsi (One-to-Many)
+        // Venue → MediaFiles
         modelBuilder.Entity<Venue>()
             .HasMany(v => v.VenueMediaFiles)
             .WithOne(vi => vi.Venue)
             .HasForeignKey(vi => vi.VenueId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        // Ticket və Seat əlaqəsi (One-to-One)
+        // Ticket → Seat
         modelBuilder.Entity<Ticket>()
             .HasOne(t => t.Seat)
             .WithOne(s => s.Ticket)
             .HasForeignKey<Ticket>(t => t.SeatId)
             .OnDelete(DeleteBehavior.SetNull);
 
-        // Ticket və StandingZone əlaqəsi (One-to-One)
+        // Ticket → StandingZone
         modelBuilder.Entity<Ticket>()
             .HasOne(t => t.StandingZone)
             .WithMany()
             .HasForeignKey(t => t.StandingZoneId)
             .OnDelete(DeleteBehavior.SetNull);
 
-       
+        // File enum property map
         modelBuilder.Entity<File>()
-                    .Property(x=>x.StorageType)
-                    .HasConversion<string>()
-                    .HasMaxLength(100)
-                    .IsRequired();
+            .Property(x => x.StorageType)
+            .HasConversion<string>()
+            .HasMaxLength(100)
+            .IsRequired();
 
+        modelBuilder.Entity<UserMediaFile>()
+             .HasOne(umf => umf.Event)
+             .WithMany()
+             .HasForeignKey(umf => umf.EventId)
+             .OnDelete(DeleteBehavior.Restrict); 
     }
-  
+
+
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         var entries = ChangeTracker

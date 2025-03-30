@@ -12,9 +12,17 @@ public class ReadRepository<TEntity>(AppDbContext context) : IReadRepository<TEn
 
 	public DbSet<TEntity> Table=>_context.Set<TEntity>();
 
-	public async Task<IEnumerable<TEntity>> GetAllAsync() => await Table.Where(Table=>Table.IsDeleted != true).ToListAsync();
+    public IQueryable<TEntity> GetAll(bool tracking = true)
+    {
+        var query = Table.Where(x => x.IsDeleted != null);
+        if (!tracking)
+            query = query.AsNoTracking();
 
-	public async Task<TEntity> GetByIdAsync(string id) => await Table.FirstOrDefaultAsync(T => T.Id==Guid.Parse(id) && T.IsDeleted!=true);
+        return query;
+    }
+
+
+    public async Task<TEntity> GetByIdAsync(string id) => await Table.FirstOrDefaultAsync(T => T.Id==Guid.Parse(id) && T.IsDeleted!=true);
 
 
 	public async Task<TEntity> GetSingleWhereAsync(Expression<Func<TEntity, bool>> filter = null) => await Table.Where(e=>e.IsDeleted!=true).FirstOrDefaultAsync(filter);

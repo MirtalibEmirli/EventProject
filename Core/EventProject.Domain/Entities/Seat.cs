@@ -1,4 +1,6 @@
-﻿namespace EventProject.Domain.Entities;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace EventProject.Domain.Entities;
 
 //venue -seat  one-many  
 
@@ -16,6 +18,8 @@ public  class Seat:BaseEntity
     public float? RotationY { get; set; }
 
     public Guid VenueId { get; set; }
+
+    [ForeignKey(nameof(VenueId))]
     public Venue Venue { get; set; }
 
     public Ticket? Ticket { get; set; } //eger bilet alinibsa 

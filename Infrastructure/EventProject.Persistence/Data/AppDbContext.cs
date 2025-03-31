@@ -99,11 +99,12 @@ public class AppDbContext : DbContext
             .OnDelete(DeleteBehavior.SetNull);
 
         // User → Notifications
-        modelBuilder.Entity<User>()
-            .HasMany<Notification>() // fərzən UserNotification varsa
-            .WithOne()
-            .HasForeignKey("UserId")
-            .OnDelete(DeleteBehavior.Cascade);
+        modelBuilder.Entity<Notification>()
+     .HasOne(n => n.User)
+     .WithMany()
+     .HasForeignKey(n => n.UserId)
+     .OnDelete(DeleteBehavior.Cascade);
+
 
         // Venue → Seats
         modelBuilder.Entity<Seat>()
@@ -144,7 +145,7 @@ public class AppDbContext : DbContext
              .HasOne(umf => umf.Event)
              .WithMany()
              .HasForeignKey(umf => umf.EventId)
-             .OnDelete(DeleteBehavior.Restrict); 
+             .OnDelete(DeleteBehavior.Restrict);
     }
 
 
@@ -154,7 +155,7 @@ public class AppDbContext : DbContext
             .Entries()
             .Where(e => e.State == EntityState.Added);
 
-        var entriesUpdate =ChangeTracker.Entries().Where(e=>e.State == EntityState.Modified);
+        var entriesUpdate = ChangeTracker.Entries().Where(e => e.State == EntityState.Modified);
 
         foreach (var entry in entries)
         {

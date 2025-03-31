@@ -12,7 +12,7 @@ namespace EventProject.Application.Features.Queries.EventQueries.GetEvents;
    {
 
        public DateTime? StartDate { get; set; }
-       public DateTime? EndDate { get; set; }
+       public DateTime? EndDate { get; set; } 
       
        public Guid? VenueId { get; set; }
        public Guid? CategoryId { get; set; }

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace EventProject.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class miog1 : Migration
+    public partial class mig3 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -73,9 +73,13 @@ namespace EventProject.Persistence.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Section = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Row = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Row = table.Column<int>(type: "int", nullable: false),
                     Number = table.Column<int>(type: "int", nullable: false),
                     IsBooked = table.Column<bool>(type: "bit", nullable: false),
+                    X = table.Column<float>(type: "real", nullable: true),
+                    Y = table.Column<float>(type: "real", nullable: true),
+                    Z = table.Column<float>(type: "real", nullable: true),
+                    RotationY = table.Column<float>(type: "real", nullable: true),
                     VenueId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -87,6 +91,30 @@ namespace EventProject.Persistence.Migrations
                     table.PrimaryKey("PK_Seats", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Seats_Venues_VenueId",
+                        column: x => x.VenueId,
+                        principalTable: "Venues",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SectionWeights",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    VenueId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SectionName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Weight = table.Column<float>(type: "real", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SectionWeights", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SectionWeights_Venues_VenueId",
                         column: x => x.VenueId,
                         principalTable: "Venues",
                         principalColumn: "Id",
@@ -151,6 +179,36 @@ namespace EventProject.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "EventSeatPrices",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EventId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SeatId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Price = table.Column<float>(type: "real", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EventSeatPrices", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EventSeatPrices_Events_EventId",
+                        column: x => x.EventId,
+                        principalTable: "Events",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EventSeatPrices_Seats_SeatId",
+                        column: x => x.SeatId,
+                        principalTable: "Seats",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Files",
                 columns: table => new
                 {
@@ -160,6 +218,7 @@ namespace EventProject.Persistence.Migrations
                     StorageType = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(21)", maxLength: 21, nullable: false),
                     EventId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UserMediaFile_EventId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     VenueId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -174,7 +233,13 @@ namespace EventProject.Persistence.Migrations
                         column: x => x.EventId,
                         principalTable: "Events",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Files_Events_UserMediaFile_EventId",
+                        column: x => x.UserMediaFile_EventId,
+                        principalTable: "Events",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Files_Venues_VenueId",
                         column: x => x.VenueId,
@@ -339,9 +404,24 @@ namespace EventProject.Persistence.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_EventSeatPrices_EventId",
+                table: "EventSeatPrices",
+                column: "EventId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EventSeatPrices_SeatId",
+                table: "EventSeatPrices",
+                column: "SeatId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Files_EventId",
                 table: "Files",
                 column: "EventId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Files_UserMediaFile_EventId",
+                table: "Files",
+                column: "UserMediaFile_EventId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Files_VenueId",
@@ -366,6 +446,11 @@ namespace EventProject.Persistence.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Seats_VenueId",
                 table: "Seats",
+                column: "VenueId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SectionWeights_VenueId",
+                table: "SectionWeights",
                 column: "VenueId");
 
             migrationBuilder.CreateIndex(
@@ -428,14 +513,24 @@ namespace EventProject.Persistence.Migrations
                 name: "FK_Files_Events_EventId",
                 table: "Files");
 
+            migrationBuilder.DropForeignKey(
+                name: "FK_Files_Events_UserMediaFile_EventId",
+                table: "Files");
+
             migrationBuilder.DropTable(
                 name: "Comments");
+
+            migrationBuilder.DropTable(
+                name: "EventSeatPrices");
 
             migrationBuilder.DropTable(
                 name: "Notifications");
 
             migrationBuilder.DropTable(
                 name: "Payments");
+
+            migrationBuilder.DropTable(
+                name: "SectionWeights");
 
             migrationBuilder.DropTable(
                 name: "Tickets");

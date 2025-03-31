@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventProject.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250319121201_miog1")]
-    partial class miog1
+    [Migration("20250331140537_mig3")]
+    partial class mig3
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -159,6 +159,42 @@ namespace EventProject.Persistence.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("EventProject.Domain.Entities.EventSeatPrice", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("EventId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool?>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<float>("Price")
+                        .HasColumnType("real");
+
+                    b.Property<Guid>("SeatId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventId");
+
+                    b.HasIndex("SeatId");
+
+                    b.ToTable("EventSeatPrices");
+                });
+
             modelBuilder.Entity("EventProject.Domain.Entities.File", b =>
                 {
                     b.Property<Guid>("Id")
@@ -260,9 +296,11 @@ namespace EventProject.Persistence.Migrations
                     b.Property<int>("Number")
                         .HasColumnType("int");
 
-                    b.Property<string>("Row")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<float?>("RotationY")
+                        .HasColumnType("real");
+
+                    b.Property<int>("Row")
+                        .HasColumnType("int");
 
                     b.Property<string>("Section")
                         .IsRequired()
@@ -274,11 +312,55 @@ namespace EventProject.Persistence.Migrations
                     b.Property<Guid>("VenueId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<float?>("X")
+                        .HasColumnType("real");
+
+                    b.Property<float?>("Y")
+                        .HasColumnType("real");
+
+                    b.Property<float?>("Z")
+                        .HasColumnType("real");
+
                     b.HasKey("Id");
 
                     b.HasIndex("VenueId");
 
                     b.ToTable("Seats");
+                });
+
+            modelBuilder.Entity("EventProject.Domain.Entities.SectionWeight", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool?>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SectionName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("VenueId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<float>("Weight")
+                        .HasColumnType("real");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("VenueId");
+
+                    b.ToTable("SectionWeights");
                 });
 
             modelBuilder.Entity("EventProject.Domain.Entities.StandingZone", b =>
@@ -524,10 +606,21 @@ namespace EventProject.Persistence.Migrations
                 {
                     b.HasBaseType("EventProject.Domain.Entities.File");
 
+                    b.Property<Guid>("EventId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasIndex("EventId");
+
+                    b.ToTable("Files", t =>
+                        {
+                            t.Property("EventId")
+                                .HasColumnName("UserMediaFile_EventId");
+                        });
+
                     b.HasDiscriminator().HasValue("UserMediaFile");
                 });
 
-            modelBuilder.Entity("EventProject.Domain.Entities.VenueImageFile", b =>
+            modelBuilder.Entity("EventProject.Domain.Entities.VenueMediaFile", b =>
                 {
                     b.HasBaseType("EventProject.Domain.Entities.File");
 
@@ -536,7 +629,7 @@ namespace EventProject.Persistence.Migrations
 
                     b.HasIndex("VenueId");
 
-                    b.HasDiscriminator().HasValue("VenueImageFile");
+                    b.HasDiscriminator().HasValue("VenueMediaFile");
                 });
 
             modelBuilder.Entity("Comment", b =>
@@ -567,7 +660,7 @@ namespace EventProject.Persistence.Migrations
                         .IsRequired();
 
                     b.HasOne("EventProject.Domain.Entities.Venue", "Location")
-                        .WithMany()
+                        .WithMany("Events")
                         .HasForeignKey("LocationId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -579,6 +672,25 @@ namespace EventProject.Persistence.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("Location");
+                });
+
+            modelBuilder.Entity("EventProject.Domain.Entities.EventSeatPrice", b =>
+                {
+                    b.HasOne("Event", "Event")
+                        .WithMany("EventSeatPrices")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EventProject.Domain.Entities.Seat", "Seat")
+                        .WithMany()
+                        .HasForeignKey("SeatId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Event");
+
+                    b.Navigation("Seat");
                 });
 
             modelBuilder.Entity("EventProject.Domain.Entities.Notification", b =>
@@ -593,6 +705,17 @@ namespace EventProject.Persistence.Migrations
                 });
 
             modelBuilder.Entity("EventProject.Domain.Entities.Seat", b =>
+                {
+                    b.HasOne("EventProject.Domain.Entities.Venue", "Venue")
+                        .WithMany("Seats")
+                        .HasForeignKey("VenueId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Venue");
+                });
+
+            modelBuilder.Entity("EventProject.Domain.Entities.SectionWeight", b =>
                 {
                     b.HasOne("EventProject.Domain.Entities.Venue", "Venue")
                         .WithMany()
@@ -670,16 +793,27 @@ namespace EventProject.Persistence.Migrations
                     b.HasOne("Event", "Event")
                         .WithMany("MediaFiles")
                         .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Event");
                 });
 
-            modelBuilder.Entity("EventProject.Domain.Entities.VenueImageFile", b =>
+            modelBuilder.Entity("EventProject.Domain.Entities.UserMediaFile", b =>
+                {
+                    b.HasOne("Event", "Event")
+                        .WithMany()
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Event");
+                });
+
+            modelBuilder.Entity("EventProject.Domain.Entities.VenueMediaFile", b =>
                 {
                     b.HasOne("EventProject.Domain.Entities.Venue", "Venue")
-                        .WithMany("VenueImages")
+                        .WithMany("VenueMediaFiles")
                         .HasForeignKey("VenueId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -690,6 +824,8 @@ namespace EventProject.Persistence.Migrations
             modelBuilder.Entity("Event", b =>
                 {
                     b.Navigation("Comments");
+
+                    b.Navigation("EventSeatPrices");
 
                     b.Navigation("MediaFiles");
 
@@ -721,7 +857,11 @@ namespace EventProject.Persistence.Migrations
 
             modelBuilder.Entity("EventProject.Domain.Entities.Venue", b =>
                 {
-                    b.Navigation("VenueImages");
+                    b.Navigation("Events");
+
+                    b.Navigation("Seats");
+
+                    b.Navigation("VenueMediaFiles");
                 });
 #pragma warning restore 612, 618
         }

@@ -3,11 +3,13 @@
 using EventProject.Application.Abstractions.Storage;
 using EventProject.Application.Abstractions.Storage.Azure;
 using EventProject.Application.Abstractions.Storage.Local;
+using EventProject.Application.Abstractions.Token;
 using EventProject.Domain.Enums;
 
 using EventProject.Infrastructure.Services.Storage;
 using EventProject.Infrastructure.Services.Storage.Azure;
 using EventProject.Infrastructure.Services.Storage.Local;
+using EventProject.Infrastructure.Services.Token;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EventProject.Infrastructure;
@@ -18,6 +20,7 @@ public static class ServiceRegistration
     public static void AddInfrastructureService(this IServiceCollection services)
     {
         services.AddScoped<IStorageService,StorageService>();
+        services.AddScoped<ITokenHandler,TokenHandler>();
     }
 
     public static void AddStorage<T>(this IServiceCollection services) where T : class, IStorage

@@ -4,10 +4,9 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
+
 
 namespace EventProject.Infrastructure.Services.Token
 {
@@ -34,6 +33,7 @@ namespace EventProject.Infrastructure.Services.Token
             token.ExpirationDate = DateTime.UtcNow.AddMinutes(minute);
             JwtSecurityToken securityToken = new JwtSecurityToken(
                 audience: configuration["JWT:ValidAudience"],
+                claims:claims,
                 issuer: configuration["JWT:ValidIssuer"],
                 expires: token.ExpirationDate,
                 notBefore: DateTime.UtcNow,

@@ -8,6 +8,7 @@ public class Event:BaseEntity
     public string Description { get; set; } = string.Empty;
 
     public DateTime StartTime { get; set; }
+    public bool IsTrend { get; set; } = false;
 
     public int AgeLimit { get; set; }
     public DateTime EndTime { get; set; }

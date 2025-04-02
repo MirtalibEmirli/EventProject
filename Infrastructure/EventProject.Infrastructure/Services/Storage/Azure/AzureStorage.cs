@@ -50,8 +50,7 @@ public class AzureStorage :Storage, IAzureStorage
             var newName = await FileRenameAsync(containerName, file.FileName,HasFile);
             BlobClient blobClient = _blobContainerClient.GetBlobClient(newName);
             await blobClient.UploadAsync(file.OpenReadStream());
-            datas.Add((newName, $"{containerName}/{newName}"));
-
+            datas.Add((blobClient.Uri.AbsoluteUri, $"{containerName}/{newName}"));
         }
         return datas;
 

@@ -6,6 +6,7 @@ using EventProject.Application.Repositories.Events;
 using EventProject.Application.Repositories.EventSeatPrices;
 using EventProject.Application.Repositories.Seats;
 using EventProject.Application.Repositories.SectionWeights;
+using EventProject.Application.Repositories.Users;
 using EventProject.Application.Repositories.VenueMediaFiles;
 using EventProject.Application.Repositories.Venues;
 using EventProject.Persistence.Data;
@@ -15,6 +16,7 @@ using EventProject.Persistence.Repository.Events;
 using EventProject.Persistence.Repository.EventSeatPrices;
 using EventProject.Persistence.Repository.Seats;
 using EventProject.Persistence.Repository.SectionWeights;
+using EventProject.Persistence.Repository.Users;
 using EventProject.Persistence.Repository.VenueMediaFiles;
 using EventProject.Persistence.Repository.Venues;
 using EventProject.Persistence.Services;
@@ -48,6 +50,8 @@ public static class RegistrationService
         services.AddScoped<IEventMediaFileWriteRepository, EventMediaFileWriteRepository>();
         services.AddScoped<IVenueMediaFileWriteRepository, VenueMediaFileWriteRepository>();
         services.AddScoped<IVenueMediaFileReadRepository, VenueMediaFileReadRepository>();
+        services.AddScoped<IUserReadRepsoitory,UserReadRepository>();   
+        services.AddScoped<IUserWriteRepository, UserWriteRepository>(); 
         return services;
     }
 }

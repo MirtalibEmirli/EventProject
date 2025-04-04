@@ -9,5 +9,7 @@ public class UserReadRepository : ReadRepository<User>, IUserReadRepsoitory
 {
 	public UserReadRepository(AppDbContext context) : base(context)
 	{
+
+
 	}
 }

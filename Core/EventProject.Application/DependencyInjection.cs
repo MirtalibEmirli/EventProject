@@ -23,7 +23,6 @@ namespace EventProject.Application
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
 
-   
 
             services.AddMediatR(Assembly.GetExecutingAssembly());
           

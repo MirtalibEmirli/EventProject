@@ -1,11 +1,8 @@
-﻿
-
-using EventProject.Application.Abstractions.Storage;
+﻿using EventProject.Application.Abstractions.Storage;
 using EventProject.Application.Abstractions.Storage.Azure;
 using EventProject.Application.Abstractions.Storage.Local;
 using EventProject.Application.Abstractions.Token;
 using EventProject.Domain.Enums;
-
 using EventProject.Infrastructure.Services.Storage;
 using EventProject.Infrastructure.Services.Storage.Azure;
 using EventProject.Infrastructure.Services.Storage.Local;

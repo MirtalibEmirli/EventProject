@@ -1,4 +1,4 @@
-﻿using CloudinaryDotNet.Actions;
+﻿
 using EventProject.Application.Abstractions.Service;
 using EventProject.Application.Repositories.EventSeatPrices;
 using EventProject.Application.Repositories.Seats;

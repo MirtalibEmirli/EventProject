@@ -45,6 +45,7 @@ public class ExceptionHandlerMiddleware
                     return;//breakde ola biler
 
                 default:
+                  
                     break;
             }
             await WriteError(context, statusCode, message);

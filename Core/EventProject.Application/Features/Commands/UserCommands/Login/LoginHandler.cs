@@ -29,6 +29,8 @@ namespace EventProject.Application.Features.Commands.UserCommands.Login
 
 
             }
+           
+
             List<Claim> authClaims = new List<Claim>()
             {
                 new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()), 

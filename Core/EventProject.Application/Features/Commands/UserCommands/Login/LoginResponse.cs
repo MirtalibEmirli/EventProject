@@ -5,10 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EventProject.Application.Features.Commands.UserCommands.Login
+namespace EventProject.Application.Features.Commands.UserCommands.Login;
+
+public class LoginResponse
 {
-    public class LoginResponse
-    {
-     public   Token? Token { get; set; }   
-    }
+ public   Token? Token { get; set; }   
 }

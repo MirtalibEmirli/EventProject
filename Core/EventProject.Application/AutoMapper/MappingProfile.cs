@@ -2,6 +2,7 @@
 using EventProject.Application.DTOs;
 using EventProject.Application.Features.Commands.EventCategoryCommands.CreateEventCategory;
 using EventProject.Application.Features.Commands.EventCommands.CreateEvent;
+using EventProject.Application.Features.Commands.UserCommands.Register;
 using EventProject.Application.Features.Queries.VenueQueries.GetAllVenueQueries;
 using EventProject.Application.Features.Queries.VenueQueries.GetByIdVenueQueries;
 using EventProject.Domain.Entities;
@@ -16,7 +17,7 @@ public class MappingProfile:Profile
         CreateMap<Category,CreateEventCategoryRequest>().ReverseMap();
 
         CreateMap<CreateEventCategoryResponse,Category>().ReverseMap().ForMember(dest=>dest.CategoryId,opt=>opt.MapFrom(src=>src.Id.ToString()));
-
+        CreateMap< RegisterRequest, User>();
 
         //CreateMap<CreateEventRequest, Event>();
         CreateMap<GetAllCategories,Category>().ReverseMap();

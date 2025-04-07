@@ -59,7 +59,7 @@ public class GetEventsHandler : IRequestHandler<GetEventsRequest, ResponseModel<
                 AgeLimit = e.AgeLimit,
                 MinPrice = e.MinPrice,
                 VenueName = e.Location.Name,
-                MediaUrls = e.MediaFiles.Select(m => m.Path).ToList()
+                MediaUrls = e.MediaFiles.Select(m => m.FileName).ToList()
             }).ToListAsync(cancellationToken);
 
 

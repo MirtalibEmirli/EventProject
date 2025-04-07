@@ -19,10 +19,13 @@ namespace EventProject.Application.Features.Commands.UserCommands.Login
         public async Task<ResponseModel<LoginResponse>> Handle(LoginRequest request, CancellationToken cancellationToken)
         {
             var user = userRead.GetWhere(u => u.Email == request.Email).FirstOrDefault();
+
             if (user == null) { throw new NotFoundException($"There  is no user with {request.Email} "); }
 
 
+           
             var hashedPassword = PasswordHasher.ComputeStringToSha256Hash(user.PasswordHash);
+          
             if (user.PasswordHash != hashedPassword)
             {
                 throw new BadRequestException($"The password you provided {user.PasswordHash} is not true");

@@ -2,7 +2,7 @@
 
 public enum EventStatus
 {
-    Active,
+    Active=0,
     Canceled,
     Past
 }

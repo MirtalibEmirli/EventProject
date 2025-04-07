@@ -16,10 +16,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddStorage<AzureStorage>();
-builder.Services.AddInfrastructureService();    
+builder.Services.AddInfrastructureService();
 builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>
-    policy.WithOrigins("http://localhost:5177", "https://localhost:5177").AllowAnyHeader().AllowAnyMethod().AllowCredentials()
+    policy.WithOrigins("http://localhost:5173", "https://localhost:5173").AllowAnyHeader().AllowAnyMethod().AllowCredentials()
 ));
+
+
 
 
 
@@ -30,7 +32,7 @@ var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 
 var app = builder.Build();
-app.UseCors();
+ 
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -40,6 +42,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseRouting(); // <-- bu olmalıdır!
+
+app.UseCors(); // <-- CORS burada olmalıdır!
 
 app.UseAuthorization();
 

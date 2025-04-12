@@ -18,6 +18,7 @@ namespace EventProject.Application
             {
 
                 mc.AddProfile(new MappingProfile());
+                mc.AddProfile(new EventProfile());
             });
 
             IMapper mapper = mapperConfig.CreateMapper();

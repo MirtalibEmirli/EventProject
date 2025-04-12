@@ -25,7 +25,8 @@ public class UploadEventMediaHandler(IStorageService storageService, IEventReadR
             CreatedDate = DateTime.Now,
             EventId = eventToImg.Id,
             StorageType = Enum.Parse<StorageType>(_storageService.StorageName),//burda errror olurdu
-            //sebeb ise  public string StorageName { get => _storage.GetType().Name; } storageservicede bunu bele yazmaq idi AzureStorage adi ile yaranib enumda ise Azure idi
+            //sebeb ise  public string StorageName { get => _storage.GetType().Name; }
+            //storageservicede bunu bele yazmaq idi AzureStorage adi ile yaranib enumda ise Azure idi
             Path = x.pathorContainerName,
 
         }));

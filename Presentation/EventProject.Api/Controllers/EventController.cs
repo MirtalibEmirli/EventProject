@@ -1,4 +1,5 @@
 ﻿using EventProject.Application.Features.Commands.EventCommands.CreateEvent;
+using EventProject.Application.Features.Commands.EventCommands.UpdateEvent;
 using EventProject.Application.Features.Commands.EventMediaFile.UploadEventMedia;
 using EventProject.Application.Features.Queries.EventQueries.GetEventById;
 using EventProject.Application.Features.Queries.EventQueries.GetEvents;
@@ -56,6 +57,11 @@ public class EventController : ControllerBase
         return Ok(result);
     }
 
+    [HttpPut("update_event")]
+    public async Task<IActionResult> UpdateEvent([FromBody]UpdateEventRequest updateEventRequest)
+    {
+        return Ok(await _mediator.Send(updateEventRequest));
+    }
 
 
 }

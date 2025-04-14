@@ -3,13 +3,15 @@ using EventProject.Application.Features.Commands.EventCommands.UpdateEvent;
 using EventProject.Application.Features.Commands.EventMediaFile.UploadEventMedia;
 using EventProject.Application.Features.Queries.EventQueries.GetEventById;
 using EventProject.Application.Features.Queries.EventQueries.GetEvents;
+using EventProject.Application.Features.Queries.EventQueries.GetTrending;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventProject.Api.Controllers;
-
 [ApiController]
 [Route("api/[controller]")]
+//[Authorize]
 public class EventController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -28,7 +30,6 @@ public class EventController : ControllerBase
 
         return Ok(result);
     }
-
     [HttpGet("getEvents")]
     public async Task<IActionResult> GetEvents([FromQuery] GetEventsRequest request)
     {
@@ -39,12 +40,13 @@ public class EventController : ControllerBase
         return Ok(result);
     }
 
-
+    
     [HttpPost("uploadEventMedia")]
     public async Task<IActionResult> UploadEventMedia([FromForm] UploadEventMediaRequest request)
     {
         return Ok(await _mediator.Send(request));
     }
+
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(Guid id)
@@ -62,7 +64,13 @@ public class EventController : ControllerBase
     {
         return Ok(await _mediator.Send(updateEventRequest));
     }
-
+   
+    [HttpGet("gettrending")]
+    public async Task<IActionResult> GetTrendingEvents()
+    {
+        GetTrendingEventsCommand command = new();
+        return Ok(await _mediator.Send(command));
+    }
 
 }
 

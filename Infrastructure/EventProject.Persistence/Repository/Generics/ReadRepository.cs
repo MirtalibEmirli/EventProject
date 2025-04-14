@@ -29,5 +29,7 @@ public class ReadRepository<TEntity>(AppDbContext context) : IReadRepository<TEn
 
 
 	public IEnumerable<TEntity> GetWhere(Expression<Func<TEntity, bool>> method) => Table.Where(e => e.IsDeleted!=true).Where(method);
+
+    public IQueryable<TEntity> GetWhereQuery(Expression<Func<TEntity, bool>> predicate) => Table.Where(e => e.IsDeleted != false).Where(predicate).AsQueryable();
 }
 

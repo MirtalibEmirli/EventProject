@@ -20,7 +20,6 @@ public class UpdateEventHanlder(IEventReadRepository readRepository,IEventCatego
          
  
 
-        //diqqeetli ooll guid ile isleyerk
 
         if (request.CategoryId != null && request.CategoryId != Guid.Empty)
         {

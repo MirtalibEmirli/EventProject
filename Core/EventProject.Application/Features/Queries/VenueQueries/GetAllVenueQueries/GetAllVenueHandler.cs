@@ -23,8 +23,17 @@ public class GetAllVenueHandler : IRequestHandler<GetAllVenueRequest, ResponseMo
 
     public async Task<ResponseModel<List<GetAllVenueResponse>>> Handle(GetAllVenueRequest request, CancellationToken cancellationToken)
     {
-        var venues =  _venueReadRepository.GetAll();
-        var result = _mapper.Map<List<GetAllVenueResponse>>(venues);
+        var venues = _venueReadRepository.GetAll().Include(x => x.VenueMediaFiles).Where(x => x.IsDeleted != true);
+
+        var result = new List<GetAllVenueResponse>();
+
+
+        foreach (var item in venues)
+        {
+            var obj = _mapper.Map<GetAllVenueResponse>(item);
+           obj.MediaUrls=item.VenueMediaFiles!=null?item.VenueMediaFiles.Select(m=>m.FileName).ToList():new List<string>();  
+
+        }
 
         return new ResponseModel<List<GetAllVenueResponse>>
         {

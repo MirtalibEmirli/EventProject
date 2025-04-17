@@ -24,7 +24,7 @@ public class MappingProfile : Profile
         CreateMap<GetAllCategories, Category>().ReverseMap();
         CreateMap<Venue, GetAllVenueResponse>();
         CreateMap<Venue, GetByIdVenueResponse>();
-
+     
 
     }
 }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EventProject.Application.DTOs;
+﻿namespace EventProject.Application.DTOs;
 
 public class VenueDTO
 {
@@ -14,5 +8,6 @@ public class VenueDTO
     public string? Description { get; set; }
     public string Phone { get; set; } = string.Empty;
     public double Latitude { get; set; }
+    public List<string> MediaUrls { get; set; }
     public double Longitude { get; set; }
 }

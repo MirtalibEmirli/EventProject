@@ -88,7 +88,7 @@ namespace EventProject.Application.Features.PartyIdeas.Commands
 </body>
 </html>";
 
-           
+
             var htmlBody = template
                 .Replace("{{FullName}}", request.FullName)
                 .Replace("{{Email}}", request.Email)
@@ -98,7 +98,7 @@ namespace EventProject.Application.Features.PartyIdeas.Commands
                 .Replace("{{Venue}}", request.Venue)
                 .Replace("{{Description}}", request.Description);
 
-     
+
             var subject = $"[New Party Idea] PartyEventHub – {request.Date:dd/MM/yyyy}";
 
             try

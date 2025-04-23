@@ -17,3 +17,5 @@ public class SendPartyIdeaRequest:IRequest<bool>
     public string Venue { get; set; } = null!;
     public string Description { get; set; } = null!;
 }
+
+

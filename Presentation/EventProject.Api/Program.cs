@@ -16,7 +16,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddStorage<AzureStorage>();
-builder.Services.AddInfrastructureService();
+builder.Services.AddInfrastructureService(builder.Configuration);
 builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>
     policy.WithOrigins("http://localhost:5173", "https://localhost:5173").AllowAnyHeader().AllowAnyMethod().AllowCredentials()
 ));

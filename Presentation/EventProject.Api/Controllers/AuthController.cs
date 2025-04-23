@@ -25,4 +25,5 @@ public class AuthController(ISender sender) : ControllerBase
         return Ok(await _sender.Send(request));
     }
 
+
 }

@@ -15,7 +15,7 @@ public class UploadEventMediaHandler(IStorageService storageService, IEventReadR
 
     public async Task<ResponseModel<Unit>> Handle(UploadEventMediaRequest request, CancellationToken cancellationToken)
     {
-        List<(string fileName, string pathorContainerName)> medias = await _storageService.UploadAsync("event-images", request.Medias);
+        List<(string fileName, string pathorContainerName)> medias = await _storageService.UploadAsync("event-medias", request.Medias);
 
         var eventToImg = await _eventReadRepository.GetByIdAsync(request.EventId);
 

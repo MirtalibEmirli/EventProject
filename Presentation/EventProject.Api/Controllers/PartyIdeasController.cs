@@ -1,4 +1,5 @@
 ﻿using EventProject.Application.Features.Commands.SendPartyIdeaCommand;
+using EventProject.Application.Features.Commands.SendPartyIdeaCommand.Contact;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -24,5 +25,12 @@ public class PartyIdeasController : ControllerBase
             return Ok(new { Message = "Your idea has been submitted successfully!" });
 
         return BadRequest(new { Message = "Failed to submit your idea. Please try again later." });
+    }
+
+
+    [HttpPost("contactus")]
+    public async Task<IActionResult> GetinTouch([FromBody] ContactUsCommand contact)
+    {
+        return Ok(await _mediator.Send(contact));   
     }
 }

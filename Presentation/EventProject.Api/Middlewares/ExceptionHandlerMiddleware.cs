@@ -62,7 +62,7 @@ public class ExceptionHandlerMiddleware
         context.Response.StatusCode = (int)badRequest;
         var validationErrors = validationException.Errors.Select(e => new { field = e.PropertyName, message = e.ErrorMessage });
 
-        var json = JsonSerializer.Serialize(new { validatonErrors = validationErrors });
+        var json = JsonSerializer.Serialize(new { validationErrors = validationErrors });
         await context.Response.WriteAsync(json);
     }
 

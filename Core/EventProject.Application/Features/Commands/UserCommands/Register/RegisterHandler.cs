@@ -5,6 +5,7 @@ using EventProject.Application.Repositories.Users;
 using EventProject.Application.ResponseModels.Generics;
 using EventProject.Application.Services.Security;
 using EventProject.Domain.Entities;
+using EventProject.Domain.Enums;
 using MediatR;
 using System.Security.Claims;
 
@@ -26,7 +27,7 @@ public class RegisterHandler(IMapper mapper, IUserReadRepsoitory userRead, IUser
         var user = _mapper.Map<User>(request);
 
         user.PasswordHash = hashedPassword;
-
+        user.Role = Role.User;
         await _userWrite.AddAsync(user);
         await _userWrite.SaveChangesAsync();
 
@@ -36,6 +37,7 @@ public class RegisterHandler(IMapper mapper, IUserReadRepsoitory userRead, IUser
             new Claim(ClaimTypes.Role,user.Role.ToString())
         };
         var token = _tokenHandler.CreateAccessToken(claims, 160);
+
         return new ResponseModel<RegisterResponse>
         {
             Data = new RegisterResponse { Token = token },

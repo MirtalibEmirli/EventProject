@@ -30,7 +30,7 @@ namespace EventProject.Infrastructure.Services.Token
             //sifrelenmis kod
             SigningCredentials signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
-            token.ExpirationDate = DateTime.UtcNow.AddMinutes(minute);
+            token.ExpirationDate = DateTime.Now.AddMinutes(minute);
             JwtSecurityToken securityToken = new JwtSecurityToken(
                 audience: configuration["JWT:ValidAudience"],
                 claims:claims,

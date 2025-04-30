@@ -22,7 +22,7 @@ public class RegisterHandler(IMapper mapper, IUserReadRepsoitory userRead, IUser
     {
         var exsitingUser = _userReadRepsoitory.GetWhere(u => request.Email == u.Email).FirstOrDefault();
         if (exsitingUser != null) { throw new BadRequestException($"User with email {request.Email} already exists."); }
-
+ 
         var hashedPassword = PasswordHasher.ComputeStringToSha256Hash(request.Password);
         var user = _mapper.Map<User>(request);
 

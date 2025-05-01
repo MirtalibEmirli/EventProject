@@ -20,15 +20,15 @@ namespace EventProject.Application.Features.Commands.UserCommands.Login
         {
             var user = userRead.GetWhere(u => u.Email == request.Email).FirstOrDefault();
 
-            if (user == null) { throw new NotFoundException($"There  is no user with {request.Email} "); }
+            if (user == null) { throw new NotFoundException($"Sistemde  {request.Email} bele mail ile qeydiyyat olunmayıb."); }
 
 
            
-            var hashedPassword = PasswordHasher.ComputeStringToSha256Hash(user.PasswordHash);
+            var hashedPassword = PasswordHasher.ComputeStringToSha256Hash(request.Password);
           
             if (user.PasswordHash != hashedPassword)
             {
-                throw new BadRequestException($"The password you provided {user.PasswordHash} is not true");
+                throw new BadRequestException($"Daxil etdiyiniz şifrə doğru deyil!");
 
 
             }

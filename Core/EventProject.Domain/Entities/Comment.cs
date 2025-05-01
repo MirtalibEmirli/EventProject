@@ -1,5 +1,5 @@
-﻿using EventProject.Domain.Entities;
-
+﻿
+namespace EventProject.Domain.Entities;
 public class Comment:BaseEntity
 {
     public Guid UserId { get; set; }

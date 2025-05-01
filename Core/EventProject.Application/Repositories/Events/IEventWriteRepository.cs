@@ -1,4 +1,6 @@
-﻿namespace EventProject.Application.Repositories.Events;
+﻿using EventProject.Domain.Entities;
+
+namespace EventProject.Application.Repositories.Events;
 
 public interface IEventWriteRepository : IWriteRepository<Event>
 {

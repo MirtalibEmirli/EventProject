@@ -2,6 +2,7 @@
 using EventProject.Application.Repositories.Events;
 using EventProject.Application.Repositories.Venues;
 using EventProject.Application.ResponseModels.Generics;
+using EventProject.Domain.Entities;
 using MediatR;
 
 namespace EventProject.Application.Features.Commands.EventCommands.CreateEvent;

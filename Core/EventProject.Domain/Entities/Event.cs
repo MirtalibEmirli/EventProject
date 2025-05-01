@@ -1,6 +1,6 @@
-﻿using EventProject.Domain.Entities;
+﻿
 using EventProject.Domain.Enums;
-
+namespace EventProject.Domain.Entities;
 public class Event:BaseEntity
 {
     public string Title { get; set; } = string.Empty;

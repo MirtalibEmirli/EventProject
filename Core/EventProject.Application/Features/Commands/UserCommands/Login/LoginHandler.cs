@@ -24,7 +24,7 @@ namespace EventProject.Application.Features.Commands.UserCommands.Login
 
 
            
-            var hashedPassword = PasswordHasher.ComputeStringToSha256Hash(user.PasswordHash);
+            var hashedPassword = PasswordHasher.ComputeStringToSha256Hash(request.Password);
           
             if (user.PasswordHash != hashedPassword)
             {

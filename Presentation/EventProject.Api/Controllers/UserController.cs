@@ -13,7 +13,7 @@ namespace EventProject.Api.Controllers;
 public class UserController(ISender sender) : ControllerBase
 {
     private readonly ISender _sender=sender;
-    [HttpPost]
+    [HttpPost("recentlyviewed")]
     public async Task<IActionResult> AddRecentlyViewedEvent(AddRecentlyViewedEventCommand request)
     {
         return Ok(await _sender.Send(request));

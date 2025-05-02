@@ -6,7 +6,7 @@ namespace EventProject.Api.Services
 {
     public static class AuthenticationService
     {
-        public static IServiceCollection AddAuthentication(this IServiceCollection services,IConfiguration configuration) {
+        public static IServiceCollection AddAuthenticationMain(this IServiceCollection services,IConfiguration configuration) {
 
             services.AddAuthentication(opt =>
             {
@@ -21,7 +21,7 @@ namespace EventProject.Api.Services
                     ValidateIssuer=true,        
                     ValidateIssuerSigningKey=true,
                     ValidateLifetime=true,
-                    ValidAudience = configuration["JWT:ValidAudince"],
+                    ValidAudience = configuration["JWT:ValidAudience"],
                     ValidIssuer = configuration["JWT:ValidIssuer"],
                     IssuerSigningKey =new SymmetricSecurityKey( Encoding.UTF8.GetBytes(configuration["JWT:Secret"]!))
                 };

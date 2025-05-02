@@ -20,7 +20,7 @@ public class GetEventsHandler : IRequestHandler<GetEventsRequest, ResponseModel<
         var query = eventReadRepository.GetAll()
                                        .Include(e => e.Location)
                                        .Include(e => e.Category)
-                                       .Include(e => e.MediaFiles).Where(e=>e.IsDeleted != null);
+                                       .Include(e => e.MediaFiles).Where(e=>e.IsDeleted != false); //
 
 
 

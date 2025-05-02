@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EventProject.Application.DTOs;
 using EventProject.Application.Features.Commands.EventCommands.UpdateEvent;
+using EventProject.Application.Features.Queries.UserQueries.GetRecentlyViewedEvents;
 
 namespace EventProject.Application.AutoMapper
 {
@@ -55,7 +56,7 @@ namespace EventProject.Application.AutoMapper
      .ForMember(dest => dest.IsTrend, opt => opt.MapFrom(src => src.IsTrend));
 
       CreateMap<Event, GetTrendingEventsDto>();
-
+            CreateMap<Event, RVEventsDto>();
         }
     }
 }

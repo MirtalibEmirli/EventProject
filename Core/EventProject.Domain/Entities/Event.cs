@@ -7,7 +7,7 @@ public class Event:BaseEntity
 
     public string Description { get; set; } = string.Empty;
 
-    public DateTime StartTime { get; set; }
+    public DateTime StartTime { get; set; } 
     public bool IsTrend { get; set; } = false;
 
     public int AgeLimit { get; set; }
@@ -24,10 +24,7 @@ public class Event:BaseEntity
     //// Foreign Keys
     public Guid CategoryId { get; set; }
     public Category Category { get; set; } = null!;
-
-
- 
-   
+    public ICollection<UserRwEvent> UserRwEvents { get; set; }
 
 
     //// Relations

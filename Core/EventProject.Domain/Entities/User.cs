@@ -22,5 +22,6 @@ public class User : BaseEntity
     public ICollection<Ticket> Tickets { get; set; } 
     public ICollection<Comment> Comments { get; set; } 
     public ICollection<Payment> Payments { get; set; }
+    public ICollection<UserRwEvent> UserRwEvents { get; set; }
 
 }

@@ -22,11 +22,20 @@ public class AppDbContext : DbContext
     public DbSet<UserMediaFile> UserMediaFiles { get; set; }
     public DbSet<EventMediaFile> EventMediaFiles { get; set; }
     public DbSet<VenueMediaFile> VenueMediaFiles { get; set; }
+    public DbSet<UserRwEvent> UserRwEvents { get; set; }
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+
+
+
+        modelBuilder.Entity<UserRwEvent>().HasKey(ur => new { ur.UserId, ur.EventId });
+
+        modelBuilder.Entity<UserRwEvent>().HasOne(ur => ur.User).WithMany(u => u.UserRwEvents).HasForeignKey(ur => ur.UserId);
+        modelBuilder.Entity<UserRwEvent>().HasOne(ur => ur.Event).WithMany(e => e.UserRwEvents).HasForeignKey(e => e.EventId);
 
         // Event → Category
         modelBuilder.Entity<Event>()

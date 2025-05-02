@@ -3,7 +3,7 @@ using EventProject.Domain.Entities;
 using EventProject.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-
+ 
 namespace EventProject.Persistence.Repository.Generics;
 
 public class ReadRepository<TEntity>(AppDbContext context) : IReadRepository<TEntity> where TEntity : BaseEntity
@@ -30,6 +30,6 @@ public class ReadRepository<TEntity>(AppDbContext context) : IReadRepository<TEn
 
 	public IEnumerable<TEntity> GetWhere(Expression<Func<TEntity, bool>> method) => Table.Where(e => e.IsDeleted!=true).Where(method);
 
-    public IQueryable<TEntity> GetWhereQuery(Expression<Func<TEntity, bool>> predicate) => Table.Where(e => e.IsDeleted != false).Where(predicate).AsQueryable();
+    public IQueryable<TEntity> GetWhereQuery(Expression<Func<TEntity, bool>> predicate) => Table.Where(e => e.IsDeleted == false).Where(predicate).AsQueryable();
 }
 

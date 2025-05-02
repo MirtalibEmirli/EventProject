@@ -21,7 +21,7 @@ public class UserController(ISender sender) : ControllerBase
     }
     //4787ed36-3512-44ee-6c34-08dd869071a8
  //{70725a5f-7d98-490d-071b-08dd88a151cf}
-    [HttpGet]
+    [HttpGet("getrecentlyviewedevents")]
     public async Task<IActionResult> GetRwEvents()
     {
         var request = new GetRecentlyViewedEventQuery();

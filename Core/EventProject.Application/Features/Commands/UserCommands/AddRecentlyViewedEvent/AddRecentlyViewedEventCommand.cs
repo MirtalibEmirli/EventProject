@@ -11,6 +11,5 @@ namespace EventProject.Application.Features.Commands.UserCommands.AddRecentlyVie
 public class AddRecentlyViewedEventCommand:IRequest<BaseResponseModel>
 {
     public required Guid EventId { get; set; }
-    public required Guid UserId { get; set; }
 }
 

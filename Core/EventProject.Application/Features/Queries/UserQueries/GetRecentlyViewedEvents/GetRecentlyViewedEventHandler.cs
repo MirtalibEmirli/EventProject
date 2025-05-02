@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using EventProject.Application.Abstractions.IHttpContextUser;
 using EventProject.Application.Repositories.UserRwEvents;
 using EventProject.Application.ResponseModels.Generics;
 using MediatR;
@@ -8,15 +9,13 @@ using System.Security.Claims;
 
 namespace EventProject.Application.Features.Queries.UserQueries.GetRecentlyViewedEvents;
 
-public class GetRecentlyViewedEventHandler(IUserRwEventsReadRepository userRwEventsRead, IHttpContextAccessor contextAccessor, IMapper mapper) : IRequestHandler<GetRecentlyViewedEventQuery, ResponseModel<List<RVEventsDto>>>
+public class GetRecentlyViewedEventHandler(IUserRwEventsReadRepository userRwEventsRead, ICurrentUserService currentUserService, IMapper mapper) : IRequestHandler<GetRecentlyViewedEventQuery, ResponseModel<List<RVEventsDto>>>
 {
+
+    private readonly ICurrentUserService _currentUserService = currentUserService;
     public async Task<ResponseModel<List<RVEventsDto>>> Handle(GetRecentlyViewedEventQuery request, CancellationToken cancellationToken)
     {
-        var userIdClaim = contextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
-        if (userIdClaim == null) throw new UnauthorizedAccessException("User is not authenticated");
-
-        var userId = Guid.Parse(userIdClaim.Value);
-
+        var userId = _currentUserService.GetUserId();
         var events = await userRwEventsRead
        .GetWhereQuery(uv => uv.UserId == userId)
        .Include(uv => uv.Event)

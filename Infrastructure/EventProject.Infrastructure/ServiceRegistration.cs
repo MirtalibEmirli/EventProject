@@ -1,10 +1,12 @@
-﻿using EventProject.Application.Abstractions.Service;
+﻿using EventProject.Application.Abstractions.IHttpContextUser;
+using EventProject.Application.Abstractions.Service;
 using EventProject.Application.Abstractions.Storage;
 using EventProject.Application.Abstractions.Storage.Azure;
 using EventProject.Application.Abstractions.Storage.Local;
 using EventProject.Application.Abstractions.Token;
 using EventProject.Domain.Enums;
 using EventProject.Infrastructure.Services;
+using EventProject.Infrastructure.Services.HttpContextUser;
 using EventProject.Infrastructure.Services.Storage;
 using EventProject.Infrastructure.Services.Storage.Azure;
 using EventProject.Infrastructure.Services.Storage.Local;
@@ -24,6 +26,7 @@ public static class ServiceRegistration
         services.AddTransient<IMailService, MailService>();
         services.Configure<MailSettings>(
             configuration.GetSection("Mail"));
+        services.AddScoped<ICurrentUserService, CurrentUserService>();
     }
 
     public static void AddStorage<T>(this IServiceCollection services) where T : class, IStorage

@@ -20,8 +20,8 @@ builder.Services.AddStorage<AzureStorage>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddAuthenticationMain(builder.Configuration);
 builder.Services.AddInfrastructureService(builder.Configuration);
-builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>
-    policy.WithOrigins("http://localhost:5173", "https://localhost:5173").AllowAnyHeader().AllowAnyMethod().AllowCredentials()
+builder.Services.AddCors(options => options.AddPolicy("AllowAll",policy =>
+    policy.WithOrigins().AllowAnyHeader().AllowAnyMethod().AllowCredentials()
 ));
 
 
@@ -46,7 +46,9 @@ if (app.Environment.IsDevelopment()||app.Environment.IsProduction())
 
 app.UseHttpsRedirection();
 
-app.UseRouting(); 
+app.UseRouting(); // <-- bu olmalıdır!
+
+app.UseCors(); // <-- CORS burada olmalıdır!
 
 app.UseCors();
 app.UseAuthentication();

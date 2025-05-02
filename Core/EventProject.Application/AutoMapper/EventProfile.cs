@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using EventProject.Application.DTOs;
 using EventProject.Application.Features.Commands.EventCommands.UpdateEvent;
-using EventProject.Application.Features.Queries.UserQueries.GetRecentlyViewedEvents;
 
 namespace EventProject.Application.AutoMapper
 {

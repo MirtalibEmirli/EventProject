@@ -8,3 +8,4 @@ public class SectionWeight:BaseEntity
     public string SectionName { get; set; } = null!;
     public float Weight { get; set; }
 }
+ 

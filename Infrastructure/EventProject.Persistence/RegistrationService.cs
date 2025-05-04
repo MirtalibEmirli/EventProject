@@ -4,6 +4,7 @@ using EventProject.Application.Repositories.EventMediaFiles;
 
 using EventProject.Application.Repositories.Events;
 using EventProject.Application.Repositories.EventSeatPrices;
+using EventProject.Application.Repositories.Refresh;
 using EventProject.Application.Repositories.Seats;
 using EventProject.Application.Repositories.SectionWeights;
 using EventProject.Application.Repositories.UserRwEvents;
@@ -15,6 +16,7 @@ using EventProject.Persistence.Repository.EventCategories;
 using EventProject.Persistence.Repository.EventMediaFiles;
 using EventProject.Persistence.Repository.Events;
 using EventProject.Persistence.Repository.EventSeatPrices;
+using EventProject.Persistence.Repository.Refresh;
 using EventProject.Persistence.Repository.Seats;
 using EventProject.Persistence.Repository.SectionWeights;
 using EventProject.Persistence.Repository.UserRwEvents;
@@ -52,11 +54,13 @@ public static class RegistrationService
         services.AddScoped<IEventMediaFileWriteRepository, EventMediaFileWriteRepository>();
         services.AddScoped<IVenueMediaFileWriteRepository, VenueMediaFileWriteRepository>();
         services.AddScoped<IVenueMediaFileReadRepository, VenueMediaFileReadRepository>();
-        services.AddScoped<IUserReadRepsoitory,UserReadRepository>();   
+        services.AddScoped<IUserReadRepsoitory, UserReadRepository>();
         services.AddScoped<IUserWriteRepository, UserWriteRepository>();
         services.AddScoped<IUserRwEventsReadRepository, UserRwEventsReadRepository>();
         services.AddScoped<IUserRwEventsWriteRepository
-, UserRwEventsWriteRepository>();   
+, UserRwEventsWriteRepository>();
+        services.AddScoped<IRefreshTokenRead,RefreshTokenRead>();
+        services.AddScoped<IRefreshTokenWrite, RefreshTokenWrite>();
         return services;
     }
 }

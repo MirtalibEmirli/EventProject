@@ -1,8 +1,10 @@
 ﻿using EventProject.Application.Abstractions.Token;
 using EventProject.Application.Exceptions;
+using EventProject.Application.Repositories.Refresh;
 using EventProject.Application.Repositories.Users;
 using EventProject.Application.ResponseModels.Generics;
 using EventProject.Application.Services.Security;
+using EventProject.Domain.Entities;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -14,7 +16,7 @@ using System.Threading.Tasks;
 namespace EventProject.Application.Features.Commands.UserCommands.Login
 {
 
-    public class LoginHandler(IUserReadRepsoitory userRead, ITokenHandler tokenHandler) : IRequestHandler<LoginRequest, ResponseModel<LoginResponse>>
+    public class LoginHandler(IUserReadRepsoitory userRead, ITokenHandler tokenHandler,IRefreshTokenWrite refreshTokenWrite) : IRequestHandler<LoginRequest, ResponseModel<LoginResponse>>
     {
         public async Task<ResponseModel<LoginResponse>> Handle(LoginRequest request, CancellationToken cancellationToken)
         {
@@ -40,7 +42,18 @@ namespace EventProject.Application.Features.Commands.UserCommands.Login
                 new Claim(ClaimTypes.Role,user.Role.ToString())
             };
             var token = tokenHandler.CreateAccessToken(authClaims, 160);
+            var refresh = tokenHandler.CreateRefreshToken();
+            token.RefreshToken = refresh;
+            token.RefreshTokenExpirationDate = DateTime.UtcNow.AddDays(1);
 
+          await  refreshTokenWrite.AddAsync(new Domain.Entities.RefreshToken()
+            {
+                Token = refresh,    
+                ExpirationDate = DateTime.UtcNow.AddDays(1),
+                UserId=user.Id,
+
+            });
+            await refreshTokenWrite.SaveChangesAsync();
             var result = new LoginResponse { Token = token };
             return new ResponseModel<LoginResponse>()
             {

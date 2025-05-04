@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 
@@ -47,7 +48,10 @@ namespace EventProject.Infrastructure.Services.Token
 
         public string CreateRefreshToken()
         {
-            throw new NotImplementedException();
+            var bytes = new byte[32];
+            using var rng = RandomNumberGenerator.Create();
+            rng.GetBytes(bytes);
+            return Convert.ToBase64String(bytes);
         }
     }
 }

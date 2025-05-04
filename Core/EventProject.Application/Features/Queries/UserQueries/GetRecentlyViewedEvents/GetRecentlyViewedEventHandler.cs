@@ -31,7 +31,8 @@ public class GetRecentlyViewedEventHandler(IUserRwEventsReadRepository userRwEve
                 return dto;
             }).ToList();
 
-        return new ResponseModel<List<RVEventsDto>> { Data = rwEvents, IsSuccess = true, Message = "recentlyViewed Events " };
+        return new ResponseModel<List<RVEventsDto>> 
+        { Data = rwEvents, IsSuccess = true, Message = "recentlyViewed Events " };
 
     }
 }

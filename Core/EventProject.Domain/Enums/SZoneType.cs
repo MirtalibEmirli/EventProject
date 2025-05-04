@@ -3,6 +3,7 @@
 public enum SZoneType
 {
     VIPStanding,
+    VVIPStanding,
     RegularStanding
 
-}
+} 

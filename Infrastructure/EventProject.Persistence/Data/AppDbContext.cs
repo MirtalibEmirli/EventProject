@@ -23,6 +23,8 @@ public class AppDbContext : DbContext
     public DbSet<EventMediaFile> EventMediaFiles { get; set; }
     public DbSet<VenueMediaFile> VenueMediaFiles { get; set; }
     public DbSet<UserRwEvent> UserRwEvents { get; set; }
+    public DbSet<RefreshToken> UserRefreshTokens { get; set; }
+
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

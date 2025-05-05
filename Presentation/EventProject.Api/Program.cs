@@ -1,24 +1,24 @@
 ﻿using EventProject.Api.Middlewares;
 using EventProject.Api.Services;
 using EventProject.Application;
-
+using EventProject.Application.Abstractions.Jobs;
 using EventProject.Infrastructure;
 using EventProject.Infrastructure.Services.Storage.Azure;
 using EventProject.Persistence;
+using Hangfire;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
  
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "EventProject.API", Version = "v1" });
 
-    // JWT üçün auth konfiqi
+     
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description = @"Tokeni aşağıdakı formatda daxil edin:  
@@ -48,51 +48,59 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+ 
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddStorage<AzureStorage>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddAuthenticationMain(builder.Configuration);
 builder.Services.AddInfrastructureService(builder.Configuration);
-builder.Services.AddCors(options => options.AddPolicy("AllowAll",policy =>
-    policy.WithOrigins().AllowAnyHeader().AllowAnyMethod().AllowCredentials()
+
+
+builder.Services.AddCors(options => options.AddPolicy("AllowAll", policy =>
+    policy
+        .WithOrigins("http://localhost:3000", "http://localhost:5173")
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials()
 ));
 
 
 
-
-
-
-
-var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-
-
+builder.Services.AddHangfire(config =>
+    config.UseSqlServerStorage(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddHangfireServer();
 
 var app = builder.Build();
- 
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment()||app.Environment.IsProduction())
+ 
+using (var scope = app.Services.CreateScope())
+{
+    var jobManager = scope.ServiceProvider.GetRequiredService<IRecurringJobManager>();
+
+    jobManager.AddOrUpdate<IRecentlyViewedJob>(
+        "delete-old-recentlyviewed-events",
+        job => job.DeleteOldRecentlyViewedEvents(),
+        Cron.Daily); 
+}
+
+ 
+if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
-
-app.UseRouting(); // <-- bu olmalıdır!
-
-app.UseCors(); // <-- CORS burada olmalıdır!
-
-app.UseCors();
+app.UseRouting();
+app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers();
+ 
+app.UseHangfireDashboard("/jobs");
+
 app.UseMiddleware<ExceptionHandlerMiddleware>();
-
-
-
-
+app.MapControllers();
 
 app.Run();

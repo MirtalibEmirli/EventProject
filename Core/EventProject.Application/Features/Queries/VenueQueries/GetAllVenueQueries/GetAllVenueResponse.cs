@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EventProject.Application.Features.Queries.VenueQueries.GetAllVenueQueries;
 
-public class GetAllVenueResponse
+public class GetAllVenueResponse 
 {
     public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;

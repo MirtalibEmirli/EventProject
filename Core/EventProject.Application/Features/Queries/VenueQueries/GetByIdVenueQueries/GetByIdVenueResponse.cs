@@ -11,4 +11,8 @@ public class GetByIdVenueResponse
     public string Phone { get; set; } = string.Empty;
     public double Latitude { get; set; }
     public double Longitude { get; set; }
+    public string? OpenHours { get; set; }
+    public string? TripAdvisorLink { get; set; }
+    public string? InstagramLink { get; set; }
+
 }

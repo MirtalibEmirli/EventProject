@@ -1,6 +1,6 @@
 ﻿namespace EventProject.Domain.Entities;
 
-
+  
 //venue-seat =>
 public class Venue:BaseEntity
 {

@@ -1,4 +1,5 @@
 ﻿using EventProject.Application.Abstractions.Service;
+using EventProject.Application.Repositories.Comments;
 using EventProject.Application.Repositories.EventCategories;
 using EventProject.Application.Repositories.EventMediaFiles;
 
@@ -12,6 +13,7 @@ using EventProject.Application.Repositories.Users;
 using EventProject.Application.Repositories.VenueMediaFiles;
 using EventProject.Application.Repositories.Venues;
 using EventProject.Persistence.Data;
+using EventProject.Persistence.Repository.Comments;
 using EventProject.Persistence.Repository.EventCategories;
 using EventProject.Persistence.Repository.EventMediaFiles;
 using EventProject.Persistence.Repository.Events;
@@ -61,6 +63,8 @@ public static class RegistrationService
 , UserRwEventsWriteRepository>();
         services.AddScoped<IRefreshTokenRead,RefreshTokenRead>();
         services.AddScoped<IRefreshTokenWrite, RefreshTokenWrite>();
+        services.AddScoped<ICommentReadRepository, CommentReadRepository>();
+        services.AddScoped<ICommentWriteRepository, CommentWriteRepository>();
         return services;
     }
 }

@@ -33,7 +33,8 @@ public class RefreshTokenHanlder(IRefreshTokenWrite refreshTokenWrite,IRefreshTo
         List<Claim> claims = new List<Claim>()
         {
            new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
-            new Claim(ClaimTypes.Role,user.Role.ToString())
+            new Claim(ClaimTypes.Role,user.Role.ToString()),
+            new Claim(ClaimTypes.Name, user.Lastname)
         };
 
         var newAccessToken = tokenHandler.CreateAccessToken(claims, 160);

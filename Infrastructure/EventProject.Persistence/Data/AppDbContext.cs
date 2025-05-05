@@ -116,6 +116,11 @@ public class AppDbContext : DbContext
      .HasForeignKey(n => n.UserId)
      .OnDelete(DeleteBehavior.Cascade);
 
+        modelBuilder.Entity<Comment>()
+         .HasOne(c => c.ParentComment)
+         .WithMany(c => c.Replies)
+         .HasForeignKey(c => c.ParentCommentId)
+         .OnDelete(DeleteBehavior.Restrict);
 
         // Venue → Seats
         modelBuilder.Entity<Seat>()

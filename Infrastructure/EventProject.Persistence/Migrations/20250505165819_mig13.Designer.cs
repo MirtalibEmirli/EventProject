@@ -4,6 +4,7 @@ using EventProject.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventProject.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250505165819_mig13")]
+    partial class mig13
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,6 +80,9 @@ namespace EventProject.Persistence.Migrations
                     b.Property<Guid?>("ParentCommentId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("ParnetCommentId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
@@ -87,7 +93,7 @@ namespace EventProject.Persistence.Migrations
 
                     b.HasIndex("EventId");
 
-                    b.HasIndex("ParentCommentId");
+                    b.HasIndex("ParnetCommentId");
 
                     b.HasIndex("UserId");
 
@@ -705,10 +711,11 @@ namespace EventProject.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EventProject.Domain.Entities.Comment", "ParentComment")
+                    b.HasOne("EventProject.Domain.Entities.Comment", "ParnetComment")
                         .WithMany("Replies")
-                        .HasForeignKey("ParentCommentId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("ParnetCommentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("EventProject.Domain.Entities.User", "User")
                         .WithMany("Comments")
@@ -718,7 +725,7 @@ namespace EventProject.Persistence.Migrations
 
                     b.Navigation("Event");
 
-                    b.Navigation("ParentComment");
+                    b.Navigation("ParnetComment");
 
                     b.Navigation("User");
                 });

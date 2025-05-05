@@ -59,7 +59,19 @@ public class WriteRepository<TEntity>(AppDbContext context) : IWriteRepository<T
 
 	}
 
-	public Task<int> SaveChangesAsync()=> context.SaveChangesAsync();
+	public async Task<int> SaveChangesAsync()
+	{
+		try
+		{
+			 return await context.SaveChangesAsync();
+		}
+		catch (Exception ex)
+		{
+            await Console.Out.WriteLineAsync(ex.Message);
+            await Console.Out.WriteLineAsync(ex.InnerException?.Message);
+            throw;
+		}
+	}
 
 
 

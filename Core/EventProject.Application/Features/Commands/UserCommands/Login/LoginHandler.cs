@@ -39,7 +39,8 @@ namespace EventProject.Application.Features.Commands.UserCommands.Login
             List<Claim> authClaims = new List<Claim>()
             {
                 new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()), 
-                new Claim(ClaimTypes.Role,user.Role.ToString())
+                new Claim(ClaimTypes.Role,user.Role.ToString()),
+                new Claim(ClaimTypes.Name, user.Lastname)
             };
             var token = tokenHandler.CreateAccessToken(authClaims, 160);
             var refresh = tokenHandler.CreateRefreshToken();

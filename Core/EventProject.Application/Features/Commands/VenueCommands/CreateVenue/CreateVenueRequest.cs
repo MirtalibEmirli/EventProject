@@ -1,12 +1,7 @@
 ﻿using EventProject.Application.DTOs;
 using EventProject.Application.ResponseModels.Generics;
 using EventProject.Domain.Entities;
-using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MediatR; 
 
 namespace EventProject.Application.Features.Commands.VenueCommands.CreateVenue;
 
@@ -18,6 +13,10 @@ public class CreateVenueRequest : IRequest<ResponseModel<Guid>>
     public string Phone { get; set; }
     public double Latitude { get; set; }
     public double Longitude { get; set; }
+
+    public string? OpenHours { get; set; }
+    public string? TripAdvisorLink { get; set; }
+    public string? InstagramLink { get; set; }
 }
 
 

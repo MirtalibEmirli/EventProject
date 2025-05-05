@@ -14,7 +14,8 @@ public class ReadRepository<TEntity>(AppDbContext context) : IReadRepository<TEn
 
     public IQueryable<TEntity> GetAll(bool tracking = true)
     {
-        var query = Table.Where(x => x.IsDeleted != null);
+        //
+        var query = Table.Where(x => x.IsDeleted!=true);
         if (!tracking)
             query = query.AsNoTracking();
 

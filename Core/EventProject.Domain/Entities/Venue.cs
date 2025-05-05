@@ -1,6 +1,6 @@
 ﻿namespace EventProject.Domain.Entities;
 
-
+  
 //venue-seat =>
 public class Venue:BaseEntity
 {
@@ -10,6 +10,10 @@ public class Venue:BaseEntity
     public string Phone { get; set; } = null!;
     public double Latitude { get; set; }
     public double Longitude { get; set; }
+    public  string? OpenHours { get; set; }
+    public  string?  TripAdvisorLink { get; set; }
+    public string? InstagramLink { get; set; }
+
 
     public ICollection<VenueMediaFile> VenueMediaFiles { get; set; }
     public virtual ICollection<Seat> Seats { get; set; } = new List<Seat>();

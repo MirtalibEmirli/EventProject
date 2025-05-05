@@ -7,7 +7,6 @@ namespace EventProject.Application.Features.Commands.VenueCommands.CreateVenue;
 
 public class CreateVenueHandler : IRequestHandler<CreateVenueRequest, ResponseModel<Guid>>
 {
-
     private readonly IVenueWriteRepository venueWriteRepository;
 
     public CreateVenueHandler(IVenueWriteRepository venueWriteRepository)
@@ -24,11 +23,12 @@ public class CreateVenueHandler : IRequestHandler<CreateVenueRequest, ResponseMo
             Description = request.Description,
             Phone = request.Phone,
             Latitude = request.Latitude,
-            Longitude = request.Longitude
-            
+            Longitude = request.Longitude,
+            InstagramLink = request?.InstagramLink,
+            OpenHours = request?.OpenHours,
+            TripAdvisorLink = request?.TripAdvisorLink
         };
-
-         await  venueWriteRepository.AddAsync(venue);
+        await venueWriteRepository.AddAsync(venue);
         await venueWriteRepository.SaveChangesAsync();
         return new ResponseModel<Guid>
         {

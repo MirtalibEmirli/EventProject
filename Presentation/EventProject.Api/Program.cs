@@ -56,16 +56,17 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddAuthenticationMain(builder.Configuration);
 builder.Services.AddInfrastructureService(builder.Configuration);
 
- 
+
 builder.Services.AddCors(options => options.AddPolicy("AllowAll", policy =>
     policy
-        .AllowAnyOrigin()
+        .WithOrigins("http://localhost:3000", "http://localhost:5173")
         .AllowAnyHeader()
         .AllowAnyMethod()
         .AllowCredentials()
 ));
 
- 
+
+
 builder.Services.AddHangfire(config =>
     config.UseSqlServerStorage(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddHangfireServer();
@@ -80,7 +81,7 @@ using (var scope = app.Services.CreateScope())
     jobManager.AddOrUpdate<IRecentlyViewedJob>(
         "delete-old-recentlyviewed-events",
         job => job.DeleteOldRecentlyViewedEvents(),
-        Cron.Daily); // istəsən Cron.Hourly və ya test üçün Cron.Minutely də edə bilərsən
+        Cron.Daily); 
 }
 
  

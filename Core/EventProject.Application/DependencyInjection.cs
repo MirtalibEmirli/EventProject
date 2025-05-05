@@ -1,6 +1,8 @@
 ﻿using Application.PipelineBehavior;
 using AutoMapper;
+using EventProject.Application.Abstractions.Jobs;
 using EventProject.Application.AutoMapper;
+using EventProject.Application.Services.Jobs;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,6 +34,9 @@ namespace EventProject.Application
             //pipelinebehavior
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
 
+
+            //recentlyviewedd
+            services.AddScoped<IRecentlyViewedJob, RecentlyViewedJob>();
             return services;
         }
 

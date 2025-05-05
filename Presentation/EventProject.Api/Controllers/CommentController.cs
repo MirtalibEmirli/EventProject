@@ -1,6 +1,11 @@
 ﻿using EventProject.Application.Features.Commands.CommentCommand.AddComment;
+using EventProject.Application.Features.Commands.CommentCommand.DeleteComment;
+using EventProject.Application.Features.Commands.CommentCommand.ReplyToComment;
+using EventProject.Application.Features.Commands.CommentCommand.UpdateComment;
+using EventProject.Application.Features.Queries.CommentQueries.GetAllComments;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,5 +30,35 @@ namespace EventProject.Api.Controllers
             return Ok(result);
         }
 
+        [HttpGet("{eventId}")]
+        public async Task<IActionResult> GetComments(Guid eventId, int page = 1, int pageSize = 4)
+        {
+            var result = await _mediator.Send(new GetAllCommentRequest(eventId, page, pageSize));
+            return Ok(result);
+        }
+
+        [Authorize]
+        [HttpDelete("{eventId}")]
+        public async Task<IActionResult> DeleteComment(Guid id)
+        {
+            var result = await _mediator.Send(new DeleteCommentRequest() { CommentId=id});
+            return Ok(result);
+        }
+
+        [Authorize]
+        [HttpPut]
+        public async Task<IActionResult> UpdateComment([FromBody] UpdateCommentRequest request)
+        {
+            var result = await _mediator.Send(request);
+            return Ok(result);
+        }
+
+        [Authorize]
+        [HttpPost("reply")]
+        public async Task<IActionResult> ReplyToComment([FromBody] ReplyToCommentRequest request)
+        {
+            var result = await _mediator.Send(request);
+            return Ok(result);
+        }
     }
 }

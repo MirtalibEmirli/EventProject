@@ -13,15 +13,15 @@ public class User : BaseEntity
 
     public string PasswordHash { get; set; } = string.Empty;
 
-    public Role Role { get; set; }  // Admin, User, EventManager
+    public virtual  Role Role { get; set; }  // Admin, User, EventManager
 
     public Guid? ProfilePictureId { get; set; }
-    public UserMediaFile? ProfilePicture { get; set; } = null!;
+    public virtual UserMediaFile? ProfilePicture { get; set; } = null!;
 
-    public ICollection<Event> OrganizedEvents { get; set; } 
-    public ICollection<Ticket> Tickets { get; set; } 
-    public ICollection<Comment> Comments { get; set; } 
-    public ICollection<Payment> Payments { get; set; }
-    public ICollection<UserRwEvent> UserRwEvents { get; set; }
+    public virtual ICollection<Event> OrganizedEvents { get; set; } 
+    public virtual ICollection<Ticket> Tickets { get; set; } 
+    public  virtual ICollection<Comment> Comments { get; set; } 
+    public virtual ICollection<Payment> Payments { get; set; }
+    public virtual ICollection<UserRwEvent> UserRwEvents { get; set; }
 
 }

@@ -7,5 +7,5 @@ public class Category:BaseEntity
     public string? Description { get; set; }
     
    
-    public ICollection<Event> Events { get; set; }
+    public virtual ICollection<Event> Events { get; set; }
 }

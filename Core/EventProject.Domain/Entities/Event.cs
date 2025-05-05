@@ -23,14 +23,14 @@ public class Event:BaseEntity
 
     //// Foreign Keys
     public Guid CategoryId { get; set; }
-    public Category Category { get; set; } = null!;
-    public ICollection<UserRwEvent> UserRwEvents { get; set; }
+    public virtual Category Category { get; set; } = null!;
+    public virtual ICollection<UserRwEvent> UserRwEvents { get; set; }
 
 
     //// Relations
-    public ICollection<Ticket> Tickets { get; set; } 
-    public ICollection<Comment> Comments { get; set; } 
-    public ICollection<Payment> Payments { get; set; } 
-    public IEnumerable<EventMediaFile> MediaFiles { get; set; }
-    public ICollection<EventSeatPrice> EventSeatPrices { get; set; } = new List<EventSeatPrice>();
+    public virtual ICollection<Ticket> Tickets { get; set; } 
+    public virtual ICollection<Comment> Comments { get; set; } 
+    public virtual ICollection<Payment> Payments { get; set; } 
+    public virtual IEnumerable<EventMediaFile> MediaFiles { get; set; }
+    public virtual ICollection<EventSeatPrice> EventSeatPrices { get; set; } = new List<EventSeatPrice>();
 }

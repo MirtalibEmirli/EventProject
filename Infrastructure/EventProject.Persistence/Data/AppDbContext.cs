@@ -68,11 +68,11 @@ public class AppDbContext : DbContext
             .OnDelete(DeleteBehavior.Cascade);
 
         // Event → Payments
-        modelBuilder.Entity<Event>()
-            .HasMany(e => e.Payments)
-            .WithOne(p => p.Event)
-            .HasForeignKey(p => p.EventId)
-            .OnDelete(DeleteBehavior.Cascade);
+        //modelBuilder.Entity<Event>()
+        //    .HasMany(e => e.Payments)
+        //    .WithOne(p => p.Event)
+        //    .HasForeignKey(p => p.EventId)
+        //    .OnDelete(DeleteBehavior.Cascade);
 
         // Event → MediaFiles (burada problem yaranırdı)
         modelBuilder.Entity<Event>()
@@ -129,12 +129,12 @@ public class AppDbContext : DbContext
             .HasForeignKey(s => s.VenueId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        // Venue → MediaFiles
-        modelBuilder.Entity<Venue>()
-            .HasMany(v => v.VenueMediaFiles)
-            .WithOne(vi => vi.Venue)
-            .HasForeignKey(vi => vi.VenueId)
-            .OnDelete(DeleteBehavior.Cascade);
+        //// Venue → MediaFiles
+        //modelBuilder.Entity<Venue>()
+        //    .HasMany(v => v.VenueMediaFiles)
+        //    .WithOne(vi => vi.Venue)
+        //    .HasForeignKey(vi => vi.VenueId)
+        //    .OnDelete(DeleteBehavior.Cascade);
 
         // Ticket → Seat
         modelBuilder.Entity<Ticket>()

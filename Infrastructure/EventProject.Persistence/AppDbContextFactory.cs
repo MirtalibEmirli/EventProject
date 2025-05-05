@@ -21,7 +21,7 @@ namespace EventProject.Persistence
            
             optionsBuilder.UseSqlServer(connectionString);
 
-            return new AppDbContext(optionsBuilder.Options);
+           return new AppDbContext(optionsBuilder.Options);
         }
     }
 }

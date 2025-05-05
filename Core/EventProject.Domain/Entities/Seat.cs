@@ -20,7 +20,7 @@ public  class Seat:BaseEntity
     public Guid VenueId { get; set; }
 
     [ForeignKey(nameof(VenueId))]
-    public Venue Venue { get; set; }
+    public virtual Venue Venue { get; set; }
 
-    public Ticket? Ticket { get; set; } //eger bilet alinibsa 
+    public virtual Ticket? Ticket { get; set; } //eger bilet alinibsa 
 }

@@ -4,10 +4,10 @@ public class Payment:BaseEntity
 {
 
     public Guid UserId { get; set; }
-    public User User { get; set; } = null!;
+    public virtual User User { get; set; } = null!;
 
     public Guid EventId { get; set; }
-    public Event Event { get; set; } = null!;
+    public virtual Event Event { get; set; } = null!;
 
     public float Amount { get; set; }
 

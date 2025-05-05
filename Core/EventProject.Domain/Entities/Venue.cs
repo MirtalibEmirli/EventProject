@@ -15,9 +15,9 @@ public class Venue:BaseEntity
     public string? InstagramLink { get; set; }
 
 
-    public ICollection<VenueMediaFile> VenueMediaFiles { get; set; }
+    public virtual ICollection<VenueMediaFile> VenueMediaFiles { get; set; }
     public virtual ICollection<Seat> Seats { get; set; } = new List<Seat>();
-    public ICollection<Event> Events { get; set; }
+    public virtual ICollection<Event> Events { get; set; }
     //qeyd-> sekil olmali
 
 

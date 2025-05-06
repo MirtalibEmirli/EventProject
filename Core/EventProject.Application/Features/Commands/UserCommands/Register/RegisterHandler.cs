@@ -21,7 +21,7 @@ public class RegisterHandler(IMapper mapper, IUserReadRepsoitory userRead, IUser
     public async Task<ResponseModel<RegisterResponse>> Handle(RegisterRequest request, CancellationToken cancellationToken)
     {
         var exsitingUser = _userReadRepsoitory.GetWhere(u => request.Email == u.Email).FirstOrDefault();
-        if (exsitingUser != null) { throw new BadRequestException($"User with email {request.Email} already exists."); }
+        if (exsitingUser != null) { throw new BadRequestException($"Bu email  {request.Email} ilə isdifadəçi sistemdə mövcuddur."); }
  
         var hashedPassword = PasswordHasher.ComputeStringToSha256Hash(request.Password);
         var user = _mapper.Map<User>(request);

@@ -5,8 +5,6 @@ using EventProject.Application.Features.Commands.CommentCommand.UpdateComment;
 using EventProject.Application.Features.Queries.CommentQueries.GetAllComments;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventProject.Api.Controllers
@@ -33,7 +31,7 @@ namespace EventProject.Api.Controllers
         [HttpGet("{eventId}")]
         public async Task<IActionResult> GetComments(Guid eventId, int page = 1, int pageSize = 4)
         {
-            var result = await _mediator.Send(new GetAllCommentRequest(eventId, page, pageSize));
+                var result = await _mediator.Send(new GetAllCommentRequest(eventId, page, pageSize));
             return Ok(result);
         }
 

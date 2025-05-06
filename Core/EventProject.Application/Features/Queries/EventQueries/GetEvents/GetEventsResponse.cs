@@ -18,8 +18,8 @@ public class GetEventsResponse
 
     public int AgeLimit { get; set; }
     public float MinPrice { get; set; }
- 
-
+    public EventStatus Status { get; set; }
+    public Guid CategoryId { get; set; }
     public string VenueName { get; set; } = string.Empty;
    
 

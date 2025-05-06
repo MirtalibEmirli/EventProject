@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace EventProject.Api.Controllers;
 [ApiController]
 [Route("api/[controller]")]
-//[Authorize]
+[Authorize]
 public class EventController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -20,7 +20,7 @@ public class EventController : ControllerBase
     {
         _mediator = mediator;
     }
-
+    [Authorize(Roles = "Admin")]
     [HttpPost("create")]
     public async Task<IActionResult> Create([FromBody] CreateEventRequest request)
     {
@@ -30,6 +30,8 @@ public class EventController : ControllerBase
 
         return Ok(result);
     }
+
+    [AllowAnonymous]
     [HttpGet("getEvents")]
     public async Task<IActionResult> GetEvents([FromQuery] GetEventsRequest request)
     {
@@ -40,14 +42,14 @@ public class EventController : ControllerBase
         return Ok(result);
     }
 
-    
+    [Authorize(Roles = "Admin")]
     [HttpPost("uploadEventMedia")]
     public async Task<IActionResult> UploadEventMedia([FromForm] UploadEventMediaRequest request)
     {
         return Ok(await _mediator.Send(request));
     }
 
-
+    [AllowAnonymous]
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(Guid id)
     {
@@ -59,12 +61,15 @@ public class EventController : ControllerBase
         return Ok(result);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPut("update_event")]
-    public async Task<IActionResult> UpdateEvent([FromBody]UpdateEventRequest updateEventRequest)
+    public async Task<IActionResult> UpdateEvent([FromBody] UpdateEventRequest updateEventRequest)
     {
         return Ok(await _mediator.Send(updateEventRequest));
     }
-   
+
+
+    [AllowAnonymous]
     [HttpGet("gettrending")]
     public async Task<IActionResult> GetTrendingEvents()
     {

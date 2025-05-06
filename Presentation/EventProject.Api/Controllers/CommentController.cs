@@ -7,56 +7,55 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EventProject.Api.Controllers
+namespace EventProject.Api.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class CommentController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class CommentController : ControllerBase
+    private readonly IMediator _mediator;
+    public CommentController(IMediator mediator)
     {
-        private readonly IMediator _mediator;
-        public CommentController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
+        _mediator = mediator;
+    }
 
-        [Authorize]
-        [HttpPost("{eventId}")]
-        public async Task<IActionResult> AddComment(Guid eventId,AddCommentRequest comment)
-        {
-            comment.EventId = eventId;
-            var result = await _mediator.Send(comment);
-            return Ok(result);
-        }
+    [Authorize]
+    [HttpPost("{eventId}")]
+    public async Task<IActionResult> AddComment(Guid eventId,AddCommentRequest comment)
+    {
+        comment.EventId = eventId;
+        var result = await _mediator.Send(comment);
+        return Ok(result);
+    }
 
-        [HttpGet("{eventId}")]
-        public async Task<IActionResult> GetComments(Guid eventId, int page = 1, int pageSize = 4)
-        {
-                var result = await _mediator.Send(new GetAllCommentRequest(eventId, page, pageSize));
-            return Ok(result);
-        }
+    [HttpGet("{eventId}")]
+    public async Task<IActionResult> GetComments(Guid eventId, int page = 1, int pageSize = 4)
+    {
+            var result = await _mediator.Send(new GetAllCommentRequest(eventId, page, pageSize));
+        return Ok(result);
+    }
 
-        [Authorize]
-        [HttpDelete("{eventId}")]
-        public async Task<IActionResult> DeleteComment(Guid id)
-        {
-            var result = await _mediator.Send(new DeleteCommentRequest() { CommentId=id});
-            return Ok(result);
-        }
+    [Authorize]
+    [HttpDelete("{eventId}")]
+    public async Task<IActionResult> DeleteComment(Guid id)
+    {
+        var result = await _mediator.Send(new DeleteCommentRequest() { CommentId=id});
+        return Ok(result);
+    }
 
-        [Authorize]
-        [HttpPut]
-        public async Task<IActionResult> UpdateComment([FromBody] UpdateCommentRequest request)
-        {
-            var result = await _mediator.Send(request);
-            return Ok(result);
-        }
+    [Authorize]
+    [HttpPut]
+    public async Task<IActionResult> UpdateComment([FromBody] UpdateCommentRequest request)
+    {
+        var result = await _mediator.Send(request);
+        return Ok(result);
+    }
 
-        [Authorize]
-        [HttpPost("reply")]
-        public async Task<IActionResult> ReplyToComment([FromBody] ReplyToCommentRequest request)
-        {
-            var result = await _mediator.Send(request);
-            return Ok(result);
-        }
+    [Authorize]
+    [HttpPost("reply")]
+    public async Task<IActionResult> ReplyToComment([FromBody] ReplyToCommentRequest request)
+    {
+        var result = await _mediator.Send(request);
+        return Ok(result);
     }
 }

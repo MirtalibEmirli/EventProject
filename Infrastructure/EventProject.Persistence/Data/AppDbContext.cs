@@ -11,6 +11,7 @@ public class AppDbContext : DbContext
     public DbSet<Event> Events { get; set; }
     public DbSet<Ticket> Tickets { get; set; }
     public DbSet<EventSeatPrice> EventSeatPrices { get; set; }
+    public DbSet<EventStandingZonePrice> EventStandingZonePrices { get; set; }
     public DbSet<SectionWeight> SectionWeights { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<Payment> Payments { get; set; }
@@ -32,6 +33,26 @@ public class AppDbContext : DbContext
         base.OnModelCreating(modelBuilder);
 
 
+        modelBuilder.Entity<EventStandingZonePrice>(builder =>
+        {
+            builder.HasKey(e => e.Id);
+
+            builder.HasOne(e => e.Event)
+                   .WithMany(e => e.EventStandingZonePrices)
+                   .HasForeignKey(e => e.EventId)
+                   .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasOne(e => e.StandingZone)
+                   .WithMany(z => z.EventStandingZonePrices)
+                   .HasForeignKey(e => e.StandingZoneId)
+                   .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Property(e => e.Price)
+                   .IsRequired();
+
+            builder.Property(e => e.AvailableCount)
+                   .IsRequired();
+        });
 
 
         modelBuilder.Entity<UserRwEvent>().HasKey(ur => new { ur.UserId, ur.EventId });

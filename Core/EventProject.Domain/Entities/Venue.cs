@@ -17,6 +17,7 @@ public class Venue:BaseEntity
 
     public virtual ICollection<VenueMediaFile> VenueMediaFiles { get; set; }
     public virtual ICollection<Seat> Seats { get; set; } = new List<Seat>();
+    public virtual ICollection<StandingZone> StandingZones { get; set; }
     public virtual ICollection<Event> Events { get; set; }
     //qeyd-> sekil olmali
 

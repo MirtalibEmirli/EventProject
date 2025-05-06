@@ -33,4 +33,5 @@ public class Event:BaseEntity
     public virtual ICollection<Payment> Payments { get; set; } 
     public virtual IEnumerable<EventMediaFile> MediaFiles { get; set; }
     public virtual ICollection<EventSeatPrice> EventSeatPrices { get; set; } = new List<EventSeatPrice>();
+    public virtual ICollection<EventStandingZonePrice> EventStandingZonePrices { get; set; } = new List<EventStandingZonePrice>();
 }

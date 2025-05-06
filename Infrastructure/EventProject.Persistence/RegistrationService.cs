@@ -30,6 +30,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore.Proxies;
+using EventProject.Application.Repositories.StandingZones;
+using EventProject.Persistence.Repository.StandingZones;
 
 namespace EventProject.Persistence;
 
@@ -69,6 +71,8 @@ public static class RegistrationService
         services.AddScoped<IRefreshTokenWrite, RefreshTokenWrite>();
         services.AddScoped<ICommentReadRepository, CommentReadRepository>();
         services.AddScoped<ICommentWriteRepository, CommentWriteRepository>();
+        services.AddScoped<IStandingZoneReadRepository, StandingZoneReadRepository>();
+        services.AddScoped<IStandingZoneWriteRepository, StandingZoneWriteRepository>();
         return services;
     }
 }

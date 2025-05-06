@@ -42,7 +42,7 @@ public class AddCommentHandler : IRequestHandler<AddCommentRequest, AddCommentRe
             CreatedDate = DateTime.Now
 
         };
-        commentWriteRepository.AddAsync(comment);
+        await commentWriteRepository.AddAsync(comment);
         await commentWriteRepository.SaveChangesAsync();
         return new AddCommentResponse
         {

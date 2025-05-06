@@ -36,8 +36,8 @@ public class RegisterHandler(IMapper mapper, IUserReadRepsoitory userRead, IUser
             new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
             new Claim(ClaimTypes.Role,user.Role.ToString()),
             new Claim(ClaimTypes.Name, user.Lastname)
-
         };
+
         var token = _tokenHandler.CreateAccessToken(claims, 160);
 
         return new ResponseModel<RegisterResponse>

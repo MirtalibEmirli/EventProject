@@ -44,6 +44,7 @@ namespace EventProject.Application.Features.Commands.UserCommands.Login
             };
             var token = tokenHandler.CreateAccessToken(authClaims, 160);
             var refresh = tokenHandler.CreateRefreshToken();
+
             token.RefreshToken = refresh;
             token.RefreshTokenExpirationDate = DateTime.UtcNow.AddDays(1);
 

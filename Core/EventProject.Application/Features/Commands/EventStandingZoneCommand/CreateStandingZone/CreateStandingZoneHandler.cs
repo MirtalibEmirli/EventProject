@@ -1,25 +1,37 @@
-﻿using EventProject.Application.Repositories.StandingZones;
+﻿using EventProject.Application.Features.Commands.EventStandingZoneCommand.CreateStandingZone;
+using EventProject.Application.Repositories.StandingZones;
 using EventProject.Domain.Entities;
 using EventProject.Domain.Enums;
 using MediatR;
-
-namespace EventProject.Application.Features.Commands.EventStandingZoneCommand.CreateStandingZone;
 
 public class CreateStandingZoneHandler : IRequestHandler<CreateStandingZoneRequest, CreateStandingZoneResponse>
 {
     private readonly IStandingZoneWriteRepository standingZoneRepo;
 
+    public CreateStandingZoneHandler(IStandingZoneWriteRepository standingZoneRepo)
+    {
+        this.standingZoneRepo = standingZoneRepo;
+    }
+
     public async Task<CreateStandingZoneResponse> Handle(CreateStandingZoneRequest request, CancellationToken cancellationToken)
     {
-        var zone = Enum.Parse<SZoneType>(request.ZoneName);
+        if (!Enum.TryParse<SZoneType>(request.ZoneName, true, out var zone))
+        {
+            throw new ArgumentException($"'{request.ZoneName}' zonası düzgün deyil.");
+        }
+        if (!Guid.TryParse(request.VenueId, out Guid venueGuid))
+            throw new ArgumentException("VenueId düzgün formatda deyil");
 
+        var standingZone = new StandingZone
+        {
+            Capacity = request.Capacity,
+            VenueId = venueGuid,
+            ZoneName = zone
+        };
 
-        var standingZone = new StandingZone() { Capacity = request.Capacity, VenueId=Guid.Parse(request.VenueId), ZoneName= zone };
+        await standingZoneRepo.AddAsync(standingZone);
+        await standingZoneRepo.SaveChangesAsync();
 
-       await  standingZoneRepo.AddAsync(standingZone);
-       await standingZoneRepo.SaveChangesAsync();
-
-
-        return new CreateStandingZoneResponse() { Id=standingZone.Id };
+        return new CreateStandingZoneResponse { Id = standingZone.Id };
     }
 }

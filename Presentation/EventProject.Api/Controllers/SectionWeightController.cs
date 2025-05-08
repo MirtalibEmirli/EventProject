@@ -1,6 +1,7 @@
 ﻿using EventProject.Application.Features.Commands.SectionWeightCommand.CreateSectionWeight;
 using EventProject.Application.Features.Commands.VenueCommands.CreateVenue;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,6 +18,7 @@ public class SectionWeightController : ControllerBase
         _mediator = mediator;
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPost("upload")]
     public async Task<IActionResult> CreateSectionWeight([FromForm] CreateSectionWeightRequest request)
     {

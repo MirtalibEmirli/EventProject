@@ -6,10 +6,11 @@ using EventProject.Application.Features.Commands.VenueMediaFile.UploadVenueMedia
 using EventProject.Application.Features.Queries.VenueQueries.GetAllVenueQueries;
 using EventProject.Application.Features.Queries.VenueQueries.GetByIdVenueQueries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventProject.API.Controllers;
-
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class VenueController : ControllerBase
@@ -21,6 +22,7 @@ public class VenueController : ControllerBase
         _mediator = mediator;
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPost("create")]
     public async Task<IActionResult> CreateVenue([FromBody] CreateVenueRequest request)
     {
@@ -30,9 +32,9 @@ public class VenueController : ControllerBase
             return BadRequest(response);
 
         return Ok(response);
-    }   
-      
-    [HttpPut("update")] 
+    }
+    [Authorize(Roles = "Admin")]
+    [HttpPut("update")]
     public async Task<IActionResult> UpdateVenue([FromBody] UpdateVenueRequest request)
     {
         var response = await _mediator.Send(request);
@@ -42,6 +44,7 @@ public class VenueController : ControllerBase
 
         return Ok(response);
     }
+    [AllowAnonymous]
     [HttpGet("getAll")]
     public async Task<IActionResult> GetAllVenue()
     {
@@ -51,9 +54,9 @@ public class VenueController : ControllerBase
 
         return Ok(result);
     }
-
+    [AllowAnonymous]
     [HttpGet("getById")]
-    public async Task<IActionResult> GetByIdVenue([FromQuery]GetByIdVenueRequest request)
+    public async Task<IActionResult> GetByIdVenue([FromQuery] GetByIdVenueRequest request)
     {
         var result = await _mediator.Send(request);
         if (!result.IsSuccess)
@@ -62,6 +65,7 @@ public class VenueController : ControllerBase
         return Ok(result);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpDelete("Delete")]
     public async Task<IActionResult> DeleteVenue([FromQuery] DeleteVenueRequest request)
     {
@@ -71,10 +75,12 @@ public class VenueController : ControllerBase
 
         return Ok(result);
     }
+
+    [Authorize(Roles = "Admin")]
     [HttpPost("uploadVenueMedia")]
     public async Task<IActionResult> UploadVenueMedia([FromForm] UploadVenueMediaRequest request)
     {
-        return Ok(await _mediator.Send(request));   
+        return Ok(await _mediator.Send(request));
     }
 
 

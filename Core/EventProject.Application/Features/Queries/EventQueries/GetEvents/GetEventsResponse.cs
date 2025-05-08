@@ -13,7 +13,10 @@ public class GetEventsResponse
     public string Title { get; set; } = string.Empty;
 
     public DateTime StartTime { get; set; }
- 
+    public DateTime EndTime { get; set; }
+    public string Description { get; set; } = string.Empty;
+    public float MaxPrice { get; set; }
+
     public string FormattedDate => StartTime.ToString("dd MMMM yyyy");
 
     public int AgeLimit { get; set; }
@@ -21,7 +24,7 @@ public class GetEventsResponse
     public EventStatus Status { get; set; }
     public Guid CategoryId { get; set; }
     public string VenueName { get; set; } = string.Empty;
-   
+
 
     public List<string> MediaUrls { get; set; } = new();
 

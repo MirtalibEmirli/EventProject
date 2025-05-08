@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EventProject.Api.Controllers;
 
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class CommentController : ControllerBase

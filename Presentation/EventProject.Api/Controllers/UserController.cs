@@ -19,7 +19,7 @@ public class UserController(ISender sender) : ControllerBase
         return Ok(await _sender.Send(request));
 
     }
-     
+    
     [HttpGet("getrecentlyviewedevents")]
     public async Task<IActionResult> GetRwEvents()
     {

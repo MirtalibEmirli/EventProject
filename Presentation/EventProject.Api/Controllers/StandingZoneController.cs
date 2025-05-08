@@ -45,15 +45,10 @@ public class StandingZoneController : ControllerBase
     }   
 
     [Authorize(Roles = "Admin")]
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(Guid id)
+    [HttpDelete("deletestandingzone")]
+    public async Task<IActionResult> Delete(DeleteStandingZoneRequest deleteRequest)
     {
-        var result = await _mediator.Send(new DeleteStandingZoneRequest { Id = id });
-
-        if (!result)
-            return NotFound(new { Message = "Standing zone not found." });
-
-        return NoContent();
+        return Ok(_mediator.Send(deleteRequest));
     }
 
     [Authorize(Roles = "Admin")]    

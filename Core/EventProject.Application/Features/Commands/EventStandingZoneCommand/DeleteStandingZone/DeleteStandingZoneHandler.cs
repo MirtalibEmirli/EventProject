@@ -16,10 +16,10 @@ namespace EventProject.Application.Features.Commands.EventStandingZoneCommand.De
 
         public async Task<bool> Handle(DeleteStandingZoneRequest request, CancellationToken cancellationToken)
         {
-            var zone = await standingZoneReadRepository.GetByIdAsync(request.Id.ToString());
+            var zone = await standingZoneReadRepository.GetByIdAsync(request.Id);
             if(zone == null) return false;
 
-            await standingZoneWriteRepository.SoftDeleteAsync(request.Id.ToString());
+            await standingZoneWriteRepository.SoftDeleteAsync(request.Id);
             await standingZoneWriteRepository.SaveChangesAsync();
             return true;
 

@@ -9,5 +9,6 @@ namespace EventProject.Application.Abstractions.IHttpContextUser
     public interface ICurrentUserService
     {
         public Guid GetUserId();
+        public string GetRole();
     }
 }

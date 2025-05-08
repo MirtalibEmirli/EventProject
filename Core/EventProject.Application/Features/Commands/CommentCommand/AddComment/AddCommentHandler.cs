@@ -1,55 +1,46 @@
-﻿using EventProject.Application.Repositories.Comments;
+﻿using EventProject.Application.Abstractions.IHttpContextUser;
+using EventProject.Application.Repositories.Comments;
+using EventProject.Application.Repositories.Users;
 using EventProject.Domain.Entities;
 using MediatR;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EventProject.Application.Features.Commands.CommentCommand.AddComment;
 
 public class AddCommentHandler : IRequestHandler<AddCommentRequest, AddCommentResponse>
 {
 
-    private readonly ICommentWriteRepository commentWriteRepository;
-    private readonly IHttpContextAccessor httpContextAccessor;
+    private readonly ICommentWriteRepository _commentWriteRepository;
+    private readonly ICurrentUserService _currentUserService;
 
-    public AddCommentHandler(ICommentWriteRepository commentWriteRepository, IHttpContextAccessor httpContextAccessor)
+    private readonly IUserReadRepsoitory _userReadRepsoitory;
+
+    public AddCommentHandler(ICommentWriteRepository commentWriteRepository, ICurrentUserService currentUserService, IUserReadRepsoitory userReadRepsoitory)
     {
-        this.commentWriteRepository = commentWriteRepository;
-        this.httpContextAccessor = httpContextAccessor;
+        _commentWriteRepository = commentWriteRepository;
+        _currentUserService = currentUserService;
+        _userReadRepsoitory = userReadRepsoitory;
     }
 
     public async Task<AddCommentResponse> Handle(AddCommentRequest request, CancellationToken cancellationToken)
     {
-      var httpContext=httpContextAccessor.HttpContext;
-        var userId = httpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        var userName = httpContext.User.FindFirst(ClaimTypes.Name)?.Value;
-
-        if (userName is null || userId is null)
-            throw new UnauthorizedAccessException("Dont found Token");
-
+        var userId = _currentUserService.GetUserId();
+        var user = await _userReadRepsoitory.GetByIdAsync(userId.ToString());
         var comment = new Comment
         {
             Content = request.Content,
             EventId = request.EventId,
-            ParentCommentId = request.ParentCommentId,
-            UserId = new Guid(userId),
+            UserId = userId,
             CreatedDate = DateTime.Now
 
         };
-        await commentWriteRepository.AddAsync(comment);
-        await commentWriteRepository.SaveChangesAsync();
+        await _commentWriteRepository.AddAsync(comment);
+        await _commentWriteRepository.SaveChangesAsync();
         return new AddCommentResponse
         {
             Id = comment.Id,
             Content = comment.Content,
             CreatedAt = comment.CreatedDate,
-            UserName = userName
+            UserName = user.Fistname + " " + user.Lastname,
         };
     }
 }

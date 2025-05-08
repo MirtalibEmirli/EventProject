@@ -1,7 +1,4 @@
-﻿using static System.Net.Mime.MediaTypeNames;
-using System.Data.Common;
-
-namespace EventProject.Domain.Entities;
+﻿namespace EventProject.Domain.Entities;
 
 public abstract class BaseEntity
 {

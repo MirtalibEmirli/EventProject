@@ -1,11 +1,6 @@
 ﻿using EventProject.Application.DTOs;
 using EventProject.Application.Repositories.Comments;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EventProject.Application.Features.Queries.CommentQueries.GetAllComments;
 
@@ -20,10 +15,11 @@ public class GetAllCommentHandler : IRequestHandler<GetAllCommentRequest, GetAll
 
     public async Task<GetAllCommentResponse> Handle(GetAllCommentRequest request, CancellationToken cancellationToken)
     {
-        var skip = (request.Page-1) * request.PageSize;
+        var skip = (request.Page - 1) * request.PageSize;
 
-        var comments =  _commentReadRepository.GetWhere(c=>c.EventId==request.EventId && c.ParentCommentId==null)
-                                              .OrderByDescending(c=>c.CreatedDate)
+
+        var comments = _commentReadRepository.GetWhere(c => c.EventId == request.EventId && c.IsDeleted != true && c.ParentCommentId == null)
+                                              .OrderByDescending(c => c.CreatedDate)
                                               .Skip(skip)
                                               .Take(request.PageSize)
                                               .ToList();
@@ -41,7 +37,7 @@ public class GetAllCommentHandler : IRequestHandler<GetAllCommentRequest, GetAll
                 CreatedDate = r.CreatedDate,
                 UserName = r.User.Lastname
             }).ToList()
-        }).ToList() ;
+        }).ToList();
         var response = new GetAllCommentResponse() { Comments = result };
         return response;
     }

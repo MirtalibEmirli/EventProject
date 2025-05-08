@@ -1,17 +1,19 @@
 ﻿using EventProject.Application.Abstractions.IHttpContextUser;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EventProject.Infrastructure.Services.HttpContextUser;
 
 public class CurrentUserService(IHttpContextAccessor httpContextAccessor) : ICurrentUserService
 {
     private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
+
+    public string GetRole()
+    {
+        var role = _httpContextAccessor?.HttpContext?.User.FindFirst(ClaimTypes.Role)?.Value;
+        if (role == null) throw new UnauthorizedAccessException("User is not authenticated");
+        return role;
+    }
 
     public Guid GetUserId()
     {

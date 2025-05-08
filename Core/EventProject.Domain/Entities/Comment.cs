@@ -11,7 +11,7 @@ public class Comment:BaseEntity
     public virtual Event Event { get; set; } = null!;
 
     public Guid? ParentCommentId { get; set; }
-    public virtual Comment ParentComment { get; set; }
+    public virtual Comment? ParentComment { get; set; }
 
     public virtual ICollection<Comment> Replies { get; set; } = new List<Comment>();
 

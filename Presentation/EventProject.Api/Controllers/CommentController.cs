@@ -3,6 +3,7 @@ using EventProject.Application.Features.Commands.CommentCommand.DeleteComment;
 using EventProject.Application.Features.Commands.CommentCommand.ReplyToComment;
 using EventProject.Application.Features.Commands.CommentCommand.UpdateComment;
 using EventProject.Application.Features.Queries.CommentQueries.GetAllComments;
+using EventProject.Application.Features.Queries.CommentQueries.GetUserComments;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -29,6 +30,7 @@ public class CommentController : ControllerBase
         return Ok(result);
     }
 
+    [AllowAnonymous]
     [HttpGet("{eventId}")]
     public async Task<IActionResult> GetComments(Guid eventId, int page = 1, int pageSize = 4)
     {
@@ -36,8 +38,17 @@ public class CommentController : ControllerBase
         return Ok(result);
     }
 
+
     [Authorize]
-    [HttpDelete("{eventId}")]
+    [HttpGet("usercomments/{eventId}")]
+    public async Task<IActionResult> GetUserComments(Guid eventId)
+    {
+        var result = await _mediator.Send(new GetUserCommentsQuery() { EventId = eventId });
+        return Ok(result);
+    }
+
+    [Authorize]
+    [HttpDelete]
     public async Task<IActionResult> DeleteComment(Guid id)
     {
         var result = await _mediator.Send(new DeleteCommentRequest() { CommentId=id});

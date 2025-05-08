@@ -30,10 +30,10 @@ public class StandingZoneController : ControllerBase
 
 
     [AllowAnonymous]
-    [HttpGet("{id}")]
+    [HttpGet("venuestandingzones/{id}")]
     public async Task<IActionResult> GetById(Guid id)
     {
-       var response = await _mediator.Send(new GetEventStandingZoneRequest { Id = id });
+       var response = await _mediator.Send(new GetEventStandingZoneRequest { VenueId = id });
         return Ok(); 
     }
     [AllowAnonymous]

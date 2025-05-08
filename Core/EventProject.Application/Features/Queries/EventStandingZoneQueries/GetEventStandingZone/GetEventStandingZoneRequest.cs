@@ -1,14 +1,10 @@
-﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using EventProject.Application.ResponseModels.Generics;
+using MediatR;
 
 namespace EventProject.Application.Features.Queries.EventStandingZoneQueries.GetEventStandingZone
 {
-    public class GetEventStandingZoneRequest:IRequest<GetEventStandingZoneResponse>
+    public class GetEventStandingZoneRequest:IRequest<ResponseModel<List<GetEventStandingZoneResponse>>>
     {
-        public Guid Id { get; set; }
+        public Guid VenueId { get; set; }
     }
 }

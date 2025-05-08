@@ -61,7 +61,12 @@ public class GetEventsHandler : IRequestHandler<GetEventsRequest, ResponseModel<
                 VenueName = e.Location.Name,
                 CategoryId = e.CategoryId,
                 Status = e.Status,
-                MediaUrls = e.MediaFiles.Select(m => m.FileName).ToList()
+                MediaUrls = e.MediaFiles.Select(m => m.FileName).ToList(),
+                MaxPrice = e.MaxPrice,
+                EndTime = e.EndTime,
+                Description = e.Description,
+                
+
             }).ToListAsync(cancellationToken);
 
 

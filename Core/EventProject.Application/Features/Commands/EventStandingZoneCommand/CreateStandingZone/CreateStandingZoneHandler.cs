@@ -1,11 +1,7 @@
 ﻿using EventProject.Application.Repositories.StandingZones;
 using EventProject.Domain.Entities;
+using EventProject.Domain.Enums;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EventProject.Application.Features.Commands.EventStandingZoneCommand.CreateStandingZone;
 
@@ -15,8 +11,10 @@ public class CreateStandingZoneHandler : IRequestHandler<CreateStandingZoneReque
 
     public async Task<CreateStandingZoneResponse> Handle(CreateStandingZoneRequest request, CancellationToken cancellationToken)
     {
-        
-        var standingZone = new StandingZone() { Capacity = request.Capacity, VenueId=request.VenueId, ZoneName=request.ZoneName };
+        var zone = Enum.Parse<SZoneType>(request.ZoneName);
+
+
+        var standingZone = new StandingZone() { Capacity = request.Capacity, VenueId=Guid.Parse(request.VenueId), ZoneName= zone };
 
        await  standingZoneRepo.AddAsync(standingZone);
        await standingZoneRepo.SaveChangesAsync();

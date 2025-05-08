@@ -43,6 +43,7 @@ public class StandingZoneController : ControllerBase
         var zoneNames = Enum.GetNames(typeof(SZoneType)).ToList();
         return Ok(zoneNames);
     }   
+
     [Authorize(Roles = "Admin")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(Guid id)

@@ -3,6 +3,7 @@ using EventProject.Application.Features.Commands.EventCommands.UpdateEvent;
 using EventProject.Application.Features.Commands.EventMediaFile.UploadEventMedia;
 using EventProject.Application.Features.Queries.EventQueries.GetEventById;
 using EventProject.Application.Features.Queries.EventQueries.GetEvents;
+using EventProject.Application.Features.Queries.EventQueries.GetEventsForSelect;
 using EventProject.Application.Features.Queries.EventQueries.GetTrending;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -76,6 +77,17 @@ public class EventController : ControllerBase
         GetTrendingEventsCommand command = new();
         return Ok(await _mediator.Send(command));
     }
+
+
+    [AllowAnonymous]
+    [HttpGet("geteventsforselectbox")]
+    public async Task<IActionResult> GetEventsForSelectBox()
+    {
+        var result = await _mediator.Send(new GetEventsForSelectQuery());
+        if (!result.IsSuccess)
+            return BadRequest(result);
+        return Ok(result);
+    }   
 
 }
 

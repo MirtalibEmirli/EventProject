@@ -2,6 +2,7 @@
 using EventProject.Application.Features.Commands.EventCommands.UpdateEvent;
 using EventProject.Application.Features.Commands.EventMediaFile.UploadEventMedia;
 using EventProject.Application.Features.Queries.EventQueries.GetEventById;
+using EventProject.Application.Features.Queries.EventQueries.GetEventMediaFile;
 using EventProject.Application.Features.Queries.EventQueries.GetEvents;
 using EventProject.Application.Features.Queries.EventQueries.GetEventsForSelect;
 using EventProject.Application.Features.Queries.EventQueries.GetTrending;
@@ -48,6 +49,16 @@ public class EventController : ControllerBase
     public async Task<IActionResult> UploadEventMedia([FromForm] UploadEventMediaRequest request)
     {
         return Ok(await _mediator.Send(request));
+    }
+
+    [AllowAnonymous]
+    [HttpGet("getEventMediaFiles/{eventId}")]
+    public async Task<IActionResult> GetEventMediaFiles(string eventId)
+    {
+        var result = await _mediator.Send(new GetEventMediaFilesQuery(eventId));
+        if (!result.IsSuccess)
+            return BadRequest(result);
+        return Ok(result);
     }
 
     [AllowAnonymous]

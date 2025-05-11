@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace EventProject.Persistence.Repository.EventSeatPrices;
 
-public class EventSeatPriceReadRepository(AppDbContext context) : ReadRepository<EventSeatPrice>(context),IEventSeatPriceReadRepository
+public class EventSeatPriceReadRepository(AppDbContext context) 
 {
 
 

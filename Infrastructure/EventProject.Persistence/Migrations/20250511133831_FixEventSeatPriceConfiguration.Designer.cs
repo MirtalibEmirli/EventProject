@@ -4,6 +4,7 @@ using EventProject.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventProject.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250511133831_FixEventSeatPriceConfiguration")]
+    partial class FixEventSeatPriceConfiguration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -169,6 +172,9 @@ namespace EventProject.Persistence.Migrations
                     b.Property<Guid>("EventId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("AvailableCount")
+                        .HasColumnType("int");
+
                     b.Property<float>("Price")
                         .HasColumnType("real");
 
@@ -318,9 +324,6 @@ namespace EventProject.Persistence.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<int?>("Capacity")
-                        .HasColumnType("int");
 
                     b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");

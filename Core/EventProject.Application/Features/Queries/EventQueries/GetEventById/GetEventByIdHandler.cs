@@ -61,8 +61,7 @@ public class GetEventByIdHandler : IRequestHandler<GetEventByIdRequest, Response
                     Section = seat.Section,
                     Row = seat.Row,
                     Number = seat.Number,
-                    IsBooked = seat.IsBooked,
-                    Price = price
+                    
                 };
             }).ToList()
         };

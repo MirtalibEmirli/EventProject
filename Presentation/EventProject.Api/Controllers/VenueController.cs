@@ -22,7 +22,7 @@ public class VenueController : ControllerBase
         _mediator = mediator;
     }
 
-    [Authorize(Roles = "Admin")]
+  
     [HttpPost("create")]
     public async Task<IActionResult> CreateVenue([FromBody] CreateVenueRequest request)
     {

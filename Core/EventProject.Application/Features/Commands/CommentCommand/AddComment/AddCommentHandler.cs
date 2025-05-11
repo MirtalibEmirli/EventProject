@@ -35,6 +35,7 @@ public class AddCommentHandler : IRequestHandler<AddCommentRequest, AddCommentRe
         };
         await _commentWriteRepository.AddAsync(comment);
         await _commentWriteRepository.SaveChangesAsync();
+
         return new AddCommentResponse
         {
             Id = comment.Id,

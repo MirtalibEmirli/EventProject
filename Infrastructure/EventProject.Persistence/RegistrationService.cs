@@ -25,7 +25,7 @@ using EventProject.Persistence.Repository.UserRwEvents;
 using EventProject.Persistence.Repository.Users;
 using EventProject.Persistence.Repository.VenueMediaFiles;
 using EventProject.Persistence.Repository.Venues;
-using EventProject.Persistence.Services;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -55,10 +55,10 @@ public static class RegistrationService
         services.AddScoped<ISeatWriteRepository, SeatWriteRepository>();
         services.AddScoped<IEventMediaFileReadRepository, EventMediaFileReadRepository>();
         services.AddScoped<IEventMediaFileWriteRepository, EventMediaFileWriteRepository>();
-        services.AddScoped<IEventSeatPriceWriteRepository, EventSeatPriceWriteRepository>();
+        
         services.AddScoped<ISectionWeightWriteRepository, SectionWeightWriteRepository>();
         services.AddScoped<ISectionWeightReadRepository, SectionWeightReadRepository>();
-        services.AddScoped<IEventPricingService, EventPricingService>();
+        //services.AddScoped<IEventPricingService, EventPricingService>();
         services.AddScoped<IEventMediaFileWriteRepository, EventMediaFileWriteRepository>();
         services.AddScoped<IVenueMediaFileWriteRepository, VenueMediaFileWriteRepository>();
         services.AddScoped<IVenueMediaFileReadRepository, VenueMediaFileReadRepository>();

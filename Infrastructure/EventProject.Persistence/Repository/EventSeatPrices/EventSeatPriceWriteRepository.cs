@@ -10,6 +10,6 @@ using System.Threading.Tasks;
 
 namespace EventProject.Persistence.Repository.EventSeatPrices;
 
-public class EventSeatPriceWriteRepository(AppDbContext context) : WriteRepository<EventSeatPrice>(context),IEventSeatPriceWriteRepository
+public class EventSeatPriceWriteRepository(AppDbContext context) 
 {
 }

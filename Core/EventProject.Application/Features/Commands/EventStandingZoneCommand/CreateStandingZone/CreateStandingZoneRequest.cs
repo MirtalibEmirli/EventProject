@@ -10,7 +10,7 @@ namespace EventProject.Application.Features.Commands.EventStandingZoneCommand.Cr
 
 public class CreateStandingZoneRequest:IRequest<CreateStandingZoneResponse>
 {
-    public string ZoneName { get; set; } 
+    public SZoneType ZoneName { get; set; } 
     public int Capacity { get; set; }
-    public string VenueId { get; set; }
+    public Guid VenueId { get; set; }
 }

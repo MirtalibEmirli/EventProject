@@ -20,7 +20,7 @@ public class StandingZoneController : ControllerBase
         _mediator = mediator;
     }
 
-    [Authorize(Roles = "Admin")]
+   
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateStandingZoneRequest request)
     {

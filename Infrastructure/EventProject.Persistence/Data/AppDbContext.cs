@@ -35,7 +35,7 @@ public class AppDbContext : DbContext
 
         modelBuilder.Entity<EventStandingZonePrice>(builder =>
         {
-            builder.HasKey(e => e.Id);
+            builder.HasKey(e => new { e.EventId,e.StandingZoneId});
 
             builder.HasOne(e => e.Event)
                    .WithMany(e => e.EventStandingZonePrices)
@@ -45,7 +45,7 @@ public class AppDbContext : DbContext
             builder.HasOne(e => e.StandingZone)
                    .WithMany(z => z.EventStandingZonePrices)
                    .HasForeignKey(e => e.StandingZoneId)
-                   .OnDelete(DeleteBehavior.Cascade);
+                   .OnDelete(DeleteBehavior.Restrict);
 
             builder.Property(e => e.Price)
                    .IsRequired();
@@ -53,6 +53,32 @@ public class AppDbContext : DbContext
             builder.Property(e => e.AvailableCount)
                    .IsRequired();
         });
+
+
+        modelBuilder.Entity<EventSeatPrice>(builder =>
+        {
+            builder.HasKey(e => new { e.SeatId, e.EventId });
+            builder.HasOne(e => e.Event)
+                   .WithMany(e => e.EventSeatPrices)
+                   .HasForeignKey(e => e.EventId)
+                   .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasOne(e => e.Seat)
+                   .WithMany(s => s.EventSeatPrices)
+                   .HasForeignKey(e => e.SeatId)
+                   .OnDelete(DeleteBehavior.Cascade);
+
+
+          
+            builder.Property(e => e.Price)
+                   .IsRequired();
+            
+
+            
+
+
+        });
+
 
 
         modelBuilder.Entity<UserRwEvent>().HasKey(ur => new { ur.UserId, ur.EventId });
@@ -144,11 +170,17 @@ public class AppDbContext : DbContext
          .OnDelete(DeleteBehavior.Restrict);
 
         // Venue → Seats
-        modelBuilder.Entity<Seat>()
-            .HasOne(s => s.Venue)
+        modelBuilder.Entity<Seat>(builder =>
+        {
+            builder.HasOne(s => s.Venue)
             .WithMany(v => v.Seats)
             .HasForeignKey(s => s.VenueId)
             .OnDelete(DeleteBehavior.Restrict);
+
+
+            builder.Property(e => e.Capacity).IsRequired(false);
+        });
+           
 
         //// Venue → MediaFiles
         //modelBuilder.Entity<Venue>()

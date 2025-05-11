@@ -14,7 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddSwaggerGen(c =>
+builder.Services.AddSwaggerGen(c => 
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "EventProject.API", Version = "v1" });
 
@@ -59,7 +59,7 @@ builder.Services.AddInfrastructureService(builder.Configuration);
 
 builder.Services.AddCors(options => options.AddPolicy("AllowAll", policy =>
     policy
-        .WithOrigins("http://localhost:3000", "http://localhost:5173")
+        .WithOrigins("http://localhost:3000", "http://localhost:5173", "http://localhost:5174")
         .AllowAnyHeader()
         .AllowAnyMethod()
         .AllowCredentials()

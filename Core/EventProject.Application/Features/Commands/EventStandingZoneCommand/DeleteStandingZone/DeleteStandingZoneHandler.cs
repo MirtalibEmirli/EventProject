@@ -1,9 +1,10 @@
 ﻿using EventProject.Application.Repositories.StandingZones;
+using EventProject.Application.ResponseModels.Generics;
 using MediatR;
 
 namespace EventProject.Application.Features.Commands.EventStandingZoneCommand.DeleteStandingZone;
 
-public class DeleteStandingZoneHandler : IRequestHandler<DeleteStandingZoneRequest, bool>
+public class DeleteStandingZoneHandler : IRequestHandler<DeleteStandingZoneRequest, ResponseModel<bool>>
 {
     private readonly IStandingZoneWriteRepository standingZoneWriteRepository;
 
@@ -15,12 +16,22 @@ public class DeleteStandingZoneHandler : IRequestHandler<DeleteStandingZoneReque
         this.standingZoneReadRepository = standingZoneReadRepository;
     }
 
-    public async Task<bool> Handle(DeleteStandingZoneRequest request, CancellationToken cancellationToken)
+    public async Task<ResponseModel<bool>> Handle(DeleteStandingZoneRequest request, CancellationToken cancellationToken)
     {
         var zone = await standingZoneReadRepository.GetByIdAsync(request.Id);
-        if(zone == null) return false;
+        if (zone == null) return new ResponseModel<bool>
+        {
+            IsSuccess = false,
+            Message = "Standing zone not deleted  .",
+            Data = true
+        }; ;
         await standingZoneWriteRepository.SoftDeleteAsync(request.Id);
         await standingZoneWriteRepository.SaveChangesAsync();
-        return true;
+        return new ResponseModel<bool>
+        {
+            IsSuccess = true,
+            Message = "Standing zone deleted successfully.",
+            Data = true
+        };
     }
 }

@@ -56,7 +56,7 @@ public class StandingZoneController : ControllerBase
     [HttpDelete("deletestandingzone")]
     public async Task<IActionResult> Delete(DeleteStandingZoneRequest deleteRequest)
     {
-        return Ok(_mediator.Send(deleteRequest));
+        return Ok(await _mediator.Send(deleteRequest));
     }
 
     [Authorize(Roles = "Admin")]    

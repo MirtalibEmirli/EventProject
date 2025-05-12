@@ -1,5 +1,6 @@
 ﻿using EventProject.Application.Features.Commands.EventCommands.CreateEvent;
 using EventProject.Application.Features.Commands.EventCommands.UpdateEvent;
+using EventProject.Application.Features.Commands.EventMediaFile.DeleteEventMedia;
 using EventProject.Application.Features.Commands.EventMediaFile.UploadEventMedia;
 using EventProject.Application.Features.Queries.EventQueries.GetEventById;
 using EventProject.Application.Features.Queries.EventQueries.GetEventMediaFile;
@@ -50,6 +51,17 @@ public class EventController : ControllerBase
     {
         return Ok(await _mediator.Send(request));
     }
+    [Authorize(Roles = "Admin")]
+    [HttpPut]
+    [Route("deleteEventMedia")]
+    public async Task<IActionResult> DeleteEventMedia([FromBody] string fileName)
+    {
+        var result = await _mediator.Send(new DeleteEventMediaRequest(fileName));
+        if (!result.IsSuccess)
+            return BadRequest(result);
+        return Ok(result);
+    }
+
 
     [AllowAnonymous]
     [HttpGet("getEventMediaFiles/{eventId}")]

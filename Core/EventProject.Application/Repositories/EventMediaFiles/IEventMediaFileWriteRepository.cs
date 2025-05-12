@@ -9,4 +9,5 @@ namespace EventProject.Application.Repositories.EventMediaFiles;
 
 public interface IEventMediaFileWriteRepository:IWriteRepository<EventMediaFile>
 {
+    public   Task SoftDeleteAsyncByName(string fileName);
 }

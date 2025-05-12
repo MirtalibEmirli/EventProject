@@ -9,7 +9,7 @@ namespace EventProject.Persistence.Repository.Generics;
 
 public class WriteRepository<TEntity>(AppDbContext context) : IWriteRepository<TEntity> where TEntity : BaseEntity
 {
-
+	 
 	private readonly AppDbContext context = context;
 
 	public DbSet<TEntity> Table => context.Set<TEntity>();

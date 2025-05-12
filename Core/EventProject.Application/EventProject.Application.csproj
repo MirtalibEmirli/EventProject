@@ -29,4 +29,8 @@
     <ProjectReference Include="..\EventProject.Domain\EventProject.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Queries\EventMedia\" />
+  </ItemGroup>
+
 </Project>

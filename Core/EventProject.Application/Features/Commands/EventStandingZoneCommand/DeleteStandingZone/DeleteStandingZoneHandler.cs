@@ -19,11 +19,8 @@ public class DeleteStandingZoneHandler : IRequestHandler<DeleteStandingZoneReque
     {
         var zone = await standingZoneReadRepository.GetByIdAsync(request.Id);
         if(zone == null) return false;
-
         await standingZoneWriteRepository.SoftDeleteAsync(request.Id);
         await standingZoneWriteRepository.SaveChangesAsync();
         return true;
-
-
     }
 }

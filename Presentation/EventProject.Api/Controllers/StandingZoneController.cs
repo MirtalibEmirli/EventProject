@@ -2,6 +2,7 @@
 using EventProject.Application.Features.Commands.EventStandingZoneCommand.DeleteStandingZone;
 using EventProject.Application.Features.Commands.EventStandingZoneCommand.UpdateStandingZone;
 using EventProject.Application.Features.Queries.EventStandingZoneQueries.GetEventStandingZone;
+using EventProject.Application.Features.Queries.EventStandingZoneQueries.GetStandingZonesAdmin;
 using EventProject.Domain.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -43,8 +44,14 @@ public class StandingZoneController : ControllerBase
     {
         var zoneNames = Enum.GetNames(typeof(SZoneType)).ToList();
         return Ok(zoneNames);
-    }   
+    }
 
+    [HttpGet("standingzonesbyevent/{id}")]
+    public async Task<IActionResult> GetStandingZonesByEventId(Guid id)
+    {
+        var request = new GetStandingZonesByEventQuery { EventId = id };
+        return Ok(await _mediator.Send(request));
+    }
     [Authorize(Roles = "Admin")]
     [HttpDelete("deletestandingzone")]
     public async Task<IActionResult> Delete(DeleteStandingZoneRequest deleteRequest)

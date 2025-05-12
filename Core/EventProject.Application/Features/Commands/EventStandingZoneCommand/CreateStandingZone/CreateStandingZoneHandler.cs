@@ -1,5 +1,6 @@
 ﻿using EventProject.Application.Exceptions;
 using EventProject.Application.Features.Commands.EventStandingZoneCommand.CreateStandingZone;
+using EventProject.Application.Repositories.Events;
 using EventProject.Application.Repositories.StandingZones;
 using EventProject.Application.Repositories.Venues;
 using EventProject.Domain.Entities;
@@ -9,30 +10,49 @@ using MediatR;
 public class CreateStandingZoneHandler : IRequestHandler<CreateStandingZoneRequest, CreateStandingZoneResponse>
 {
     private readonly IStandingZoneWriteRepository standingZoneRepo;
-    private readonly IVenueReadRepository venueReadRepo;
-    public CreateStandingZoneHandler(IStandingZoneWriteRepository standingZoneRepo, IVenueReadRepository venueReadRepo)
+    private readonly IStandingZoneReadRepository _standingReadZoneRepo;
+    public CreateStandingZoneHandler(IStandingZoneWriteRepository standingZoneRepo,IStandingZoneReadRepository 
+        standing)
     {
         this.standingZoneRepo = standingZoneRepo;
-        this.venueReadRepo = venueReadRepo;
+        _standingReadZoneRepo=standing;
     }
-
     public async Task<CreateStandingZoneResponse> Handle(CreateStandingZoneRequest request, CancellationToken cancellationToken)
     {
-      
-        var venue = await venueReadRepo.GetByIdAsync(request.VenueId.ToString());
-        if (venue is null)
-            throw new NotFoundException("Venue tapilmadi");
+        
 
-        var standingZone = new StandingZone
+        if (!Enum.TryParse<SZoneType>(request.ZoneName, true, out var zoneEnum))
+            throw new BadRequestException("Daxil edilən zona adı düzgün deyil.");
+
+
+        var existingZone =   _standingReadZoneRepo.GetWhere(z => z.EventId == request.EventId && z.ZoneName == zoneEnum).FirstOrDefault();
+
+        if (existingZone!=null)
         {
-            Capacity = request.Capacity,
-            VenueId = venue.Id,
-            ZoneName = request.ZoneName
-        };
+            existingZone.Price = request.Price;
+            existingZone.Capacity = request.Capacity;
+            existingZone.VenueId = request.VenueId;
+            standingZoneRepo.Update(existingZone);
+            await standingZoneRepo.SaveChangesAsync();
+           return new CreateStandingZoneResponse { Id = existingZone.Id };  
+        }
+        else
+        {
+            var standingZone = new StandingZone
+            {
+                Capacity = request.Capacity,
+                VenueId = request.VenueId,
+                ZoneName = zoneEnum,
+                EventId = request.EventId,
+                Price = request.Price,
+            };
 
-        await standingZoneRepo.AddAsync(standingZone);
-        await standingZoneRepo.SaveChangesAsync();
+            await standingZoneRepo.AddAsync(standingZone);
+            await standingZoneRepo.SaveChangesAsync();
+            return new CreateStandingZoneResponse { Id = standingZone.Id };
+        }
 
-        return new CreateStandingZoneResponse { Id = standingZone.Id };
+
+        
     }
 }

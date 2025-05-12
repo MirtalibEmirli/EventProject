@@ -30,6 +30,7 @@ public class GetEventByIdHandler : IRequestHandler<GetEventByIdRequest, Response
                                                     .Include(e => e.Location.Seats)
                                                     .Include(e => e.MediaFiles)
                                                     .Include(e => e.EventSeatPrices)
+                                                    .Include(e =>e.Location.StandingZones)
                                                     .FirstOrDefaultAsync(e => e.Id == request.Id, cancellationToken);
 
         if (eventEntity is null)

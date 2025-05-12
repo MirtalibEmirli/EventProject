@@ -36,6 +36,7 @@ public class StandingZoneController : ControllerBase
        var response = await _mediator.Send(new GetEventStandingZoneRequest { VenueId = id });
         return Ok(response); 
     }
+
     [AllowAnonymous]
     [HttpGet("zone-types")]
     public async Task<IActionResult> GetZoneNames()

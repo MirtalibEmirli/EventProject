@@ -1,9 +1,5 @@
 ﻿using EventProject.Application.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using EventProject.Domain.Entities;
 
 namespace EventProject.Application.Features.Queries.EventQueries.GetEventById;
 
@@ -27,5 +23,6 @@ public class GetEventByIdResponse
     public List<string> MediaUrls { get; set; } = new();
 
     public List<SeatDTO> Seats { get; set; } = new();
+    //public List<StandingZone>? StandingZones { get; set; } = new();                      
 
 }

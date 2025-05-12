@@ -11,7 +11,6 @@ public class AppDbContext : DbContext
     public DbSet<Event> Events { get; set; }
     public DbSet<Ticket> Tickets { get; set; }
     public DbSet<EventSeatPrice> EventSeatPrices { get; set; }
-    public DbSet<EventStandingZonePrice> EventStandingZonePrices { get; set; }
     public DbSet<SectionWeight> SectionWeights { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<Payment> Payments { get; set; }
@@ -32,29 +31,6 @@ public class AppDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-
-        modelBuilder.Entity<EventStandingZonePrice>(builder =>
-        {
-            builder.HasKey(e => new { e.EventId,e.StandingZoneId});
-
-            builder.HasOne(e => e.Event)
-                   .WithMany(e => e.EventStandingZonePrices)
-                   .HasForeignKey(e => e.EventId)
-                   .OnDelete(DeleteBehavior.Cascade);
-
-            builder.HasOne(e => e.StandingZone)
-                   .WithMany(z => z.EventStandingZonePrices)
-                   .HasForeignKey(e => e.StandingZoneId)
-                   .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Property(e => e.Price)
-                   .IsRequired();
-
-            builder.Property(e => e.AvailableCount)
-                   .IsRequired();
-        });
-
-
         modelBuilder.Entity<EventSeatPrice>(builder =>
         {
             builder.HasKey(e => new { e.SeatId, e.EventId });
@@ -69,22 +45,24 @@ public class AppDbContext : DbContext
                    .OnDelete(DeleteBehavior.Cascade);
 
 
-          
+
             builder.Property(e => e.Price)
                    .IsRequired();
-            
-
-            
-
 
         });
-
-
 
         modelBuilder.Entity<UserRwEvent>().HasKey(ur => new { ur.UserId, ur.EventId });
 
         modelBuilder.Entity<UserRwEvent>().HasOne(ur => ur.User).WithMany(u => u.UserRwEvents).HasForeignKey(ur => ur.UserId);
         modelBuilder.Entity<UserRwEvent>().HasOne(ur => ur.Event).WithMany(e => e.UserRwEvents).HasForeignKey(e => e.EventId);
+
+
+        modelBuilder.Entity<StandingZone>()
+            .HasOne(s => s.Event)
+            .WithMany(e => e.StandingZones)
+            .HasForeignKey(sz => sz.EventId)
+            .OnDelete(DeleteBehavior.Restrict);
+
 
         // Event → Category
         modelBuilder.Entity<Event>()
@@ -126,7 +104,7 @@ public class AppDbContext : DbContext
             .HasMany(e => e.MediaFiles)
             .WithOne(m => m.Event)
             .HasForeignKey(m => m.EventId)
-            .OnDelete(DeleteBehavior.Restrict); // ❗ cascade yox, restrict et
+            .OnDelete(DeleteBehavior.Restrict);
 
         // User → Tickets
         modelBuilder.Entity<User>()
@@ -180,7 +158,7 @@ public class AppDbContext : DbContext
 
             builder.Property(e => e.Capacity).IsRequired(false);
         });
-           
+
 
         //// Venue → MediaFiles
         //modelBuilder.Entity<Venue>()

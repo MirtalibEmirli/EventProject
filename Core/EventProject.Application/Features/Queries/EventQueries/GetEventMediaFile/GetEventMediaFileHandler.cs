@@ -25,7 +25,7 @@ public class GetEventMediaFileHandler : IRequestHandler<GetEventMediaFilesQuery,
     public async Task<ResponseModel<GetEventMediaFileResponse>> Handle(GetEventMediaFilesQuery request, CancellationToken cancellationToken)
     {
         var _event = await _eventReadRepository.GetByIdAsync(request.EventId);
-        var medaias = _event.MediaFiles.Select(m => m.FileName).ToList();
+        var medaias = _event.MediaFiles.Where(m=>m.IsDeleted!=true).Select(m => m.FileName).ToList();
 
         var result = new GetEventMediaFileResponse()
         {

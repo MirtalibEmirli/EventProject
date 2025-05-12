@@ -19,10 +19,11 @@ public class EventMediaFileWriteRepository : WriteRepository<EventMediaFile>, IE
         var table = _appDbContext.Set<EventMediaFile>();
 
         var entity = await table.FirstOrDefaultAsync(x => x.FileName == fileName);
-        if   (entity!=null)
+        if (entity != null)
         {
             entity.IsDeleted = true;
             entity.DeletedDate = DateTime.Now;
+            table.Update(entity);
             await _appDbContext.SaveChangesAsync();
         }
     }

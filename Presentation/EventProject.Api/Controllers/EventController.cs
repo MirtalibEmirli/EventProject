@@ -54,9 +54,9 @@ public class EventController : ControllerBase
     [Authorize(Roles = "Admin")]
     [HttpPut]
     [Route("deleteEventMedia")]
-    public async Task<IActionResult> DeleteEventMedia([FromBody] string fileName)
+    public async Task<IActionResult> DeleteEventMedia([FromBody] DeleteEventMediaRequest request)
     {
-        var result = await _mediator.Send(new DeleteEventMediaRequest(fileName));
+        var result = await _mediator.Send(request);
         if (!result.IsSuccess)
             return BadRequest(result);
         return Ok(result);

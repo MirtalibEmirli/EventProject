@@ -20,18 +20,18 @@ public class GetEventsHandler : IRequestHandler<GetEventsRequest, ResponseModel<
         var query = eventReadRepository.GetAll()
                                        .Include(e => e.Location)
                                        .Include(e => e.Category)
-                                       .Include(e => e.MediaFiles).Where(e=>e.IsDeleted == false); //
+                                       .Include(e => e.MediaFiles).Where(e => e.IsDeleted == false); //
 
 
 
         //filters-----
-        if(request.StartDate.HasValue)
-            query= query.Where(e=>e.StartTime>=request.StartDate.Value);
+        if (request.StartDate.HasValue)
+            query = query.Where(e => e.StartTime >= request.StartDate.Value);
 
-        if(request.EndDate.HasValue)
+        if (request.EndDate.HasValue)
             query = query.Where(e => e.EndTime <= request.EndDate.Value);
 
-        if(request.VenueId.HasValue)
+        if (request.VenueId.HasValue)
             query = query.Where(e => e.LocationId == request.VenueId.Value);
 
         if (request.CategoryId.HasValue)
@@ -61,11 +61,13 @@ public class GetEventsHandler : IRequestHandler<GetEventsRequest, ResponseModel<
                 VenueName = e.Location.Name,
                 CategoryId = e.CategoryId,
                 Status = e.Status,
-                MediaUrls = e.MediaFiles.Select(m => m.FileName).ToList(),
+                MediaUrls = e.MediaFiles.Where(m => m.IsDeleted != true)
+                 .Select(m => m.FileName)
+                 .ToList(),
                 MaxPrice = e.MaxPrice,
                 EndTime = e.EndTime,
                 Description = e.Description,
-                
+
 
             }).ToListAsync(cancellationToken);
 

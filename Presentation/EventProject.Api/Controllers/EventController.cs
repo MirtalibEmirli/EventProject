@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace EventProject.Api.Controllers;
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
+//[Authorize]
 public class EventController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -45,7 +45,7 @@ public class EventController : ControllerBase
         return Ok(result);
     }
 
-    [Authorize(Roles = "Admin")]
+    [AllowAnonymous]
     [HttpPost("uploadEventMedia")]
     public async Task<IActionResult> UploadEventMedia([FromForm] UploadEventMediaRequest request)
     {

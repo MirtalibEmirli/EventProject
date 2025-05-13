@@ -50,6 +50,8 @@ public class GetEventByIdHandler : IRequestHandler<GetEventByIdRequest, Response
             MaxPrice = eventEntity.MaxPrice,
             VenueName = eventEntity.Location.Name,
             VenueAddress = eventEntity.Location.Address,
+            VenueId=eventEntity.LocationId,
+            CategoryId = eventEntity.CategoryId,
             CategoryName = eventEntity.Category.CategoryName,
             MediaUrls = eventEntity.MediaFiles.Select(m => m.Path).ToList(),
             Seats = eventEntity.Location.Seats.Select(seat =>

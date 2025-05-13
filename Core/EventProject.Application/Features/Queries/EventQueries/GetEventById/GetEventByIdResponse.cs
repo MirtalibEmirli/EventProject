@@ -6,6 +6,8 @@ namespace EventProject.Application.Features.Queries.EventQueries.GetEventById;
 public class GetEventByIdResponse
 {
     public Guid Id { get; set; }
+    public Guid VenueId { get; set; }
+    public Guid CategoryId { get; set; }
     public string Title { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
 

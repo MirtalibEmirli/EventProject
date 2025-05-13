@@ -39,7 +39,8 @@ namespace EventProject.Application.Features.Commands.CommentCommand.ReplyToComme
                 Id = Guid.NewGuid(),
                 Content = request.Content,
                 EventId = parentComment.EventId,
-                UserId = userId
+                UserId = userId,
+                ParentCommentId = parentComment.Id,
             };
 
             await _commentWriteRepository.AddAsync(reply);

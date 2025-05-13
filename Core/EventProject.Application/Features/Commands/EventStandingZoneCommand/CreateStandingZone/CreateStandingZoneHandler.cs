@@ -24,7 +24,7 @@ public class CreateStandingZoneHandler : IRequestHandler<CreateStandingZoneReque
         if (!Enum.TryParse<SZoneType>(request.ZoneName, true, out var zoneEnum))
             throw new BadRequestException("Daxil edilən zona adı düzgün deyil.");
 
-
+        
         var existingZone =   _standingReadZoneRepo.GetWhere(z => z.EventId == request.EventId && z.ZoneName == zoneEnum).FirstOrDefault();
 
         if (existingZone!=null)

@@ -19,6 +19,10 @@ public class CurrentUserService(IHttpContextAccessor httpContextAccessor) : ICur
     {
         var userIdClaim = _httpContextAccessor?.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null) throw new UnauthorizedAccessException("User is not authenticated");
+        Console.WriteLine(userIdClaim);
+        Console.WriteLine();
+        Console.WriteLine();
+        Console.WriteLine(userIdClaim.Value);
         var userId = Guid.Parse(userIdClaim.Value);
         return userId;
     }

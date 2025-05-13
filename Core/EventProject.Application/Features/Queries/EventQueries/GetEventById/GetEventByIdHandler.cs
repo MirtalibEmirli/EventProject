@@ -53,7 +53,7 @@ public class GetEventByIdHandler : IRequestHandler<GetEventByIdRequest, Response
             VenueId=eventEntity.LocationId,
             CategoryId = eventEntity.CategoryId,
             CategoryName = eventEntity.Category.CategoryName,
-            MediaUrls = eventEntity.MediaFiles.Select(m => m.FileName).ToList(),
+            MediaUrls = eventEntity.MediaFiles.Where(m=>m.IsDeleted!=true).Select(m => m.FileName).ToList(),
             Seats = eventEntity.Location.Seats.Select(seat =>
             {
                 var price = eventEntity.EventSeatPrices.FirstOrDefault(p => p.SeatId == seat.Id)?.Price;

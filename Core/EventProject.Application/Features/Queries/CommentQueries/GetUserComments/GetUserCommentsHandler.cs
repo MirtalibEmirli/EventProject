@@ -54,15 +54,15 @@ public class GetUserCommentsHandler : IRequestHandler<GetUserCommentsQuery, Resp
             }
         ).ToList();
 
-       return new ResponseModel<GetUserCommentsResponse>
-       {
-           Message = "User comments",
-           IsSuccess = true,
-           Data = new GetUserCommentsResponse()
-           {
-               Comments = commentsToFront
-           }
-       };   
+        return new ResponseModel<GetUserCommentsResponse>
+        {
+            Message = "User comments",
+            IsSuccess = true,
+            Data = new GetUserCommentsResponse()
+            {
+                Comments = commentsToFront
+            }
+        };
     }
 }
 

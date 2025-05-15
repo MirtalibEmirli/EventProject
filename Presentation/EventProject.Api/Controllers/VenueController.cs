@@ -5,6 +5,7 @@ using EventProject.Application.Features.Commands.VenueCommands.UpdateVenue;
 using EventProject.Application.Features.Commands.VenueMediaFile.UploadVenueMedia;
 using EventProject.Application.Features.Queries.VenueQueries.GetAllVenueQueries;
 using EventProject.Application.Features.Queries.VenueQueries.GetByIdVenueQueries;
+using EventProject.Application.Features.Queries.VenueQueries.Search;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -83,6 +84,15 @@ public class VenueController : ControllerBase
         return Ok(await _mediator.Send(request));
     }
 
+    [AllowAnonymous]
+    [HttpGet("searchelements")]
+    public async Task<IActionResult> Search([FromQuery] string searchText)
+    {
+        var result = await _mediator.Send(new SearchRequest(searchText));
+        if (!result.IsSuccess)
+            return BadRequest(result);
 
+        return Ok(result);
+    }
 
 }

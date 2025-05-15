@@ -62,8 +62,7 @@ public class AddCommentHandler : IRequestHandler<AddCommentRequest, AddCommentRe
         
 
         return new AddCommentResponse
-        {
-            Id = comment.Id,
+        {   Id = comment.Id,
             Content = comment.Content,
             CreatedAt = comment.CreatedDate,
             UserName = $"{user.Fistname} {user.Lastname}"

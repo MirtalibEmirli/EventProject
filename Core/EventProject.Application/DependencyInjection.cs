@@ -37,6 +37,7 @@ namespace EventProject.Application
 
             //recentlyviewedd
             services.AddScoped<IRecentlyViewedJob, RecentlyViewedJob>();
+            services.AddScoped<ISendMailAllUsersJob, SendMmailAllUsersJob>();
             return services;
         }
 

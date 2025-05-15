@@ -80,11 +80,18 @@ using (var scope = app.Services.CreateScope())
 
     jobManager.AddOrUpdate<IRecentlyViewedJob>(
         "delete-old-recentlyviewed-events",
-        job => job.DeleteOldRecentlyViewedEvents(),
-        Cron.Daily); 
+        job => job.DeleteOldRecentlyViewedEvents(), 
+        Cron.Daily);   
+     
+
+    jobManager.AddOrUpdate<ISendMailAllUsersJob>(
+        "send-mail-all-users",
+        job => job.SendMailAllUsers(),
+        "50 12 */4 * *");
+    //demeli  deqiqe saat soram */ bu gun sayidi o birilerde  ay  ve  hefte gunu oda lazim dol
 }
 
- 
+
 if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
     app.UseSwagger();

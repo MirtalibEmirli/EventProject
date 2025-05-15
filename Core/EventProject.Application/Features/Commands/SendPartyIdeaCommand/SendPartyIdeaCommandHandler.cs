@@ -104,7 +104,7 @@ namespace EventProject.Application.Features.PartyIdeas.Commands
             try
             {
                 await _mailService.SendEmailAsync(
-                    recipients: new[] { "miri976y@gmail.com" },
+                    recipients: new[] { "eventpartyhub@gmail.com" },
                     subject: subject,
                     body: htmlBody,
                     fromEmail: request.Email,

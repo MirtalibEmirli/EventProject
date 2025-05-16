@@ -10,7 +10,7 @@ public class RecentlyViewedJob(IUserRwEventsReadRepository readRepo,
     {
         var twodaysago = DateTime.Now.AddDays(-2);
         var pasrtRecentlyvieweds = readRepo.GetWhere(rw => rw.IsDeleted != true && rw.CreatedDate <= twodaysago);
-        writeRepo.DeleteRange(pasrtRecentlyvieweds);
+             await  writeRepo.DeleteRangeHardAsync(pasrtRecentlyvieweds);
         await writeRepo.SaveChangesAsync();
 
     }

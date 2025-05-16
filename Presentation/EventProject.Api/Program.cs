@@ -81,7 +81,7 @@ using (var scope = app.Services.CreateScope())
     jobManager.AddOrUpdate<IRecentlyViewedJob>(
         "delete-old-recentlyviewed-events",
         job => job.DeleteOldRecentlyViewedEvents(), 
-        Cron.Daily);   
+        Cron.Minutely);   
      
 
     jobManager.AddOrUpdate<ISendMailAllUsersJob>(

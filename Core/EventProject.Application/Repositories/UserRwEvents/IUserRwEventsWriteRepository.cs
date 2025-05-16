@@ -9,5 +9,7 @@ namespace EventProject.Application.Repositories.UserRwEvents
 {
     public interface IUserRwEventsWriteRepository:IWriteRepository<UserRwEvent>
     {
+        public Task DeleteRangeHardAsync(IEnumerable<UserRwEvent> entities);
+
     }
 }

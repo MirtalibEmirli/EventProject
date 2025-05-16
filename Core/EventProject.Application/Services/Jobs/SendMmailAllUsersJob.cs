@@ -18,19 +18,21 @@ public class SendMmailAllUsersJob: ISendMailAllUsersJob
     }
     public async Task SendMailAllUsers()
     {
+        var endDate = DateTime.Now.AddDays(4);
         var allEmails = _userReadRepsoitory
             .GetWhere(u => u.IsDeleted != true && u.Email != null)
             .Select(u => u.Email)
             .ToList();
 
         var allEvents = _eventReadRepository
-            .GetWhere(e => e.IsDeleted != true)
+            .GetWhere(e => e.IsDeleted != true&&e.EndTime<= endDate)
             .ToList();
 
         var random = new Random();
 
         foreach (var userEmail in allEmails)
         {
+        
             var eventToSend = allEvents[random.Next(allEvents.Count)];
             Console.WriteLine(userEmail);
             var randomImage = eventToSend.MediaFiles.Select(f=>f.FileName).ToList() != null && eventToSend.MediaFiles.Select(f=>f.FileName).Any()

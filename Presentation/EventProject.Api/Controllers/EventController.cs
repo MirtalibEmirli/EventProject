@@ -51,7 +51,7 @@ public class EventController : ControllerBase
     {
         return Ok(await _mediator.Send(request));
     }
-    [AllowAnonymous]
+    [Authorize(Roles ="Admin")]
     [HttpPut]
     [Route("deleteEventMedia")]
     public async Task<IActionResult> DeleteEventMedia([FromBody] DeleteEventMediaRequest request)

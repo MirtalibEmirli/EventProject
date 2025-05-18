@@ -87,8 +87,8 @@ using (var scope = app.Services.CreateScope())
     jobManager.AddOrUpdate<ISendMailAllUsersJob>(
         "send-mail-all-users",
         job => job.SendMailAllUsers(),
-        "50 12 */4 * *");
-    //demeli  deqiqe saat soram */ bu gun sayidi o birilerde  ay  ve  hefte gunu oda lazim dol
+        "50 12 */2 * *");
+    //demeli  deqiqe saat soram */ bu gun sayidi(nece gunden bir) o birilerde  ay  ve  hefte gunu oda lazim dol
 }
 
 

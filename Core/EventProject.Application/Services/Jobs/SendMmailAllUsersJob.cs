@@ -39,6 +39,10 @@ public class SendMmailAllUsersJob: ISendMailAllUsersJob
                 ? eventToSend.MediaFiles.Select(f=>f.FileName).OrderBy(x => Guid.NewGuid()).FirstOrDefault()
                 : "https://placehold.co/600x300?text=PartyHub+Event";
 
+            if (Path.GetExtension(randomImage)==".MP4"|| Path.GetExtension(randomImage) == ".mp4"|| Path.GetExtension(randomImage) == ".mov")
+            {
+                randomImage = "https://eventstoragemain.blob.core.windows.net/venue-medias/fomomekan3.jpg ";
+            }
             var template = @"<!DOCTYPE html>
 <html lang=""en"">
 <head>

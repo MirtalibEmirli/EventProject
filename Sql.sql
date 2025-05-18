@@ -1,0 +1,1 @@
+﻿select * from Files where FileName = 'https://eventstoragemain.blob.core.windows.net/venue-medias/hh4.webp'

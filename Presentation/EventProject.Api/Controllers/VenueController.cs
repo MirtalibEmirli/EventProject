@@ -2,9 +2,11 @@
 using EventProject.Application.Features.Commands.VenueCommands.CreateVenue;
 using EventProject.Application.Features.Commands.VenueCommands.DeleteVenue;
 using EventProject.Application.Features.Commands.VenueCommands.UpdateVenue;
+using EventProject.Application.Features.Commands.VenueMediaFile.DeleteVenueMedia;
 using EventProject.Application.Features.Commands.VenueMediaFile.UploadVenueMedia;
 using EventProject.Application.Features.Queries.VenueQueries.GetAllVenueQueries;
 using EventProject.Application.Features.Queries.VenueQueries.GetByIdVenueQueries;
+using EventProject.Application.Features.Queries.VenueQueries.Getvenuesforselectbox;
 using EventProject.Application.Features.Queries.VenueQueries.Search;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -23,7 +25,17 @@ public class VenueController : ControllerBase
         _mediator = mediator;
     }
 
-  
+
+    [AllowAnonymous]
+    [HttpGet("getvenuesforselectbox")]
+    public async Task<IActionResult> GetVenuesForSelect()
+    {
+        var result = await _mediator.Send(new GetvenuesforselectboxQuery());
+        if (!result.IsSuccess)
+            return BadRequest(result);
+        return Ok(result);
+    }   
+
     [HttpPost("create")]
     public async Task<IActionResult> CreateVenue([FromBody] CreateVenueRequest request)
     {
@@ -84,6 +96,17 @@ public class VenueController : ControllerBase
         return Ok(await _mediator.Send(request));
     }
 
+    //[Authorize(Roles = "Admin")]
+    [AllowAnonymous]
+    [HttpPut("deletevenuemedia")]
+    public async Task<IActionResult> DeleteVenueMedia([FromQuery] string fileName)
+    {
+        var result = await _mediator.Send(new DeleteVenueMediaRequest(fileName));
+        if (!result.IsSuccess)
+            return BadRequest(result);
+        return Ok(result);
+    }
+
     [AllowAnonymous]
     [HttpGet("searchelements")]
     public async Task<IActionResult> Search([FromQuery] string searchText)
@@ -94,5 +117,6 @@ public class VenueController : ControllerBase
 
         return Ok(result);
     }
+
 
 }

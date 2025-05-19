@@ -6,6 +6,7 @@ using EventProject.Application.Features.Commands.VenueMediaFile.DeleteVenueMedia
 using EventProject.Application.Features.Commands.VenueMediaFile.UploadVenueMedia;
 using EventProject.Application.Features.Queries.VenueQueries.GetAllVenueQueries;
 using EventProject.Application.Features.Queries.VenueQueries.GetByIdVenueQueries;
+using EventProject.Application.Features.Queries.VenueQueries.GetVenueMedia;
 using EventProject.Application.Features.Queries.VenueQueries.Getvenuesforselectbox;
 using EventProject.Application.Features.Queries.VenueQueries.Search;
 using MediatR;
@@ -34,8 +35,17 @@ public class VenueController : ControllerBase
         if (!result.IsSuccess)
             return BadRequest(result);
         return Ok(result);
-    }   
+    }
 
+    [AllowAnonymous]
+    [HttpGet("getVenueMediaFiles/{id}")]
+    public async Task<IActionResult> GetVenueMediaFiles(Guid id)
+    {
+        var result = await _mediator.Send(new GetVenueMediasQuery(id));
+        if (!result.IsSuccess)
+            return BadRequest(result);
+        return Ok(result);
+    }   
     [HttpPost("create")]
     public async Task<IActionResult> CreateVenue([FromBody] CreateVenueRequest request)
     {

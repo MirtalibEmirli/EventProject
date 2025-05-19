@@ -7,6 +7,6 @@ public class CommentDto
     public string UserName { get; set; } = string.Empty;
     public DateTime? CreatedDate { get; set; }
     public List<CommentDto> Replies { get; set; } = new();
-
+    public bool IsOwner { get; set; }
 
 }

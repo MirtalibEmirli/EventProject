@@ -25,7 +25,7 @@ public class DeleteCommentHandler:IRequestHandler<DeleteCommentRequest, Response
         if (comment is null) throw new Exception("Comment not found!");
         var userId = _currentUserService.GetUserId();   
         var userRole = _currentUserService.GetRole();
-        if (comment.UserId != userId || userRole != "Admin")
+        if (comment.UserId != userId && userRole != "Admin")
         {
             return new ResponseModel<Unit>
             {
@@ -37,7 +37,7 @@ public class DeleteCommentHandler:IRequestHandler<DeleteCommentRequest, Response
 
         comment.IsDeleted = true;
         comment.DeletedDate = DateTime.Now;
-
+         commentWriteRepository.Update(comment); 
         await commentWriteRepository.SaveChangesAsync();
 
         return new ResponseModel<Unit>

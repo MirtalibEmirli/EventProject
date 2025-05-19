@@ -31,7 +31,7 @@ public class GetAllVenueHandler : IRequestHandler<GetAllVenueRequest, ResponseMo
         foreach (var item in venues)
         {
             var obj = _mapper.Map<GetAllVenueResponse>(item);
-            obj.MediaUrls=item.VenueMediaFiles!=null?item.VenueMediaFiles.Select(m=>m.FileName).ToList():new List<string>();
+            obj.MediaUrls=item.VenueMediaFiles!=null?item.VenueMediaFiles.Where(x=>x.IsDeleted!=true).Select(m=>m.FileName).ToList():new List<string>();
             
             result.Add(obj);
         }

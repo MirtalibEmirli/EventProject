@@ -1,4 +1,5 @@
-﻿using EventProject.Application.DTOs;
+﻿using EventProject.Application.Abstractions.IHttpContextUser;
+using EventProject.Application.DTOs;
 using EventProject.Application.Repositories.Comments;
 using MediatR;
 
@@ -7,10 +8,11 @@ namespace EventProject.Application.Features.Queries.CommentQueries.GetAllComment
 public class GetAllCommentHandler : IRequestHandler<GetAllCommentRequest, GetAllCommentResponse>
 {
     private readonly ICommentReadRepository _commentReadRepository;
-
-    public GetAllCommentHandler(ICommentReadRepository commentReadRepository)
+    private readonly ICurrentUserService _currentUserService;
+    public GetAllCommentHandler(ICommentReadRepository commentReadRepository,ICurrentUserService currentUserservice)
     {
         _commentReadRepository = commentReadRepository;
+        _currentUserService = currentUserservice;
     }
 
     public async Task<GetAllCommentResponse> Handle(GetAllCommentRequest request, CancellationToken cancellationToken)
@@ -23,21 +25,29 @@ public class GetAllCommentHandler : IRequestHandler<GetAllCommentRequest, GetAll
                                               .Skip(skip)
                                               .Take(request.PageSize)
                                               .ToList();
+        var userId = _currentUserService.GetUserId();
+        var isOwner = comments.FirstOrDefault()?.UserId == userId;
 
         var result = comments.Select(c => new CommentDto
         {
             Id = c.Id,
             Content = c.Content,
             CreatedDate = c.CreatedDate,
-            UserName = c.User.Lastname,
-            Replies = c.Replies.Select(r => new CommentDto
-            {
-                Id = r.Id,
-                Content = r.Content,
-                CreatedDate = r.CreatedDate,
-                UserName = r.User.Lastname
-            }).ToList()
+            UserName = c.User.Lastname + " " + c.User.Fistname,
+            IsOwner = c.UserId == userId, // 👈 düz burda yoxlanılır
+            Replies = c.Replies
+                .Where(r => r.IsDeleted != true)
+                .Select(r => new CommentDto
+                {
+                    Id = r.Id,
+                    Content = r.Content,
+                    CreatedDate = r.CreatedDate,
+                    UserName = r.User.Lastname,
+                    IsOwner = r.UserId == userId // 👈 cavablarda da yoxlanır
+                })
+                .ToList()
         }).ToList();
+
         var response = new GetAllCommentResponse() { Comments = result };
         return response;
     }

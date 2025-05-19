@@ -42,13 +42,14 @@ public class GetUserCommentsHandler : IRequestHandler<GetUserCommentsQuery, Resp
                 Id = c.Id,
                 Content = c.Content,
                 CreatedDate = c.CreatedDate,
+                IsOwner=userId == c.UserId,
                 UserName = c.User.Lastname,
                 Replies = c.Replies.Select(r => new CommentDto
                 {
                     Id = r.Id,
                     Content = r.Content,
                     CreatedDate = r.CreatedDate,
-                    UserName = r.User.Lastname
+                    UserName = r.User.Lastname+r.User.Fistname,
                 }).ToList()
 
             }

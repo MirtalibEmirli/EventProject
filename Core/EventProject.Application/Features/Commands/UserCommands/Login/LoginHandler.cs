@@ -26,7 +26,7 @@ namespace EventProject.Application.Features.Commands.UserCommands.Login
 
 
            
-            var hashedPassword = PasswordHasher.ComputeStringToSha256Hash(request.Password);
+            var hashedPassword = PasswordHasher.ComputeStringToSha256Hash(request.Password); //sha256 hashleme
           
             if (user.PasswordHash != hashedPassword)
             {
@@ -40,7 +40,7 @@ namespace EventProject.Application.Features.Commands.UserCommands.Login
             {
                 new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()), 
                 new Claim(ClaimTypes.Role,user.Role.ToString()),
-                new Claim(ClaimTypes.Name, user.Lastname)
+                new Claim(ClaimTypes.Name, user.Fistname)
             };
             var token = tokenHandler.CreateAccessToken(authClaims, 160);
             var refresh = tokenHandler.CreateRefreshToken();

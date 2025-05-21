@@ -6,11 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EventProject.Application.Features.Commands.UserCommands.Login
+namespace EventProject.Application.Features.Commands.UserCommands.Login;
+
+public class LoginRequest:IRequest<ResponseModel<LoginResponse>>
 {
-    public class LoginRequest:IRequest<ResponseModel<LoginResponse>>
-    {
-        public string Email { get; set; }
-        public string Password { get; set; }
-    }
+    public string Email { get; set; }
+    public string Password { get; set; }
 }

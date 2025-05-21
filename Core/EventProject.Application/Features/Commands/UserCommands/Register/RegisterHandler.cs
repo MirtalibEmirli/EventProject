@@ -25,7 +25,7 @@ public class RegisterHandler(IMapper mapper, IUserReadRepsoitory userRead, IUser
  
         var hashedPassword = PasswordHasher.ComputeStringToSha256Hash(request.Password);
         var user = _mapper.Map<User>(request);
-
+       
         user.PasswordHash = hashedPassword;
         user.Role = Role.User;
         await _userWrite.AddAsync(user);
@@ -35,7 +35,7 @@ public class RegisterHandler(IMapper mapper, IUserReadRepsoitory userRead, IUser
         {
             new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
             new Claim(ClaimTypes.Role,user.Role.ToString()),
-            new Claim(ClaimTypes.Name, user.Lastname)
+            new Claim(ClaimTypes.Name, user.Fistname)
         };
 
         var token = _tokenHandler.CreateAccessToken(claims, 160);

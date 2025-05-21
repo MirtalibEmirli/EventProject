@@ -9,6 +9,7 @@ using EventProject.Application.Features.Queries.VenueQueries.GetByIdVenueQueries
 using EventProject.Application.Features.Queries.VenueQueries.GetVenueMedia;
 using EventProject.Application.Features.Queries.VenueQueries.Getvenuesforselectbox;
 using EventProject.Application.Features.Queries.VenueQueries.Search;
+using EventProject.Application.Features.Queries.VenueQueries.VenueEventMedia;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -128,5 +129,15 @@ public class VenueController : ControllerBase
         return Ok(result);
     }
 
+
+    [AllowAnonymous]
+    [HttpGet("getavenueeventmedias")] 
+    public async Task<IActionResult> EventVenueMedias(Guid id)
+    {
+        var result = await _mediator.Send(new GetAllVenueEventMediaQuery() { VenueId= id });
+        if (!result.IsSuccess)
+            return BadRequest(result);
+        return Ok(result);  
+    }
 
 }

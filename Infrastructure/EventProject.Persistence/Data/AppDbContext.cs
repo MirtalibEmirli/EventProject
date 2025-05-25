@@ -189,9 +189,9 @@ public class AppDbContext : DbContext
             .IsRequired();
 
         modelBuilder.Entity<UserMediaFile>()
-             .HasOne(umf => umf.Event)
+             .HasOne(umf => umf.User)
              .WithMany()
-             .HasForeignKey(umf => umf.EventId)
+             .HasForeignKey(umf => umf.UserId)
              .OnDelete(DeleteBehavior.Restrict);
     }
 

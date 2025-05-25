@@ -1,6 +1,7 @@
 ﻿using EventProject.Application.Abstractions.IHttpContextUser;
 using EventProject.Application.DTOs;
 using EventProject.Application.Repositories.Comments;
+using EventProject.Application.Repositories.UserMediaFileRepo;
 using EventProject.Application.ResponseModels.Generics;
 using MediatR;
 
@@ -15,11 +16,12 @@ public class GetUserCommentsHandler : IRequestHandler<GetUserCommentsQuery, Resp
 {
     private readonly ICommentReadRepository _commentReadRepository;
     private readonly ICurrentUserService _currentUserService;
-
-    public GetUserCommentsHandler(ICommentReadRepository commentReadRepository, ICurrentUserService currentUserService)
+    private readonly IUserMediaFileRead _userMediaFileRead;
+    public GetUserCommentsHandler(ICommentReadRepository commentReadRepository, ICurrentUserService currentUserService, IUserMediaFileRead userMediaFileRead)
     {
         _commentReadRepository = commentReadRepository;
         _currentUserService = currentUserService;
+        _userMediaFileRead = userMediaFileRead; 
     }
 
     public async Task<ResponseModel<GetUserCommentsResponse>> Handle(GetUserCommentsQuery request, CancellationToken cancellationToken)
@@ -35,6 +37,13 @@ public class GetUserCommentsHandler : IRequestHandler<GetUserCommentsQuery, Resp
                 IsSuccess = true
             };
         }
+        var latestMedia = _userMediaFileRead
+    .GetWhere(x => x.UserId == userId && x.IsDeleted!=true
+    )
+    .OrderByDescending(x => x.CreatedDate)
+    .FirstOrDefault();
+
+        string? mediaUrl = latestMedia != null ? latestMedia.FileName : null;
 
         var commentsToFront = comments.Select(c =>
             new CommentDto
@@ -43,13 +52,15 @@ public class GetUserCommentsHandler : IRequestHandler<GetUserCommentsQuery, Resp
                 Content = c.Content,
                 CreatedDate = c.CreatedDate,
                 IsOwner=userId == c.UserId,
-                UserName = c.User.Lastname,
+                UserName = c.User.Lastname+ c.User.Fistname,
+                UserMediaUrl = mediaUrl,
                 Replies = c.Replies.Select(r => new CommentDto
                 {
                     Id = r.Id,
                     Content = r.Content,
                     CreatedDate = r.CreatedDate,
                     UserName = r.User.Lastname+r.User.Fistname,
+
                 }).ToList()
 
             }

@@ -8,5 +8,7 @@ public class CommentDto
     public DateTime? CreatedDate { get; set; }
     public List<CommentDto> Replies { get; set; } = new();
     public bool IsOwner { get; set; }
+    public string? UserMediaUrl { get; set; }   
+
 
 }

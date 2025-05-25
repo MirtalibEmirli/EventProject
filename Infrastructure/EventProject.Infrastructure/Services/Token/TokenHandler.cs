@@ -10,7 +10,6 @@ using System.Text;
 
 
 namespace EventProject.Infrastructure.Services.Token;
-
 public class TokenHandler : ITokenHandler
 {
     readonly IConfiguration configuration;

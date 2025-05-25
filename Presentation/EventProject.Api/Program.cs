@@ -59,7 +59,7 @@ builder.Services.AddInfrastructureService(builder.Configuration);
 
 builder.Services.AddCors(options => options.AddPolicy("AllowAll", policy =>
     policy
-        .WithOrigins("http://localhost:3000", "http://localhost:5173", "http://localhost:5174")
+        .WithOrigins("http://localhost:3000", "http://localhost:5173", "http://localhost:5174", "https://partyhubevent.netlify.app/", "https://partyhubevent.netlify.app/")
         .AllowAnyHeader()
         .AllowAnyMethod()
         .AllowCredentials()
@@ -87,7 +87,7 @@ using (var scope = app.Services.CreateScope())
     jobManager.AddOrUpdate<ISendMailAllUsersJob>(
         "send-mail-all-users",
         job => job.SendMailAllUsers(),
-        "50 12 */2 * *");
+        "50 12 */1 * *");
     //demeli  deqiqe saat soram */ bu gun sayidi(nece gunden bir) o birilerde  ay  ve  hefte gunu oda lazim dol
 }
 

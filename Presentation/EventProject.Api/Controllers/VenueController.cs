@@ -1,5 +1,4 @@
-﻿using EventProject.Application.DTOs;
-using EventProject.Application.Features.Commands.VenueCommands.CreateVenue;
+﻿using EventProject.Application.Features.Commands.VenueCommands.CreateVenue;
 using EventProject.Application.Features.Commands.VenueCommands.DeleteVenue;
 using EventProject.Application.Features.Commands.VenueCommands.UpdateVenue;
 using EventProject.Application.Features.Commands.VenueMediaFile.DeleteVenueMedia;

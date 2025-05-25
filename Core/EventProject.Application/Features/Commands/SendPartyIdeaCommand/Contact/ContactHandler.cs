@@ -135,7 +135,7 @@ public class ContactHandler(IMailService mailService) : IRequestHandler<ContactU
         try
         {
             await _mailService.SendEmailAsync(
-                recipients: new[] { "mirtalibemirli217@gmail.com" },
+                recipients: new[] { "eventpartyhub@gmail.com" },
                  subject: subject,
                  body: html,
                  fromEmail: request.email,

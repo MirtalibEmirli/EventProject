@@ -32,6 +32,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore.Proxies;
 using EventProject.Application.Repositories.StandingZones;
 using EventProject.Persistence.Repository.StandingZones;
+using EventProject.Application.Repositories.UserMediaFileRepo;
+using EventProject.Persistence.Repository.UserMediaFileRepo;
 
 namespace EventProject.Persistence;
 
@@ -73,6 +75,8 @@ public static class RegistrationService
         services.AddScoped<ICommentWriteRepository, CommentWriteRepository>();
         services.AddScoped<IStandingZoneReadRepository, StandingZoneReadRepository>();
         services.AddScoped<IStandingZoneWriteRepository, StandingZoneWriteRepository>();
+        services.AddScoped<IUserMediaFileRead, UserMediaFileRead>();
+        services.AddScoped<IUserMediaFileWrite, UserMediaFileWrite>();
         return services;
     }
 }

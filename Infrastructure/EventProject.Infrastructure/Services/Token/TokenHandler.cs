@@ -37,6 +37,7 @@ public class TokenHandler : ITokenHandler
             issuer: configuration["JWT:ValidIssuer"],
             expires: token.ExpirationDate,
             notBefore: DateTime.UtcNow,
+          
             signingCredentials: signingCredentials
             );
         //token creator classs

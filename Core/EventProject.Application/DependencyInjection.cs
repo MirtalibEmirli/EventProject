@@ -6,6 +6,8 @@ using EventProject.Application.Services.Jobs;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using NLog.Extensions.Logging;
 using System.Reflection;
 
 namespace EventProject.Application
@@ -34,7 +36,13 @@ namespace EventProject.Application
             //pipelinebehavior
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
 
+            //logger
 
+            services.AddLogging(builder =>
+            {
+                builder.ClearProviders();
+                builder.AddNLog();
+            });
             //recentlyviewedd
             services.AddScoped<IRecentlyViewedJob, RecentlyViewedJob>();
             services.AddScoped<ISendMailAllUsersJob, SendMmailAllUsersJob>();

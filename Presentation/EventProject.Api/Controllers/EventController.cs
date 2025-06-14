@@ -17,12 +17,22 @@ namespace EventProject.Api.Controllers;
 //[Authorize]
 public class EventController : ControllerBase
 {
+
+    private readonly ILogger<EventController> _logger;  
+
     private readonly IMediator _mediator;
 
-    public EventController(IMediator mediator)
+    public EventController(IMediator mediator, ILogger<EventController> logger)
     {
+        _logger = logger; //default log by Ilogger
+
         _mediator = mediator;
     }
+
+    
+
+    
+    
     [Authorize(Roles = "Admin")]
     [HttpPost("create")]
     public async Task<IActionResult> Create([FromBody] CreateEventRequest request)
@@ -34,6 +44,33 @@ public class EventController : ControllerBase
         return Ok(result);
     }
 
+    [AllowAnonymous]
+    [HttpGet("Testlog")]
+    public async Task<IActionResult> GetLog()
+    {
+        _logger.LogInformation("Test log message from EventController");
+        _logger.LogWarning("This is a warning log message");
+        _logger.LogCritical("This is a critical log message");
+        _logger.LogDebug("This is a debug log message");
+        _logger.LogTrace("This is a trace log message");
+        try
+        {
+            int a = 5;
+            int c = a/0; // This will throw an exception
+
+        }
+        catch (Exception ex )
+        {
+            _logger.LogError($"This is an error log message {ex.Message}");
+
+            throw;
+        }
+
+        return Ok("Log message sent successfully");
+    }   
+ 
+    
+    
     [AllowAnonymous]
     [HttpGet("getEvents")]
     public async Task<IActionResult> GetEvents([FromQuery] GetEventsRequest request)
@@ -51,6 +88,8 @@ public class EventController : ControllerBase
     {
         return Ok(await _mediator.Send(request));
     }
+   
+    
     [Authorize(Roles ="Admin")]
     [HttpPut]
     [Route("deleteEventMedia")]

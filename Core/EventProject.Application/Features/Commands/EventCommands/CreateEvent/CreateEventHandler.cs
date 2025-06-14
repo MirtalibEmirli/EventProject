@@ -4,6 +4,7 @@ using EventProject.Application.Repositories.Venues;
 using EventProject.Application.ResponseModels.Generics;
 using EventProject.Domain.Entities;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace EventProject.Application.Features.Commands.EventCommands.CreateEvent;
 
@@ -12,16 +13,18 @@ public class CreateEventHandler : IRequestHandler<CreateEventRequest, ResponseMo
     private readonly IEventWriteRepository _eventWriteRepository;
     private readonly IEventCategoryReadRepository _eventCategoryReadRepository;
     private readonly IVenueReadRepository _venueReadRepository;
-
-    public CreateEventHandler(IEventCategoryReadRepository eventCategoryReadRepository, IVenueReadRepository venueReadRepository, IEventWriteRepository eventWriteRepository)
+    private readonly ILogger<CreateEventHandler> _logger;
+    public CreateEventHandler(IEventCategoryReadRepository eventCategoryReadRepository,ILogger<CreateEventHandler> logger, IVenueReadRepository venueReadRepository, IEventWriteRepository eventWriteRepository)
     {
         _eventCategoryReadRepository = eventCategoryReadRepository;
         _venueReadRepository = venueReadRepository;
         _eventWriteRepository = eventWriteRepository;
+        _logger = logger;
     }
 
     public async Task<ResponseModel<Guid>> Handle(CreateEventRequest request, CancellationToken cancellationToken)
     {
+        _logger.LogInformation("Starting Create new event with title: {Title}", request.Title);
 
 
         var categoryExists = await _eventCategoryReadRepository.GetByIdAsync(request.CategoryId.ToString());
@@ -44,9 +47,11 @@ public class CreateEventHandler : IRequestHandler<CreateEventRequest, ResponseMo
             CreatedDate = DateTime.Now
             
         };
+        _logger.LogInformation("Creating new event with title: {Title}", newEvent.Title);
 
-       await _eventWriteRepository.AddAsync(newEvent);
+        await _eventWriteRepository.AddAsync(newEvent);
         await _eventWriteRepository.SaveChangesAsync();
+        _logger.LogInformation("Event with Id {EventId} created successfully.", newEvent.Id);
 
 
         return new ResponseModel<Guid> {  IsSuccess =true,Data = newEvent.Id};

@@ -9,9 +9,12 @@ namespace EventProject.Api.Middlewares;
 public class ExceptionHandlerMiddleware
 {
     private readonly RequestDelegate _next;
-    public ExceptionHandlerMiddleware(RequestDelegate next)
+    private   readonly ILogger<ExceptionHandlerMiddleware> _logger;
+    public ExceptionHandlerMiddleware(RequestDelegate next, ILogger<ExceptionHandlerMiddleware> logger)
+
     {
         _next = next;
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));    
     }
 
     public async Task InvokeAsync(HttpContext context)
@@ -25,6 +28,7 @@ public class ExceptionHandlerMiddleware
         {
             HttpStatusCode statusCode = HttpStatusCode.InternalServerError;
             var message = new List<string> { ex.Message };
+            _logger.LogError(ex.Message, "An unhandled exception occurred while processing the request.");
             switch (ex)
             {
 
@@ -45,7 +49,7 @@ public class ExceptionHandlerMiddleware
                     return;//breakde ola biler
 
                 default:
-                  
+
                     break;
             }
             await WriteError(context, statusCode, message);
@@ -54,24 +58,26 @@ public class ExceptionHandlerMiddleware
 
     }
 
-    private static async Task WriteValidationExceptions(HttpContext context, ValidationException validationException, HttpStatusCode badRequest)
+    private  async Task WriteValidationExceptions(HttpContext context, ValidationException validationException, HttpStatusCode badRequest)
     {
-
         context.Response.Clear();
         context.Response.ContentType = "application/json";
         context.Response.StatusCode = (int)badRequest;
         var validationErrors = validationException.Errors.Select(e => new { field = e.PropertyName, message = e.ErrorMessage });
-
         var json = JsonSerializer.Serialize(new { validationErrors = validationErrors });
+
         await context.Response.WriteAsync(json);
     }
 
-    private static async Task WriteError(HttpContext context, HttpStatusCode statusCode, List<string> message)
+    private   async Task WriteError(HttpContext context, HttpStatusCode statusCode, List<string> message)
     {
+         
+
         context.Response.Clear();
         context.Response.ContentType = "application/json";
         context.Response.StatusCode = (int)statusCode;
         var json = JsonSerializer.Serialize(new BaseResponseModel(message));
+                                
         await context.Response.WriteAsync(json);
 
 

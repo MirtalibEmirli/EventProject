@@ -2,6 +2,7 @@
 using EventProject.Api.Services;
 using EventProject.Application;
 using EventProject.Application.Abstractions.Jobs;
+using EventProject.Application.Services.LogServices;
 using EventProject.Infrastructure;
 using EventProject.Infrastructure.Services.Storage.Azure;
 using EventProject.Persistence;
@@ -9,16 +10,15 @@ using Hangfire;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
-
- 
+LoggerService.SetUpNlog(builder.Configuration.GetConnectionString("DefaultConnection"));
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddSwaggerGen(c => 
+builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "EventProject.API", Version = "v1" });
 
-     
+
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description = @"Tokeni aşağıdakı formatda daxil edin:  
@@ -28,7 +28,7 @@ builder.Services.AddSwaggerGen(c =>
         Type = SecuritySchemeType.ApiKey,
         Scheme = "Bearer"
     });
-   
+
     c.AddSecurityRequirement(new OpenApiSecurityRequirement()
     {
         {
@@ -48,7 +48,7 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
- 
+
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddStorage<AzureStorage>();
@@ -68,21 +68,21 @@ builder.Services.AddCors(options => options.AddPolicy("AllowAll", policy =>
 
 
 builder.Services.AddHangfire(config =>
-    config.UseSqlServerStorage(builder.Configuration.GetConnectionString("DefaultConnection")));
+     config.UseSqlServerStorage(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddHangfireServer();
 
 var app = builder.Build();
 
- 
+
 using (var scope = app.Services.CreateScope())
 {
     var jobManager = scope.ServiceProvider.GetRequiredService<IRecurringJobManager>();
 
     jobManager.AddOrUpdate<IRecentlyViewedJob>(
         "delete-old-recentlyviewed-events",
-        job => job.DeleteOldRecentlyViewedEvents(), 
-        Cron.Minutely);   
-     
+        job => job.DeleteOldRecentlyViewedEvents(),
+        Cron.Minutely);
+
 
     jobManager.AddOrUpdate<ISendMailAllUsersJob>(
         "send-mail-all-users",
@@ -104,7 +104,7 @@ app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseAuthorization();
 
- 
+
 app.UseHangfireDashboard("/jobs");
 
 app.UseMiddleware<ExceptionHandlerMiddleware>();

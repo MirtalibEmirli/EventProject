@@ -6,6 +6,7 @@ namespace EventProject.Api.Services;
 
 public static class AuthenticationService
 {
+
     public static IServiceCollection AddAuthenticationMain(this IServiceCollection services,IConfiguration configuration) {
 
         services.AddAuthentication(opt =>

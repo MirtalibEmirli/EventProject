@@ -2,15 +2,17 @@
 
 namespace EventProject.Domain.Entities;
 
-public class StandingZone:  BaseEntity 
+public class StandingZone : BaseEntity
 {
-    public SZoneType ZoneName { get; set; } 
+    public string ZoneName { get; set; } = null!;
+
     public int Capacity { get; set; }
-    public int Price { get; set; }
+
     public Guid VenueId { get; set; }
-    public Guid EventId { get; set; }
-    public virtual Venue Venue { get; set; }
-    public virtual Event Event { get; set; }
+    public virtual Venue Venue { get; set; } = null!;
 
+    public Guid SectionId { get; set; }
+    public virtual Section Section { get; set; } = null!;
 
+    public virtual ICollection<EventStandingZone> EventStandingZones { get; set; } = new List<EventStandingZone>();
 }

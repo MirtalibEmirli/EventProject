@@ -69,4 +69,4 @@
 //    public ICollection<Payment> Payments { get; set; }
 //    public IEnumerable<EventMediaFile> MediaFiles { get; set; }
 //    public ICollection<EventSeatPrice> EventSeatPrices { get; set; } = new List<EventSeatPrice>();
-//}
+//}}

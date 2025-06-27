@@ -6,8 +6,9 @@ namespace EventProject.Domain.Entities;
 
 public  class Seat:BaseEntity
 {
-    public string Section { get; set; } = null!;
-    public int Row { get; set; } 
+    public Guid SectionId { get; set; }
+    public virtual Section Section { get; set; } = null!;
+    public int Row { get; set; }  
     public int Number { get; set; }
     public bool IsBooked { get; set; } = false;
 
@@ -27,5 +28,5 @@ public  class Seat:BaseEntity
     public virtual ICollection<EventSeatPrice> EventSeatPrices { get; set; }
       = new HashSet<EventSeatPrice>();
 
-    public virtual Ticket? Ticket { get; set; } //eger bilet alinibsa 
+  
 }

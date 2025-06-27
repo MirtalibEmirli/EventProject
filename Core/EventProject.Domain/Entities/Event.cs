@@ -28,10 +28,12 @@ public class Event:BaseEntity
 
 
     //// Relations
-    public virtual ICollection<Ticket> Tickets { get; set; } 
+    public virtual ICollection<EventStandingZone> EventStandingZones { get; set; } = new List<EventStandingZone>();
+    public virtual ICollection<EventSeatPrice> EventSeats { get; set; } = new List<EventSeatPrice>();
+    public virtual ICollection<EventTablePrice> EventTables { get; set; } = new List<EventTablePrice>();
+
+    public virtual ICollection<Ticket> Tickets { get; set; }  
     public virtual ICollection<Comment> Comments { get; set; } 
     public virtual ICollection<Payment> Payments { get; set; } 
     public virtual IEnumerable<EventMediaFile> MediaFiles { get; set; }
-    public virtual ICollection<EventSeatPrice> EventSeatPrices { get; set; } = new List<EventSeatPrice>();
-    public virtual ICollection<StandingZone> StandingZones { get; set; } = new List<StandingZone>();
 }

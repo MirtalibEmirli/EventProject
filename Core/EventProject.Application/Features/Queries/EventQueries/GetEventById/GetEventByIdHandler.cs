@@ -29,7 +29,7 @@ public class GetEventByIdHandler : IRequestHandler<GetEventByIdRequest, Response
                                                     .Include(e => e.Location)
                                                     .Include(e => e.Location.Seats)
                                                     .Include(e => e.MediaFiles)
-                                                    .Include(e => e.EventSeatPrices)
+                                                    .Include(e => e.EventSeats)
                                                     .Include(e =>e.Location.StandingZones)
                                                     .FirstOrDefaultAsync(e => e.Id == request.Id, cancellationToken);
 
@@ -56,12 +56,12 @@ public class GetEventByIdHandler : IRequestHandler<GetEventByIdRequest, Response
             MediaUrls = eventEntity.MediaFiles.Where(m=>m.IsDeleted!=true).Select(m => m.FileName).ToList(),
             Seats = eventEntity.Location.Seats.Select(seat =>
             {
-                var price = eventEntity.EventSeatPrices.FirstOrDefault(p => p.SeatId == seat.Id)?.Price;
+                var price = eventEntity.EventSeats.FirstOrDefault(p => p.SeatId == seat.Id)?.Price;
 
                 return new SeatDTO
                 {
                     Id = seat.Id,
-                    Section = seat.Section,
+                    Section = seat.Section.Name,
                     Row = seat.Row,
                     Number = seat.Number,
                     

@@ -2,7 +2,7 @@
 
 public class SectionWeight:BaseEntity
 {
-    public Guid VenueId { get; set; }
+    public Guid VenueId { get; set; } 
     public virtual Venue Venue { get; set; } = null!;
 
     public string SectionName { get; set; } = null!;

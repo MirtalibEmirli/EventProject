@@ -33,7 +33,7 @@ public class GetSeatsByVenueHandler : IRequestHandler<GetSeatsByVenueQuery,Respo
             .Select(s => new SeatDTO
             {
                 Id = s.Id,
-                Section = s.Section,
+                Section = s.Section.Name,
                 Row = s.Row,
                 Number = s.Number,
                 Capacity = s.Capacity,

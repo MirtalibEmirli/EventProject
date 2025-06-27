@@ -2,6 +2,7 @@
 
 public enum TicketStatus
 {
+    Aviable,
     Reserved,
     Purchased,
     Cancelled

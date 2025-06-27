@@ -22,7 +22,7 @@ namespace EventProject.Application.Features.Commands.EventStandingZoneCommand.Up
 
             if (zone == null) return false;
 
-            zone.ZoneName = Enum.Parse<SZoneType>(request.ZoneName);
+            zone.ZoneName = request.ZoneName;
             zone.Capacity = request.Capacity;
             zone.VenueId = request.VenueId;
 

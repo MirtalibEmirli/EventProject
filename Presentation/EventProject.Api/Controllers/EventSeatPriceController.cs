@@ -34,21 +34,21 @@ public class EventSeatPriceController : ControllerBase
         return Ok(result);
     }
 
-    [AllowAnonymous]
-    [HttpGet("{eventId}/seat-prices")]
-    public async Task<IActionResult> GetSeatPrices(Guid eventId)
-    {
-        var seatPrices = await _context.EventSeatPrices
-            .Where(x => x.EventId == eventId)
-            .GroupBy(x => new { x.Seat.Section, x.Price })
-            .Select(g => new SeatPriceDTO
-            {
-                Section = g.Key.Section,
-                Price = g.Key.Price,
-                Available = g.Count()
-            })
-            .ToListAsync();
+    //[AllowAnonymous]
+    //[HttpGet("{eventId}/seat-prices")]
+    //public async Task<IActionResult> GetSeatPrices(Guid eventId)
+    //{
+    //    var seatPrices = await _context.EventSeatPrices
+    //        .Where(x => x.EventId == eventId)
+    //        .GroupBy(x => new { x.Seat.Section, x.Price })
+    //        .Select(g => new SeatPriceDTO
+    //        {
+    //            Section = g.Key.Section,
+    //            Price = g.Key.Price,
+    //            Available = g.Count()
+    //        })
+    //        .ToListAsync();
 
-        return Ok(seatPrices);
-    }
+    //    return Ok(seatPrices);
+    //}
 }

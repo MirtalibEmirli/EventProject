@@ -12,12 +12,12 @@ public static class LoggerService
     public static void SetUpNlog(string dbconnection)
     {
 
-        NLog.Common.InternalLogger.LogLevel = LogLevel.Trace;
+        NLog.Common.InternalLogger.LogLevel = LogLevel.Error;
         NLog.Common.InternalLogger.LogFile = "logs\\nlog-internal-errors.txt";
 
         var fileTarget = new FileTarget("logfile")
         {
-            FileName = "C:\\Users\\Mirtalib\\source\\repos\\EventProject\\Presentation\\EventProject.Api\\logs\\logFile-${date:format=yyyy-MM-dd}.txt",
+            FileName = "logs2\\logFile-${date:format=yyyy-MM-dd}.txt",
             Layout = "${longdate} ${level} ${message} ${exception}"
         };
         var consoleTarget = new ConsoleTarget("consoleTarget")
@@ -33,7 +33,7 @@ public static class LoggerService
         var databaseTarget = new DatabaseTarget("databaseTarget")
         {
             DBProvider = "Microsoft.Data.SqlClient.SqlConnection, Microsoft.Data.SqlClient",
-            ConnectionString = "Data Source=DESKTOP-U9UFRFT\\SQLEXPRESS;Initial Catalog=PartyHubEventDatabase-2025-5-16-2-20;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False",
+            ConnectionString = "Data Source=.;Initial Catalog=EventDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False",
             CommandText = @"
         INSERT INTO  dbo.Logs 
         (MachineName, Logged, Level, Message, Logger, Callsite, Exception, Application, Thread, UserName)
@@ -58,7 +58,7 @@ public static class LoggerService
 
         config.AddTarget(fileTarget);
         config.AddTarget(consoleTarget);
-        config.AddRule(NLog.LogLevel.Warn, NLog.LogLevel.Fatal, fileTarget);
+        config.AddRule(NLog.LogLevel.Info, NLog.LogLevel.Error, fileTarget);
         config.AddRule(LogLevel.Warn, LogLevel.Error, databaseTarget);
         config.AddRule(NLog.LogLevel.Info, NLog.LogLevel.Fatal, consoleTarget);
 

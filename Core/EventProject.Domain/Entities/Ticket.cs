@@ -7,30 +7,26 @@ public class Ticket : BaseEntity
     public Guid EventId { get; set; }
 
     public virtual Event Event { get; set; } = null!;
-
-    public Guid? EventSeatPriceId { get; set; }
-    public virtual EventSeatPrice? EventSeatPrice { get; set; }
-
-    public Guid? EventStandingZoneId { get; set; }
-    public virtual EventStandingZone? EventStandingZone { get; set; }
-    public Guid? EventTableId { get; set; }
-    public EventTablePrice? EventTablePrice { get; set; }
+ 
 
     public Guid UserId { get; set; }
     public virtual User User { get; set; } = null!;
 
 
-    public float Price { get; set; }
+    public decimal Price { get; set; }
 
-    public DateTime PurchaseDate { get; set; } //alinma tarixi
+    public DateTime PurchaseDate { get; set; }  
 
     public TicketStatus Status { get; set; }
 
     public string TicketNumber { get; set; } = Guid.NewGuid().ToString().Substring(0, 8).ToUpper();
     public bool IsScanned { get; set; } = false; // Girişdə istifadə üçün
-    public string? QRCodePath { get; set; } // QR fayl path-i
+    public string? QRCodePath { get; set; }
+    public string VenueName { get; set; }
+    public  string SectorName { get; set; }
+    public int? Row { get; set; }
 
-
+    public int? Seat { get; set; }
 
 }
 //Bilet necə yaranır?

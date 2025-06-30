@@ -1,7 +1,9 @@
-﻿using EventProject.Application.Repositories.Events;
+﻿using EventProject.Application.Exceptions;
+using EventProject.Application.Repositories.Events;
 using EventProject.Application.ResponseModels.Generics;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 
 namespace EventProject.Application.Features.Queries.EventQueries.GetEvents;
@@ -9,10 +11,12 @@ namespace EventProject.Application.Features.Queries.EventQueries.GetEvents;
 public class GetEventsHandler : IRequestHandler<GetEventsRequest, ResponseModel<List<GetEventsResponse>>>
 {
     private readonly IEventReadRepository eventReadRepository;
+    private readonly ILogger<GetEventsHandler> logger;
 
-    public GetEventsHandler(IEventReadRepository eventReadRepository)
+    public GetEventsHandler(IEventReadRepository eventReadRepository,ILogger<GetEventsHandler> logger)
     {
         this.eventReadRepository = eventReadRepository;
+        this.logger = logger;
     }
 
     public async Task<ResponseModel<List<GetEventsResponse>>> Handle(GetEventsRequest request, CancellationToken cancellationToken)
@@ -70,7 +74,12 @@ public class GetEventsHandler : IRequestHandler<GetEventsRequest, ResponseModel<
 
 
             }).ToListAsync(cancellationToken);
+        if (totalCount<=0)
+        {
+            logger.LogError("Event hyoxudr");
+            throw new BadRequestException("Event yoxdur");
 
+        }
 
         return new ResponseModel<List<GetEventsResponse>>
         {

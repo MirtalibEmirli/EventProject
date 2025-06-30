@@ -29,12 +29,7 @@ public class Venue : BaseEntity
 
     // Navigations
 
-    public virtual ICollection<Section> Sections { get; set; } = new List<Section>();
-
-    public virtual ICollection<Seat> Seats { get; set; } = new List<Seat>();
-
-    public virtual ICollection<StandingZone> StandingZones { get; set; } = new List<StandingZone>();
-
+     
     public virtual ICollection<Event> Events { get; set; } = new List<Event>();
 
     public virtual ICollection<VenueMediaFile> VenueMediaFiles { get; set; } = new List<VenueMediaFile>();

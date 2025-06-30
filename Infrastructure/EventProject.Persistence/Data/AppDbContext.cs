@@ -9,18 +9,12 @@ public class AppDbContext : DbContext
 {
     public DbSet<Venue> Venues { get; set; }
     public DbSet<Section> Sections { get; set; }
-    public DbSet<Seat> Seats { get; set; }
     public DbSet<Event> Events { get; set; }
     public DbSet<Ticket> Tickets { get; set; }
-    public DbSet<EventSeatPrice> EventSeatPrices { get; set; }
-    public DbSet<EventStandingZone> EventStandingZones { get; set; }
-    public DbSet<EventTablePrice> EventTablePrices { get; set; }
-    public DbSet<SectionWeight> SectionWeights { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<Payment> Payments { get; set; }
     public DbSet<Notification> Notifications { get; set; }
     public DbSet<Comment> Comments { get; set; }
-    public DbSet<StandingZone> StandingZones { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<File> Files { get; set; }
     public DbSet<UserMediaFile> UserMediaFiles { get; set; }
@@ -34,75 +28,14 @@ public class AppDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-
-        modelBuilder.Entity<EventSeatPrice>(builder =>
-        {
-            builder.HasKey(e => new { e.SeatId, e.EventId });
-            builder.HasOne(e => e.Event)
-                   .WithMany(e => e.EventSeats)
-                   .HasForeignKey(e => e.EventId)
-                   .OnDelete(DeleteBehavior.Cascade);
-
-            builder.HasOne(e => e.Seat)
-                   .WithMany(s => s.EventSeatPrices)
-                   .HasForeignKey(e => e.SeatId)
-                   .OnDelete(DeleteBehavior.Cascade);
-
-            builder.Property(e => e.Price)
-                   .IsRequired();
-        });
-
-        modelBuilder.Entity<EventStandingZone>(builder =>
-        {
-            builder.HasKey(e => new { e.EventId, e.StandingZoneId });
-            builder.HasOne(e => e.Event)
-                   .WithMany(e => e.EventStandingZones)
-                   .HasForeignKey(e => e.EventId)
-                   .OnDelete(DeleteBehavior.Cascade);
-
-            builder.HasOne(e => e.StandingZone)
-                   .WithMany()
-                   .HasForeignKey(e => e.StandingZoneId)
-                   .OnDelete(DeleteBehavior.Cascade);
-        });
-
-        modelBuilder.Entity<EventTablePrice>(builder =>
-        {
-            builder.HasKey(e => new { e.EventId, e.TableId });
-
-            builder.HasOne(e => e.Event)
-                   .WithMany(e => e.EventTables
-                   )
-                   .HasForeignKey(e => e.EventId)
-                   .OnDelete(DeleteBehavior.Cascade);
-
-            builder.HasOne(e => e.Table)
-                   .WithMany(t => t.EventTablePrices)
-                   .HasForeignKey(e => e.TableId)
-                   .OnDelete(DeleteBehavior.Cascade);
-        });
-
+        
 
         modelBuilder.Entity<UserRwEvent>().HasKey(ur => new { ur.UserId, ur.EventId });
 
         modelBuilder.Entity<UserRwEvent>().HasOne(ur => ur.User).WithMany(u => u.UserRwEvents).HasForeignKey(ur => ur.UserId);
         modelBuilder.Entity<UserRwEvent>().HasOne(ur => ur.Event).WithMany(e => e.UserRwEvents).HasForeignKey(e => e.EventId);
 
-        modelBuilder.Entity<StandingZone>()
-            .HasOne(s => s.Section)
-            .WithMany(sc => sc.StandingZones)
-            .HasForeignKey(sz => sz.SectionId)
-            .OnDelete(DeleteBehavior.Cascade);
-
-        modelBuilder.Entity<StandingZone>()
-            .HasOne(s => s.Venue)
-            .WithMany(v => v.StandingZones
-            )
-            .HasForeignKey(sz => sz.VenueId)
-            .OnDelete(DeleteBehavior.Cascade);
-
-
-
+        
         modelBuilder.Entity<Event>()
             .HasOne(e => e.Category)
             .WithMany(c => c.Events)
@@ -169,46 +102,6 @@ public class AppDbContext : DbContext
             .HasForeignKey(c => c.ParentCommentId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        modelBuilder.Entity<Section>(builder =>
-        {
-            builder.HasOne(s => s.Venue)
-            .WithMany(v => v.Sections)
-            .HasForeignKey(s => s.VenueId)
-            .OnDelete(DeleteBehavior.Cascade);
-        });
-
-        modelBuilder.Entity<Seat>(builder =>
-        {
-            builder.HasOne(s => s.Venue)
-            .WithMany(v => v.Seats)
-            .HasForeignKey(s => s.VenueId)
-            .OnDelete(DeleteBehavior.Restrict);
-
-            builder.HasOne(s => s.Section)
-            .WithMany(sec => sec.Seats)
-            .HasForeignKey(s => s.SectionId)
-            .OnDelete(DeleteBehavior.Cascade);
-
-            builder.Property(e => e.Capacity).IsRequired(false);
-        });
-
-        modelBuilder.Entity<Ticket>()
-            .HasOne(t => t.EventSeatPrice)
-            .WithMany()
-            .HasForeignKey(t => t.EventSeatPriceId)
-            .OnDelete(DeleteBehavior.SetNull);
-
-        modelBuilder.Entity<Ticket>()
-            .HasOne(t => t.EventStandingZone)
-            .WithMany()
-            .HasForeignKey(t => t.EventStandingZoneId)
-            .OnDelete(DeleteBehavior.SetNull);
-
-        modelBuilder.Entity<Ticket>()
-            .HasOne(t => t.EventTablePrice)
-            .WithMany()
-            .HasForeignKey(t => t.EventTableId)
-            .OnDelete(DeleteBehavior.SetNull);
 
         modelBuilder.Entity<File>()
             .Property(x => x.StorageType)

@@ -35,33 +35,32 @@ public static class RegistrationService
         services.AddDbContext<AppDbContext>(opt =>
         opt.UseLazyLoadingProxies() 
         .UseSqlServer(config.GetConnectionString("DefaultConnection")));
-        services.AddScoped(typeof(IReadRepository<>),typeof(ReadRepository<>));
-        services.AddScoped(typeof(IWriteRepository<>),typeof(WriteRepository<>));
+        //services.AddScoped(typeof(IReadRepository<>),typeof(ReadRepository<>));
+        //services.AddScoped(typeof(IWriteRepository<>),typeof(WriteRepository<>));
 
-//        services.AddScoped<IEventCategoryWriteRepository, EventCategoryWriteRepository>();
-//        services.AddScoped<IEventCategoryReadRepository, EventCategoryReadRepository>();
-//        services.AddScoped<IEventWriteRepository, EventWriteRepository>();
-//        services.AddScoped<IEventReadRepository, EventReadRepository>();
-//        services.AddScoped<IVenueWriteRepository, VenueWriteRepository>();
-//        services.AddScoped<IVenueReadRepository, VenueReadRepository>();
-//        services.AddScoped<IEventMediaFileReadRepository, EventMediaFileReadRepository>();
-//        services.AddScoped<IEventMediaFileWriteRepository, EventMediaFileWriteRepository>();
-        
-//        //services.AddScoped<IEventPricingService, EventPricingService>();
-//        services.AddScoped<IEventMediaFileWriteRepository, EventMediaFileWriteRepository>();
-//        services.AddScoped<IVenueMediaFileWriteRepository, VenueMediaFileWriteRepository>();
-//        services.AddScoped<IVenueMediaFileReadRepository, VenueMediaFileReadRepository>();
-//        services.AddScoped<IUserReadRepsoitory, UserReadRepository>();
-//        services.AddScoped<IUserWriteRepository, UserWriteRepository>();
-//        services.AddScoped<IUserRwEventsReadRepository, UserRwEventsReadRepository>();
-//        services.AddScoped<IUserRwEventsWriteRepository
-//, UserRwEventsWriteRepository>();
-//        services.AddScoped<IRefreshTokenRead,RefreshTokenRead>();
-//        services.AddScoped<IRefreshTokenWrite, RefreshTokenWrite>();
-//        services.AddScoped<ICommentReadRepository, CommentReadRepository>();
-//        services.AddScoped<ICommentWriteRepository, CommentWriteRepository>();
-//        services.AddScoped<IUserMediaFileRead, UserMediaFileRead>();
-//        services.AddScoped<IUserMediaFileWrite, UserMediaFileWrite>();
-        return services;
+         services.AddScoped<IEventCategoryWriteRepository, EventCategoryWriteRepository>();
+         services.AddScoped<IEventCategoryReadRepository, EventCategoryReadRepository>();
+         services.AddScoped<IEventWriteRepository, EventWriteRepository>();
+         services.AddScoped<IEventReadRepository, EventReadRepository>();
+         services.AddScoped<IVenueWriteRepository, VenueWriteRepository>();
+         services.AddScoped<IVenueReadRepository, VenueReadRepository>();
+         services.AddScoped<IEventMediaFileReadRepository, EventMediaFileReadRepository>();
+         services.AddScoped<IEventMediaFileWriteRepository, EventMediaFileWriteRepository>();
+       
+         services.AddScoped<IEventMediaFileWriteRepository, EventMediaFileWriteRepository>();
+         services.AddScoped<IVenueMediaFileWriteRepository, VenueMediaFileWriteRepository>();
+         services.AddScoped<IVenueMediaFileReadRepository, VenueMediaFileReadRepository>();
+         services.AddScoped<IUserReadRepsoitory, UserReadRepository>();
+         services.AddScoped<IUserWriteRepository, UserWriteRepository>();
+         services.AddScoped<IUserRwEventsReadRepository, UserRwEventsReadRepository>();
+         services.AddScoped<IUserRwEventsWriteRepository
+ , UserRwEventsWriteRepository>();
+         services.AddScoped<IRefreshTokenRead,RefreshTokenRead>();
+         services.AddScoped<IRefreshTokenWrite, RefreshTokenWrite>();
+         services.AddScoped<ICommentReadRepository, CommentReadRepository>();
+         services.AddScoped<ICommentWriteRepository, CommentWriteRepository>();
+         services.AddScoped<IUserMediaFileRead, UserMediaFileRead>();
+         services.AddScoped<IUserMediaFileWrite, UserMediaFileWrite>();
+       return services;
     }
 }

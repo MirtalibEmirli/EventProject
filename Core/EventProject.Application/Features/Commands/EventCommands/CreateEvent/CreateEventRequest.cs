@@ -2,7 +2,7 @@
 using EventProject.Domain.Entities;
 using EventProject.Domain.Enums;
 using MediatR;
-using Microsoft.AspNetCore.Http;
+
 
 namespace EventProject.Application.Features.Commands.EventCommands.CreateEvent;
 
@@ -16,10 +16,10 @@ public class CreateEventRequest : IRequest<ResponseModel<Guid>>
     public int AgeLimit { get; set; }
     public Guid LocationId { get; set; }
     
-    public EventStatus Status { get; set; }
+    public EventStatus Status { get;private set; }=EventStatus.Active;//frontda deyis
+
+    public float MinPrice { get; set; }
+    public float MaxPrice { get; set; }
     public Guid CategoryId { get; set; }
-
-
-
 }
 

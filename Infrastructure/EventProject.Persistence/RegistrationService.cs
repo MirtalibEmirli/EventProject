@@ -4,6 +4,8 @@ using EventProject.Application.Repositories.EventCategories;
 using EventProject.Application.Repositories.EventMediaFiles;
 using EventProject.Application.Repositories.Events;
 using EventProject.Application.Repositories.Refresh;
+using EventProject.Application.Repositories.SectionPriceRepo;
+using EventProject.Application.Repositories.SectionRepo;
 using EventProject.Application.Repositories.UserMediaFileRepo;
 using EventProject.Application.Repositories.UserRwEvents;
 using EventProject.Application.Repositories.Users;
@@ -16,6 +18,8 @@ using EventProject.Persistence.Repository.EventMediaFiles;
 using EventProject.Persistence.Repository.Events;
 using EventProject.Persistence.Repository.Generics;
 using EventProject.Persistence.Repository.Refresh;
+using EventProject.Persistence.Repository.SectorPriceRepo;
+using EventProject.Persistence.Repository.SectorRepo;
 using EventProject.Persistence.Repository.UserMediaFileRepo;
 using EventProject.Persistence.Repository.UserRwEvents;
 using EventProject.Persistence.Repository.Users;
@@ -61,6 +65,10 @@ public static class RegistrationService
          services.AddScoped<ICommentWriteRepository, CommentWriteRepository>();
          services.AddScoped<IUserMediaFileRead, UserMediaFileRead>();
          services.AddScoped<IUserMediaFileWrite, UserMediaFileWrite>();
+        services.AddScoped<ISectionWriteRepository, SectionWriteRepository>();
+        services.AddScoped<ISectionReadRepository, SectionReadRepository>();
+        services.AddScoped<ISectionPriceWriteRepository, SectionPriceWriteRepository>();
+        services.AddScoped<ISectionPriceReadRepository, SectionPriceReadRepository>();
        return services;
     }
 }

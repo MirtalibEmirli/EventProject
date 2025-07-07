@@ -1,32 +1,75 @@
-﻿using EventProject.Application.ResponseModels.Generics;
+﻿using EventProject.Application.Exceptions;
+using EventProject.Application.Repositories.Events;
+using EventProject.Application.Repositories.SectionPriceRepo;
+using EventProject.Application.Repositories.SectionRepo;
+using EventProject.Application.ResponseModels.Generics;
+using EventProject.Domain.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace EventProject.Application.Features.Commands.EventCommands.CreateSection;
-
-
-public class CreateSectionRequest:IRequest<ResponseModel<Unit>>
+namespace EventProject.Application.Features.Commands.EventCommands.CreateSection
 {
-    public string Name { get; set; }//bununla sectiona post gedr section yaradilir id sin goturruk 
-
-    public string Price { get; set; }
-
-    public Guid EventId { get; set; }//buuda selectboxdan gelecek olan id di
-    //Sectionid evvnettid ve price ilede section price yaaradilir vse 
-
-}
-
-public class CreateSectionHandler : IRequestHandler<CreateSectionRequest, ResponseModel<Unit>>
-{
-    public Task<ResponseModel<Unit>> Handle(CreateSectionRequest request, CancellationToken cancellationToken)
+    public class CreateSectionRequest : IRequest<ResponseModel<Unit>>
     {
+        public string Name { get; set; }
+        public decimal Price { get; set; }
+        public Guid EventId { get; set; }
+    }
 
+    public class CreateSectionHandler : IRequestHandler<CreateSectionRequest, ResponseModel<Unit>>
+    {
+        private readonly IEventReadRepository _eventReadRepository;
+        private readonly ISectionWriteRepository _sectionWriteRepository;
+        private readonly ISectionPriceWriteRepository _sectionPriceWriteRepository;
 
+        public CreateSectionHandler(
+            IEventReadRepository eventReadRepository,
+            ISectionWriteRepository sectionWriteRepository,
+            ISectionPriceWriteRepository sectionPriceWriteRepository)
+        {
+            _eventReadRepository = eventReadRepository;
+            _sectionWriteRepository = sectionWriteRepository;
+            _sectionPriceWriteRepository = sectionPriceWriteRepository;
+        }
 
-        throw new NotImplementedException();
+        public async Task<ResponseModel<Unit>> Handle(CreateSectionRequest request, CancellationToken cancellationToken)
+        {
+       
+            var eventEntity = await _eventReadRepository.GetByIdAsync(request.EventId.ToString());
+            if (eventEntity == null)
+            {
+                throw new BadRequestException("Bu event mövcud deyil.");
+            }
+
+          
+            var newSection = new Section
+            {
+                Name = request.Name,
+                CreatedDate = DateTime.Now,
+                IsDeleted = false
+            };
+
+          
+            await _sectionWriteRepository.AddAsync(newSection);
+            await _sectionWriteRepository.SaveChangesAsync();
+
+             
+            var newSectionPrice = new SectionPrice
+            {
+                Price = request.Price,
+                EventId = request.EventId,
+                SectionId = newSection.Id
+            };
+
+          
+            await _sectionPriceWriteRepository.AddAsync(newSectionPrice);
+            await _sectionPriceWriteRepository.SaveChangesAsync();
+
+      
+            return new ResponseModel<Unit>
+            {
+                IsSuccess = true,
+                Message = $"Section '{newSection.Name}' yaradıldı və qiymət verildi."
+            };
+        }
     }
 }

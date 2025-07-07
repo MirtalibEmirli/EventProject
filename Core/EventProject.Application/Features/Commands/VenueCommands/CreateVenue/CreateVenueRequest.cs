@@ -15,6 +15,7 @@ public class CreateVenueRequest : IRequest<ResponseModel<Guid>>
     public double Longitude { get; set; }
 
     public string? OpenHours { get; set; }
+
     public string? TripAdvisorLink { get; set; }
     public string? InstagramLink { get; set; }
 }

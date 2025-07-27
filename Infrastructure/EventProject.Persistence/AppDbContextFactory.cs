@@ -12,16 +12,18 @@ namespace EventProject.Persistence
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
 
             var config = new ConfigurationBuilder()
-                           .SetBasePath(Directory.GetCurrentDirectory()) 
-                           .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                           .Build();
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .Build();
 
             var connectionString = config.GetConnectionString("DefaultConnection");
 
-           
-            optionsBuilder.UseSqlServer(connectionString);
+            optionsBuilder.UseMySql(
+                connectionString,
+                new MySqlServerVersion(new Version(8, 0, 0))  
+            );
 
-           return new AppDbContext(optionsBuilder.Options);
+            return new AppDbContext(optionsBuilder.Options);
         }
     }
 }

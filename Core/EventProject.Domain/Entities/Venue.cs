@@ -21,15 +21,16 @@ public class Venue : BaseEntity
 
     public double Longitude { get; set; }
 
-    public string? OpenHours { get; set; }
-
+    public TimeOnly OpenTime { get; set; }
+    public TimeOnly CloseTime { get; set; }
+    //time only
     public string? TripAdvisorLink { get; set; }
 
     public string? InstagramLink { get; set; }
 
     // Navigations
 
-     
+
     public virtual ICollection<Event> Events { get; set; } = new List<Event>();
 
     public virtual ICollection<VenueMediaFile> VenueMediaFiles { get; set; } = new List<VenueMediaFile>();

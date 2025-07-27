@@ -36,39 +36,54 @@ public static class RegistrationService
 
     public static IServiceCollection AddPersistence(this IServiceCollection services, IConfigurationManager config)
     {
-        services.AddDbContext<AppDbContext>(opt =>
-        opt.UseLazyLoadingProxies() 
-        .UseSqlServer(config.GetConnectionString("DefaultConnection")));
+        services.AddDbContext<AppDbContext>(options =>
+       options
+              .UseMySql(
+                  config.GetConnectionString("DefaultConnection"),
+                  new MySqlServerVersion(new Version(8, 0, 0))
+              ).UseMySql(config.GetConnectionString("DefaultConnection"), ServerVersion.AutoDetect(config.GetConnectionString("DefaultConnection")), mySqlOptions =>
+              {
+                  mySqlOptions.EnableRetryOnFailure(
+                      maxRetryCount: 5,
+                      maxRetryDelay: TimeSpan.FromSeconds(10),
+                      errorNumbersToAdd: null);
+              })
+   );
+
+
+        
+
+
         //services.AddScoped(typeof(IReadRepository<>),typeof(ReadRepository<>));
         //services.AddScoped(typeof(IWriteRepository<>),typeof(WriteRepository<>));
 
-         services.AddScoped<IEventCategoryWriteRepository, EventCategoryWriteRepository>();
-         services.AddScoped<IEventCategoryReadRepository, EventCategoryReadRepository>();
-         services.AddScoped<IEventWriteRepository, EventWriteRepository>();
-         services.AddScoped<IEventReadRepository, EventReadRepository>();
-         services.AddScoped<IVenueWriteRepository, VenueWriteRepository>();
-         services.AddScoped<IVenueReadRepository, VenueReadRepository>();
-         services.AddScoped<IEventMediaFileReadRepository, EventMediaFileReadRepository>();
-         services.AddScoped<IEventMediaFileWriteRepository, EventMediaFileWriteRepository>();
-       
-         services.AddScoped<IEventMediaFileWriteRepository, EventMediaFileWriteRepository>();
-         services.AddScoped<IVenueMediaFileWriteRepository, VenueMediaFileWriteRepository>();
-         services.AddScoped<IVenueMediaFileReadRepository, VenueMediaFileReadRepository>();
-         services.AddScoped<IUserReadRepsoitory, UserReadRepository>();
-         services.AddScoped<IUserWriteRepository, UserWriteRepository>();
-         services.AddScoped<IUserRwEventsReadRepository, UserRwEventsReadRepository>();
-         services.AddScoped<IUserRwEventsWriteRepository
- , UserRwEventsWriteRepository>();
-         services.AddScoped<IRefreshTokenRead,RefreshTokenRead>();
-         services.AddScoped<IRefreshTokenWrite, RefreshTokenWrite>();
-         services.AddScoped<ICommentReadRepository, CommentReadRepository>();
-         services.AddScoped<ICommentWriteRepository, CommentWriteRepository>();
-         services.AddScoped<IUserMediaFileRead, UserMediaFileRead>();
-         services.AddScoped<IUserMediaFileWrite, UserMediaFileWrite>();
+        services.AddScoped<IEventCategoryWriteRepository, EventCategoryWriteRepository>();
+        services.AddScoped<IEventCategoryReadRepository, EventCategoryReadRepository>();
+        services.AddScoped<IEventWriteRepository, EventWriteRepository>();
+        services.AddScoped<IEventReadRepository, EventReadRepository>();
+        services.AddScoped<IVenueWriteRepository, VenueWriteRepository>();
+        services.AddScoped<IVenueReadRepository, VenueReadRepository>();
+        services.AddScoped<IEventMediaFileReadRepository, EventMediaFileReadRepository>();
+        services.AddScoped<IEventMediaFileWriteRepository, EventMediaFileWriteRepository>();
+
+        services.AddScoped<IEventMediaFileWriteRepository, EventMediaFileWriteRepository>();
+        services.AddScoped<IVenueMediaFileWriteRepository, VenueMediaFileWriteRepository>();
+        services.AddScoped<IVenueMediaFileReadRepository, VenueMediaFileReadRepository>();
+        services.AddScoped<IUserReadRepsoitory, UserReadRepository>();
+        services.AddScoped<IUserWriteRepository, UserWriteRepository>();
+        services.AddScoped<IUserRwEventsReadRepository, UserRwEventsReadRepository>();
+        services.AddScoped<IUserRwEventsWriteRepository
+, UserRwEventsWriteRepository>();
+        services.AddScoped<IRefreshTokenRead, RefreshTokenRead>();
+        services.AddScoped<IRefreshTokenWrite, RefreshTokenWrite>();
+        services.AddScoped<ICommentReadRepository, CommentReadRepository>();
+        services.AddScoped<ICommentWriteRepository, CommentWriteRepository>();
+        services.AddScoped<IUserMediaFileRead, UserMediaFileRead>();
+        services.AddScoped<IUserMediaFileWrite, UserMediaFileWrite>();
         services.AddScoped<ISectionWriteRepository, SectionWriteRepository>();
         services.AddScoped<ISectionReadRepository, SectionReadRepository>();
         services.AddScoped<ISectionPriceWriteRepository, SectionPriceWriteRepository>();
         services.AddScoped<ISectionPriceReadRepository, SectionPriceReadRepository>();
-       return services;
+        return services;
     }
 }

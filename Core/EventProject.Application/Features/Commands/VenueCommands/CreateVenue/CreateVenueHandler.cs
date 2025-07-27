@@ -25,7 +25,8 @@ public class CreateVenueHandler : IRequestHandler<CreateVenueRequest, ResponseMo
             Latitude = request.Latitude,
             Longitude = request.Longitude,
             InstagramLink = request?.InstagramLink,
-            OpenHours = request?.OpenHours,
+            OpenTime = request.OpenTime ,
+            CloseTime = request.CloseTime,
             TripAdvisorLink = request?.TripAdvisorLink
         };
         await venueWriteRepository.AddAsync(venue);

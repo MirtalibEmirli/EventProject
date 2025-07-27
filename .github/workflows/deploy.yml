@@ -2,7 +2,7 @@ name: CI/CD Backend Deployment
 
 on:
   push:
-    branches: [ "main" ]  # Change if your main backend branch is different
+    branches: [ "master" ]  # Change if your main backend branch is different
 
 jobs:
   build-and-deploy:

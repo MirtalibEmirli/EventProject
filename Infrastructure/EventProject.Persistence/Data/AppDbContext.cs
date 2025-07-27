@@ -35,7 +35,17 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<UserRwEvent>().HasOne(ur => ur.User).WithMany(u => u.UserRwEvents).HasForeignKey(ur => ur.UserId);
         modelBuilder.Entity<UserRwEvent>().HasOne(ur => ur.Event).WithMany(e => e.UserRwEvents).HasForeignKey(e => e.EventId);
 
-        
+        modelBuilder.Entity<User>().HasData(new User
+        {
+            Id = Guid.NewGuid(), // or a fixed GUID if you want repeatable seed
+            Fistname = "Emil",
+            Lastname = "Abdullayev",
+            Email = "emil@gmail.com",
+            PasswordHash = "cf581ba3c0e3ce147b7250868997039215bf6533896975f50427645cedbed79a", // already hashed
+            Role = Role.Admin,
+            ProfilePictureId = null
+        });
+
         modelBuilder.Entity<Event>()
             .HasOne(e => e.Category)
             .WithMany(c => c.Events)

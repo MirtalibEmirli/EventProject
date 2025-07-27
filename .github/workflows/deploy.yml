@@ -29,7 +29,6 @@ jobs:
         port: 22
         script: |
           cd /opt/docker-compose/eventproject
-          docker-compose down
-          docker-compose pull
-          docker-compose up -d
+          docker-compose up -d --pull always
+           
 

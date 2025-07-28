@@ -44,30 +44,30 @@ public class EventController : ControllerBase
         return Ok(result);
     }
 
-    [AllowAnonymous]
-    [HttpGet("Testlog")]
-    public async Task<IActionResult> GetLog()
-    {
-        _logger.LogInformation("Test log message from EventController");
-        _logger.LogWarning("This is a warning log message");
-        _logger.LogCritical("This is a critical log message");
-        _logger.LogDebug("This is a debug log message");
-        _logger.LogTrace("This is a trace log message");
-        try
-        {
-            int a = 5;
-            int c = a/0; // This will throw an exception
+    //[AllowAnonymous]
+    //[HttpGet("Testlog")]
+    //public async Task<IActionResult> GetLog()
+    //{
+    //    _logger.LogInformation("Test log message from EventController");
+    //    _logger.LogWarning("This is a warning log message");
+    //    _logger.LogCritical("This is a critical log message");
+    //    _logger.LogDebug("This is a debug log message");
+    //    _logger.LogTrace("This is a trace log message");
+    //    try
+    //    {
+    //        int a = 5;
+    //        int c = a/0; // This will throw an exception
 
-        }
-        catch (Exception ex )
-        {
-            _logger.LogError($"This is an error log message {ex.Message}");
+    //    }
+    //    catch (Exception ex )
+    //    {
+    //        _logger.LogError($"This is an error log message {ex.Message}");
 
-            throw;
-        }
+    //        throw;
+    //    }
 
-        return Ok("Log message sent successfully");
-    }   
+    //    return Ok("Log message sent successfully");
+    //}   
  
     
     

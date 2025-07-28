@@ -11,14 +11,19 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
 
     - name: Log in to Docker Hub
       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
-    - name: Build and Push Docker Image
-      run: |
-        docker build -t mirtalib2005/eventproject-backend:latest .
-        docker push mirtalib2005/eventproject-backend:latest
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: true
+        tags: mirtalib2005/eventproject-backend:latest
 
     - name: Deploy to VM via SSH
       uses: appleboy/ssh-action@master
@@ -28,7 +33,18 @@ jobs:
         key: ${{ secrets.SERVER_SSH_KEY }}
         port: 22
         script: |
+          echo "Logging in to Docker on VM..."
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          
+          echo "Removing old container..."
+          docker rm -f backend_container || true
+          
+          echo "Pulling latest image..."
+          docker pull mirtalib2005/eventproject-backend:latest
+          
+          echo "Starting userapp container with docker-compose..."
           cd /opt/docker-compose/eventproject
-          docker-compose up -d --pull always
+          docker-compose up -d backend
+
            
 

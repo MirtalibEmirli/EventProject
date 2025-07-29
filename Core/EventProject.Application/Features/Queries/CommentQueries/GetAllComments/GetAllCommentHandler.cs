@@ -34,7 +34,7 @@ public class GetAllCommentHandler : IRequestHandler<GetAllCommentRequest, GetAll
             Content = c.Content,
             CreatedDate = c.CreatedDate,
             UserName = c.User.Lastname + " " + c.User.Fistname,
-            IsOwner = c.UserId == userId, // 👈 düz burda yoxlanılır
+            IsOwner = c.UserId == userId,
             Replies = c.Replies
                 .Where(r => r.IsDeleted != true)
                 .Select(r => new CommentDto

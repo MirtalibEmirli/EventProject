@@ -6,7 +6,6 @@ using EventProject.Application.Services.LogServices;
 using EventProject.Infrastructure;
 using EventProject.Infrastructure.Services.Storage.Azure;
 using EventProject.Persistence;
-using EventProject.Persistence.Data;
 using Hangfire;
 using Hangfire.MySql;
 using Microsoft.OpenApi.Models;
@@ -75,33 +74,33 @@ builder.Services.AddCors(options =>
 
 
 
-// builder.Services.AddHangfire(config =>
-//     config.UseStorage(new MySqlStorage(connectionString, new MySqlStorageOptions
-//     {
-//         TablesPrefix = "Hangfire"
-//     })));
+//builder.Services.AddHangfire(config =>
+//    config.UseStorage(new MySqlStorage(connectionString, new MySqlStorageOptions
+//    {
+//        TablesPrefix = "Hangfire"
+//    })));
 
-// builder.Services.AddHangfireServer();
+//builder.Services.AddHangfireServer();
 
 var app = builder.Build();
 
 
-// using (var scope = app.Services.CreateScope())
-// {
-//     var jobManager = scope.ServiceProvider.GetRequiredService<IRecurringJobManager>();
+//using (var scope = app.Services.CreateScope())
+//{
+//    var jobManager = scope.ServiceProvider.GetRequiredService<IRecurringJobManager>();
 
-//     jobManager.AddOrUpdate<IRecentlyViewedJob>(
-//         "delete-old-recentlyviewed-events",
-//         job => job.DeleteOldRecentlyViewedEvents(),
-//         Cron.Minutely);
+//    jobManager.AddOrUpdate<IRecentlyViewedJob>(
+//        "delete-old-recentlyviewed-events",
+//        job => job.DeleteOldRecentlyViewedEvents(),
+//        Cron.Minutely);
 
 
-//     jobManager.AddOrUpdate<ISendMailAllUsersJob>(
-//         "send-mail-all-users",
-//         job => job.SendMailAllUsers(),
-//         "50 12 */1 * *");
-//     //demeli  deqiqe saat soram */ bu gun sayidi(nece gunden bir) o birilerde  ay  ve  hefte gunu oda lazim dol
-// }
+//    jobManager.AddOrUpdate<ISendMailAllUsersJob>(
+//        "send-mail-all-users",
+//        job => job.SendMailAllUsers(),
+//        "50 12 */1 * *");
+//    //demeli  deqiqe saat soram */ bu gun sayidi(nece gunden bir) o birilerde  ay  ve  hefte gunu oda lazim dol
+//}
 
 
 if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
@@ -117,7 +116,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 
-// app.UseHangfireDashboard("/jobs");
+ //app.UseHangfireDashboard("/jobs");
 
 app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.MapControllers();

@@ -21,6 +21,8 @@ public class CommentController : ControllerBase
         _mediator = mediator;
     }
 
+
+    //fronta gore duzeld
     [Authorize]
     [HttpPost("{eventId}")]
     public async Task<IActionResult> AddComment(Guid eventId,AddCommentRequest comment)
@@ -37,7 +39,6 @@ public class CommentController : ControllerBase
             var result = await _mediator.Send(new GetAllCommentRequest(eventId, page, pageSize));
         return Ok(result);
     }
-
 
     [Authorize]
     [HttpGet("usercomments/{eventId}")]

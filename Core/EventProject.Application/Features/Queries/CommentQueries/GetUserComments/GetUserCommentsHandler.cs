@@ -4,6 +4,7 @@ using EventProject.Application.Repositories.Comments;
 using EventProject.Application.Repositories.UserMediaFileRepo;
 using EventProject.Application.ResponseModels.Generics;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace EventProject.Application.Features.Queries.CommentQueries.GetUserComments;
 
@@ -27,7 +28,10 @@ public class GetUserCommentsHandler : IRequestHandler<GetUserCommentsQuery, Resp
     public async Task<ResponseModel<GetUserCommentsResponse>> Handle(GetUserCommentsQuery request, CancellationToken cancellationToken)
     {
         var userId = _currentUserService.GetUserId();
-        var comments = _commentReadRepository.GetWhere(c => c.EventId == request.EventId && c.UserId == userId).ToList();
+        var comments = _commentReadRepository.
+            GetWhereQuery(c => c.EventId == request.EventId && c.UserId == userId).Include(c=>c.User).Include(c=>c.Replies)
+            
+            .ToList();
         if (comments == null)
         {
             return new ResponseModel<GetUserCommentsResponse>()

@@ -2,6 +2,7 @@
 using EventProject.Application.DTOs;
 using EventProject.Application.Repositories.Comments;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace EventProject.Application.Features.Queries.CommentQueries.GetAllComments;
 
@@ -20,9 +21,12 @@ public class GetAllCommentHandler : IRequestHandler<GetAllCommentRequest, GetAll
         var skip = (request.Page - 1) * request.PageSize;
 
 
-        var comments = _commentReadRepository.GetWhere(c => c.EventId == request.EventId && c.IsDeleted != true && c.ParentCommentId == null)
-                                              .OrderByDescending(c => c.CreatedDate)
+        var comments = _commentReadRepository.
+            GetWhereQuery(c => c.EventId == request.EventId && c.IsDeleted != true && c.ParentCommentId == null)
+                                             .Include(c=>c.User).Include(c=>c.User)
+            .OrderByDescending(c => c.CreatedDate)
                                               .Skip(skip)
+                                              
                                               .Take(request.PageSize)
                                               .ToList();
         var userId = _currentUserService.GetUserId();
@@ -33,8 +37,8 @@ public class GetAllCommentHandler : IRequestHandler<GetAllCommentRequest, GetAll
             Id = c.Id,
             Content = c.Content,
             CreatedDate = c.CreatedDate,
-            UserName = c.User.Lastname + " " + c.User.Fistname,
-            IsOwner = c.UserId == userId,
+            UserName = c?.User.Lastname + " " + c?.User.Fistname,
+            IsOwner = c?.UserId == userId,
             Replies = c.Replies
                 .Where(r => r.IsDeleted != true)
                 .Select(r => new CommentDto

@@ -37,17 +37,17 @@ public static class RegistrationService
     public static IServiceCollection AddPersistence(this IServiceCollection services, IConfigurationManager config)
     {
         services.AddDbContext<AppDbContext>(options =>
-       options
-              .UseMySql(
-                  config.GetConnectionString("DefaultConnection"),
-                  new MySqlServerVersion(new Version(8, 0, 0))
-              ).UseMySql(config.GetConnectionString("DefaultConnection"), ServerVersion.AutoDetect(config.GetConnectionString("DefaultConnection")), mySqlOptions =>
-              {
-                  mySqlOptions.EnableRetryOnFailure(
-                      maxRetryCount: 5,
-                      maxRetryDelay: TimeSpan.FromSeconds(10),
-                      errorNumbersToAdd: null);
-              })
+       options.UseSqlServer(config.GetConnectionString("DefaultConnection"))
+   //.UseMySql(
+   //    config.GetConnectionString("DefaultConnection"),
+   //    new MySqlServerVersion(new Version(8, 0, 0))
+   //).UseMySql(config.GetConnectionString("DefaultConnection"), ServerVersion.AutoDetect(config.GetConnectionString("DefaultConnection")), mySqlOptions =>
+   //{
+   //    mySqlOptions.EnableRetryOnFailure(
+   //        maxRetryCount: 5,
+   //        maxRetryDelay: TimeSpan.FromSeconds(10),
+   //        errorNumbersToAdd: null);
+   //})
    );
 
 

@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EventProject.Persistence.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using EventProject.Persistence.Data;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace EventProject.Persistence
 {
@@ -18,10 +19,13 @@ namespace EventProject.Persistence
 
             var connectionString = config.GetConnectionString("DefaultConnection");
 
-            optionsBuilder.UseMySql(
-                connectionString,
-                new MySqlServerVersion(new Version(8, 0, 0))  
-            );
+            //lokal
+            optionsBuilder.UseSqlServer(connectionString);
+
+            //optionsBuilder.UseMySql(
+            //    connectionString,
+            //    new MySqlServerVersion(new Version(8, 0, 0))  
+            //);
 
             return new AppDbContext(optionsBuilder.Options);
         }
